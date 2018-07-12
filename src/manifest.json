@@ -1,16 +1,20 @@
 {
-  "name": "Chrome Extension Webpack",
-  "options_page": "options.html",
+  "name": "UAPrivacy",
+  "version": "1.0.0",
+
   "background": {
-    "page": "background.html"
+    "scripts": ["background.bundle.js"],
+    "persistent": false
   },
   "browser_action": {
     "default_popup": "popup.html",
-    "default_icon": "icon-34.png"
+    "default_icon": "logo.png",
+    "default_title": "UAPrivacy"
   },
   "icons": {
-    "128": "icon-128.png"
+    "128": "logo.png"
   },
   "manifest_version": 2,
+  "default_locale": "en",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
