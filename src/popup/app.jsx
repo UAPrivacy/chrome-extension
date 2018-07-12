@@ -6,7 +6,6 @@ class GreetingComponent extends React.Component {
     return (
       <div>
         <p>Hello, find me on src/js/popup/greeting_component.jsx</p>
-        <img src={icon} />
       </div>
     );
   }
