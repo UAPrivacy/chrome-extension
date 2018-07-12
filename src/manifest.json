@@ -1,7 +1,5 @@
 {
   "name": "UAPrivacy",
-  "version": "1.0.0",
-
   "background": {
     "scripts": ["background.bundle.js"],
     "persistent": false
