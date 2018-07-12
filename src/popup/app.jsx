@@ -1,7 +1,7 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import { hot } from "react-hot-loader";
 
-class GreetingComponent extends React.Component {
+class App extends PureComponent {
   render() {
     return (
       <div>
@@ -11,4 +11,4 @@ class GreetingComponent extends React.Component {
   }
 }
 
-export default hot(module)(GreetingComponent);
+export default hot(module)(App);

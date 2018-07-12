@@ -1,4 +1,4 @@
-import Greeting from "./components/app";
+import Greeting from "./app";
 import React from "react";
 import { render } from "react-dom";
 // assets
