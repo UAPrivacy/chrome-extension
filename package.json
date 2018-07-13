@@ -1,7 +1,7 @@
 {
   "name": "UAPrivacy",
   "version": "1.0.0",
-  "description": "UAPrivacy",
+  "description": "Highlighting the important bits of User Agreements & Privacy Policy for the website you are browsing.",
   "license": "UNLICENSED",
   "repository": {
     "github": "https://github.com/UAPrivacy/chrome-extension.git"
