@@ -45,7 +45,7 @@ export default class Popup extends PureComponent {
 
   storeLocalStorage(data) {
     chrome.runtime.sendMessage({ store: true, data }, function(response) {
-      console.log(response);
+      console.log(response.msg);
     });
   }
 

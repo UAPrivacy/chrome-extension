@@ -19,11 +19,11 @@ export function storeState(key, data) {
                     [key]: stringValue
                 },
                 function () {
-                    resolve(`saved items`);
+                    resolve(`saved items in storage`);
                 }
             );
         } catch (error) {
-            reject("error storing items");
+            reject("error storing items in storage");
         }
     });
 }

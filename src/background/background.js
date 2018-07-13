@@ -12,12 +12,18 @@ chrome.runtime.onMessage.addListener(
                     data
                 })
                 updateBadge(data.terms.length + data.privacies.length)
+                console.log("fetched from storage and updated badge")
             }).catch(err => console.error(err))
         } else if (request.store) {
             storeState(key, request.data).then(msg => {
-                console.log(msg)
+                sendResponse({
+                    msg
+                })
+                const data = request.data;
                 updateBadge(data.terms.length + data.privacies.length)
-            }).catch(err => console.error(err))
+            }).catch(err => sendResponse({
+                msg: err
+            }))
         }
     })
 
