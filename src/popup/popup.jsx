@@ -29,45 +29,44 @@ export default class Popup extends PureComponent {
     isLoading: true
   };
 
-  fetchLocalStorage() {
-    chrome.runtime.sendMessage({ load: true }, function(response) {
-      if (response.data) {
-        console.log("fetching from storage");
+  fetchLocalStorage = () => {
+    chrome.runtime.sendMessage({ load: true }, response => {
+      if (response && response.data) {
         this.setState({
           terms: data.terms,
           privacies: data.privacies,
           isLoading: false
         });
       } else {
-        fetchAPI();
+        this.fetchAPI();
       }
     });
-  }
+  };
 
-  storeLocalStorage(value) {
-    chrome.runtime.sendMessage({ store: true, value }, function(response) {
+  storeLocalStorage(data) {
+    chrome.runtime.sendMessage({ store: true, data }, function(response) {
       console.log(response);
     });
   }
 
-  fetchAPI() {
+  fetchAPI = () => {
     axios
       .get("https://jsonplaceholder.typicode.com/posts")
       .then(results => {
         results = results.data.map(post => post.body).slice(0, 15);
+
         const data = {
           terms: results,
-          privacies: result.slice().reverse()
+          privacies: results.slice().reverse()
         };
+
         const { privacies, terms } = data;
-        this.setState(
-          {
-            terms: data.terms,
-            privacies: data.privacies,
-            isLoading: false
-          },
-          () => this.storeLocalStorage({ terms, privacies })
-        );
+        this.setState({
+          terms: data.terms,
+          privacies: data.privacies,
+          isLoading: false
+        });
+        this.storeLocalStorage({ terms, privacies });
       })
       .catch(() => {
         console.error("error fetching clauses");
@@ -75,7 +74,7 @@ export default class Popup extends PureComponent {
           isLoading: false
         });
       });
-  }
+  };
 
   componentDidMount() {
     this.fetchLocalStorage();

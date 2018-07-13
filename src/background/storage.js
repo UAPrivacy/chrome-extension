@@ -11,15 +11,15 @@ export function loadState(key) {
     });
 }
 
-export function storeState(key, value) {
+export function storeState(key, data) {
     return new Promise(function (resolve, reject) {
         try {
-            const stringValue = JSON.stringify(value);
+            const stringValue = JSON.stringify(data);
             chrome.storage.sync.set({
                     [key]: stringValue
                 },
                 function () {
-                    resolve(`saved ${value.present.length} items`);
+                    resolve(`saved items`);
                 }
             );
         } catch (error) {

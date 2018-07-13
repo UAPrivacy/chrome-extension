@@ -31,7 +31,7 @@ class App extends PureComponent {
             className="uk-list uk-list-divider"
             uk-scrollspy="cls: uk-animation-fade; target: > li; delay: 300; repeat: true"
           >
-            {clauses.map(clause => <Clause text={clause} />)}
+            {clauses.map((clause, idx) => <Clause key={idx} text={clause} />)}
           </ul>
         </div>
       </div>
@@ -41,7 +41,7 @@ class App extends PureComponent {
 
 App.propTypes = {
   terms: PropTypes.array.isRequired,
-  clauses: PropTypes.array.isRequired
+  privacies: PropTypes.array.isRequired
 };
 
 export default hot(module)(App);
