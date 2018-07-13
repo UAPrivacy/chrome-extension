@@ -5,28 +5,40 @@ import axios from "axios";
 
 class App extends PureComponent {
   state = {
-    clauses: []
+    clauses: [],
+    isLoading: true
   };
 
+  fetchClauses() {
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .then(results => {
+        this.setState({
+          clauses: results.data.map(post => post.body),
+          isLoading: false
+        });
+      })
+      .catch(() => {
+        console.error("error fetching clauses");
+        this.setState({
+          isLoading: false
+        });
+      });
+  }
+
   componentDidMount() {
-    axios.get("https://jsonplaceholder.typicode.com/posts").then(results => {
-      this.setState({ clause: results.data.map(post => post.body) });
-    });
+    setTimeout(this.fetchClauses, 1000);
   }
 
   render() {
-    const { clauses } = this.state;
-    return (
-      <div>
-        {clauses.map(clause => <Clause text={clause} />)}
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam
-          totam nam sed illum architecto libero amet a inventore similique est
-          repudiandae, sit, repellendus possimus asperiores, cum assumenda non.
-          Vero, asperiores.
-        </p>
-      </div>
+    const { clauses, isLoading } = this.state;
+    const renderResult = isLoading ? (
+      <div className="uk-flex uk-flex-center">loading...</div>
+    ) : (
+      <div>{clauses.map(clause => <Clause text={clause} />)}</div>
     );
+
+    return renderResult;
   }
 }
 
