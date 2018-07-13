@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Clause = ({ text }) => {
-  return <p>{text}</p>;
+  return <li>{text}</li>;
 };
 
 Clause.propTypes = {
