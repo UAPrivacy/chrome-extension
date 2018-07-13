@@ -3,18 +3,8 @@ import { hot } from "react-hot-loader";
 import PropTypes from "prop-types";
 import Clause from "./Clause";
 
-const Loading = () => (
-  <div
-    className="uk-flex uk-flex-center uk-flex-middle"
-    data-uk-height-viewport
-  >
-    <span uk-spinner="ratio: 4.5" className="uk-margin-auto-vertical" />
-  </div>
-);
-
 class App extends PureComponent {
   state = {
-    isLoading: true,
     active: "terms"
   };
 
@@ -23,12 +13,10 @@ class App extends PureComponent {
   };
 
   render() {
-    const { isLoading, active } = this.state;
+    const { active } = this.state;
     const { terms, privacies } = this.props;
     const clauses = active === "terms" ? terms : privacies;
-    return isLoading ? (
-      <Loading />
-    ) : (
+    return (
       <div className="uk-section uk-section-xsmall">
         <div className="uk-container uk-container-small">
           <ul className="uk-subnav uk-subnav-pill uk-flex-center">
