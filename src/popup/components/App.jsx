@@ -14,7 +14,8 @@ const Loading = () => (
 
 class App extends PureComponent {
   state = {
-    clauses: [],
+    terms: [],
+    privacies: [],
     isLoading: true,
     active: "terms"
   };
@@ -25,8 +26,10 @@ class App extends PureComponent {
       axios
         .get("https://jsonplaceholder.typicode.com/posts")
         .then(results => {
+          const data = results.data.map(post => post.body).slice(0, 15);
           this.setState({
-            clauses: results.data.map(post => post.body).slice(0, 5),
+            terms: data,
+            privacies: data.slice().reverse(),
             isLoading: false
           });
         })
@@ -44,8 +47,8 @@ class App extends PureComponent {
   };
 
   render() {
-    const { clauses, isLoading, active } = this.state;
-
+    const { terms, privacies, isLoading, active } = this.state;
+    const clauses = active === "terms" ? terms : privacies;
     return isLoading ? (
       <Loading />
     ) : (
@@ -59,7 +62,6 @@ class App extends PureComponent {
               <a onClick={() => this.handleActive("privacy")}>Privacy</a>
             </li>
           </ul>
-
           <ul
             className="uk-list uk-list-divider"
             uk-scrollspy="cls: uk-animation-fade; target: > li; delay: 300; repeat: true"
