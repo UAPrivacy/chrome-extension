@@ -32,6 +32,7 @@ export default class Popup extends PureComponent {
   fetchLocalStorage = () => {
     chrome.runtime.sendMessage({ load: true }, response => {
       if (response && response.data) {
+        const data = response.data;
         this.setState({
           terms: data.terms,
           privacies: data.privacies,

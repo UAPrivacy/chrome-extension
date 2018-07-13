@@ -25,6 +25,7 @@ chrome.runtime.onMessage.addListener(
                 msg: err
             }))
         }
+        return true;
     })
 
 
@@ -38,9 +39,9 @@ function updateBadge(count) {
 const QUOTA_BYTES_PER_ITEM = 8192;
 chrome.storage.onChanged.addListener(function (store, area) {
     if (area === "sync") {
-        chrome.storage.sync.getBytesInUse(storeName, function (bytes) {
+        chrome.storage.sync.getBytesInUse(key, function (bytes) {
             if (bytes > QUOTA_BYTES_PER_ITEM - QUOTA_BYTES_PER_ITEM / 64) {
-                chrome.storage.sync.remove(storeName, function () {
+                chrome.storage.sync.remove(key, function () {
                     console.log(`storage cleared`);
                 });
             }
