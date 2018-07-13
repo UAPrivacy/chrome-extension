@@ -1,4 +1,4 @@
-import Greeting from "./app";
+import App from "./components/App";
 import React from "react";
 import { render } from "react-dom";
 // assets
@@ -6,4 +6,4 @@ import "./popup.css";
 import logo from "../assets/logo.png";
 import favicon from "../assets/favicon.png";
 
-render(<Greeting />, window.document.getElementById("app-container"));
+render(<App />, window.document.getElementById("app-container"));
