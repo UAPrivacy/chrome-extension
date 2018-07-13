@@ -4,7 +4,6 @@ function performUpdateBadge(count) {
     });
 }
 
-// buggy storage clearing - clears out undo/redo history when full
 const QUOTA_BYTES_PER_ITEM = 8192;
 const storeName = "uaprivacy"
 
