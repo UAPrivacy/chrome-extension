@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { hot } from "react-hot-loader";
+import PropTypes from "prop-types";
 import Clause from "./Clause";
-import axios from "axios";
 
 const Loading = () => (
   <div
@@ -14,40 +14,17 @@ const Loading = () => (
 
 class App extends PureComponent {
   state = {
-    terms: [],
-    privacies: [],
     isLoading: true,
     active: "terms"
   };
-
-  componentDidMount() {
-    // TODO remove timeout
-    setTimeout(() => {
-      axios
-        .get("https://jsonplaceholder.typicode.com/posts")
-        .then(results => {
-          const data = results.data.map(post => post.body).slice(0, 15);
-          this.setState({
-            terms: data,
-            privacies: data.slice().reverse(),
-            isLoading: false
-          });
-        })
-        .catch(() => {
-          console.error("error fetching clauses");
-          this.setState({
-            isLoading: false
-          });
-        });
-    }, 500);
-  }
 
   handleActive = which => {
     this.setState({ active: which });
   };
 
   render() {
-    const { terms, privacies, isLoading, active } = this.state;
+    const { isLoading, active } = this.state;
+    const { terms, privacies } = this.props;
     const clauses = active === "terms" ? terms : privacies;
     return isLoading ? (
       <Loading />
@@ -73,5 +50,10 @@ class App extends PureComponent {
     );
   }
 }
+
+App.propTypes = {
+  terms: PropTypes.array.isRequired,
+  clauses: PropTypes.array.isRequired
+};
 
 export default hot(module)(App);
