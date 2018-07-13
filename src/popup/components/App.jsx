@@ -9,7 +9,7 @@ class App extends PureComponent {
     isLoading: true
   };
 
-  fetchClauses() {
+  componentDidMount() {
     axios
       .get("https://jsonplaceholder.typicode.com/posts")
       .then(results => {
@@ -24,10 +24,6 @@ class App extends PureComponent {
           isLoading: false
         });
       });
-  }
-
-  componentDidMount() {
-    setTimeout(this.fetchClauses, 1000);
   }
 
   render() {
