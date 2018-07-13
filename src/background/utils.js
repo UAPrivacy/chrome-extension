@@ -1,11 +1,5 @@
-function performUpdateBadge(count) {
-    chrome.browserAction.setBadgeText({
-        text: count.toString()
-    });
-}
-
 const QUOTA_BYTES_PER_ITEM = 8192;
-const storeName = "uaprivacy"
+const storeName = chrome.extension.getBackgroundPage().key
 
 chrome.storage.onChanged.addListener(function (store, area) {
     if (area === "sync") {

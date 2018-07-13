@@ -15,3 +15,10 @@ chrome.runtime.onMessage.addListener(
             storeState(key, request.data).then(msg => console.log(msg)).catch(err => console.error(err))
         }
     })
+
+
+function performUpdateBadge(count) {
+    chrome.browserAction.setBadgeText({
+        text: count.toString()
+    });
+}

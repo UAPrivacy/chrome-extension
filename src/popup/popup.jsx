@@ -30,7 +30,7 @@ export default class Popup extends PureComponent {
   };
 
   fetchLocalStorage() {
-    chrome.runtime.sendMessage("load", function(response) {
+    chrome.runtime.sendMessage({ load: true }, function(response) {
       if (response.data) {
         console.log("fetching from storage");
         this.setState({
@@ -45,7 +45,7 @@ export default class Popup extends PureComponent {
   }
 
   storeLocalStorage(value) {
-    chrome.runtime.sendMessage({ key: "store", value }, function(response) {
+    chrome.runtime.sendMessage({ store: true, value }, function(response) {
       console.log(response);
     });
   }
@@ -54,12 +54,16 @@ export default class Popup extends PureComponent {
     axios
       .get("https://jsonplaceholder.typicode.com/posts")
       .then(results => {
-        const data = results.data.map(post => post.body).slice(0, 15);
+        results = results.data.map(post => post.body).slice(0, 15);
+        const data = {
+          terms: results,
+          privacies: result.slice().reverse()
+        };
         const { privacies, terms } = data;
         this.setState(
           {
-            terms: data,
-            privacies: data.slice().reverse(),
+            terms: data.terms,
+            privacies: data.privacies,
             isLoading: false
           },
           () => this.storeLocalStorage({ terms, privacies })
