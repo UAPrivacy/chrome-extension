@@ -35,17 +35,16 @@ function updateBadge(count) {
     });
 }
 
-
-const QUOTA_BYTES_PER_ITEM = 8192;
-chrome.storage.onChanged.addListener(function (store, area) {
-    if (area === "sync") {
-        chrome.storage.sync.getBytesInUse(key, function (bytes) {
-            if (bytes > QUOTA_BYTES_PER_ITEM - QUOTA_BYTES_PER_ITEM / 64) {
-                chrome.storage.sync.remove(key, function () {
-                    console.log(`storage cleared`);
-                });
-            }
-            console.log(`bytes so far ${bytes}`);
-        });
-    }
-});
+// const QUOTA_BYTES_PER_ITEM = 8192;
+// chrome.storage.onChanged.addListener(function (store, area) {
+//     if (area === "sync") {
+//         chrome.storage.sync.getBytesInUse(key, function (bytes) {
+//             if (bytes > QUOTA_BYTES_PER_ITEM - QUOTA_BYTES_PER_ITEM / 64) {
+//                 chrome.storage.sync.remove(key, function () {
+//                     console.log(`storage cleared`);
+//                 });
+//             }
+//             console.log(`bytes so far ${bytes}`);
+//         });
+//     }
+// });
