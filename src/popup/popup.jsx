@@ -78,7 +78,21 @@ export default class Popup extends PureComponent {
   };
 
   componentDidMount() {
+    this.getURL();
     this.fetchLocalStorage();
+  }
+
+  getURL() {
+    chrome.tabs.query(
+      {
+        active: true,
+        lastFocusedWindow: true
+      },
+      function(tabs) {
+        const url = tabs[0].url;
+        console.log(url);
+      }
+    );
   }
 
   render() {
