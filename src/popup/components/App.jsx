@@ -23,7 +23,7 @@ class App extends PureComponent {
             <li className={active === "terms" ? "uk-active" : ""}>
               <a
                 onClick={() => this.handleActive("terms")}
-                uk-tooltip="title:Terms & Conditions; pos: left"
+                uk-tooltip="title:User Agreements; pos: left"
               >
                 Terms
               </a>

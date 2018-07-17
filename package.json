@@ -4,7 +4,8 @@
   "description": "Highlighting the important bits of User Agreements & Privacy Policy for the website you are browsing.",
   "license": "UNLICENSED",
   "repository": {
-    "github": "https://github.com/UAPrivacy/chrome-extension.git"
+    "type": "git",
+    "url": "https://github.com/UAPrivacy/chrome-extension.git"
   },
   "scripts": {
     "build": "node utils/build.js",
