@@ -1,4 +1,4 @@
-import pagesData from './staticPages.json';
+import pagesData from './static.json';
 
 const attributes = [
     'privacies',
@@ -25,19 +25,6 @@ function fetchPages(name) {
         data = {};
     }
     return data;
-}
-
-// TODO
-function detect(url) {
-    url.test(/privacy|terms/);
-}
-
-function content(params) {
-    // find the main keywords
-}
-// TODO
-function fetchSiteURLs(url) {
-    console.log(url);
 }
 
 const getPages = name => getSelectPages(fetchPages(name), attributes);

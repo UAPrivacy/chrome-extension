@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, writeFile } from 'fs';
 import { join } from 'path';
-import pages from './staticPages.json';
+import pages from './static.json';
 
 function getCommonURLS() {
     return {
