@@ -19,10 +19,61 @@ const Loading = () => (
 );
 
 export default class Popup extends PureComponent {
+  static storeLocalStorage(data) {
+    chrome.runtime.sendMessage({ store: true, data }, (response) => {
+      console.log(response.msg);
+    });
+  }
+
   state = {
     terms: [],
     privacies: [],
     isLoading: true,
+  };
+
+  componentDidMount() {
+    Popup.getURL();
+    this.fetchLocalStorage();
+  }
+
+  static getURL() {
+    chrome.tabs.query(
+      {
+        active: true,
+        lastFocusedWindow: true,
+      },
+      (tabs) => {
+        const [{ url }] = tabs;
+        console.log(url);
+      },
+    );
+  }
+
+  fetchAPI = () => {
+    axios
+      .get('https://jsonplaceholder.typicode.com/posts')
+      .then((res) => {
+        const results = res.data.map(post => post.body).slice(0, 15);
+
+        const data = {
+          terms: results,
+          privacies: results.slice().reverse(),
+        };
+
+        const { privacies, terms } = data;
+        this.setState({
+          terms: data.terms,
+          privacies: data.privacies,
+          isLoading: false,
+        });
+        Popup.storeLocalStorage({ terms, privacies });
+      })
+      .catch(() => {
+        console.error('error fetching clauses');
+        this.setState({
+          isLoading: false,
+        });
+      });
   };
 
   fetchLocalStorage = () => {
@@ -39,57 +90,6 @@ export default class Popup extends PureComponent {
       }
     });
   };
-
-  storeLocalStorage(data) {
-    chrome.runtime.sendMessage({ store: true, data }, (response) => {
-      console.log(response.msg);
-    });
-  }
-
-  fetchAPI = () => {
-    axios
-      .get('https://jsonplaceholder.typicode.com/posts')
-      .then((results) => {
-        results = results.data.map(post => post.body).slice(0, 15);
-
-        const data = {
-          terms: results,
-          privacies: results.slice().reverse(),
-        };
-
-        const { privacies, terms } = data;
-        this.setState({
-          terms: data.terms,
-          privacies: data.privacies,
-          isLoading: false,
-        });
-        this.storeLocalStorage({ terms, privacies });
-      })
-      .catch(() => {
-        console.error('error fetching clauses');
-        this.setState({
-          isLoading: false,
-        });
-      });
-  };
-
-  componentDidMount() {
-    this.getURL();
-    this.fetchLocalStorage();
-  }
-
-  getURL() {
-    chrome.tabs.query(
-      {
-        active: true,
-        lastFocusedWindow: true,
-      },
-      (tabs) => {
-        const url = tabs[0].url;
-        console.log(url);
-      },
-    );
-  }
 
   render() {
     const { isLoading, privacies, terms } = this.state;
