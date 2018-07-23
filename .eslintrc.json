@@ -11,6 +11,7 @@
         "no-undef": 1,
         "prefer-promise-reject-errors": 1,
         "class-methods-use-this": 1,
+        "import/no-extraneous-dependencies": 1,
         "no-multiple-empty-lines": [
             2,
             {
