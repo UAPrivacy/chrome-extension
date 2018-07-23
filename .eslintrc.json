@@ -17,7 +17,7 @@
         "no-use-before-define": 1,
         "no-unused-vars": 1,
         "max-len": [
-            2,
+            1,
             {
                 "code": 180
             }
@@ -26,7 +26,9 @@
         "import/no-unresolved": 1,
         "no-restricted-globals": 1,
         "no-await-in-loop": 1,
-        "no-undef": 1
+        "no-undef": 1,
+        "prefer-promise-reject-errors": 1,
+        "class-methods-use-this": 1
     },
     "env": {
         "node": true
