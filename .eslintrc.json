@@ -1,7 +1,7 @@
 {
     "extends": "airbnb-base",
     "rules": {
-        "no-console": 0,
+        "no-console": 1,
         "indent": [
             "error",
             4
@@ -14,18 +14,19 @@
                 "maxEOF": 1
             }
         ],
-        "no-use-before-define": 0,
-        "no-unused-vars": 0,
+        "no-use-before-define": 1,
+        "no-unused-vars": 1,
         "max-len": [
             2,
             {
                 "code": 180
             }
         ],
-        "no-restricted-syntax": 0,
-        "import/no-unresolved": 0,
-        "no-restricted-globals": 0,
-        "no-await-in-loop": 0
+        "no-restricted-syntax": 1,
+        "import/no-unresolved": 1,
+        "no-restricted-globals": 1,
+        "no-await-in-loop": 1,
+        "no-undef": 1
     },
     "env": {
         "node": true
