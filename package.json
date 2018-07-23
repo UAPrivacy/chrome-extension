@@ -18,10 +18,11 @@
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "uikit": "^3.0.0-rc.8"
+    "uikit": "^3.0.0-rc.8",
+    "unirest": "^0.5.1",
+    "x-ray": "^2.3.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
     "babel-loader": "^6.2.4",
@@ -37,7 +38,6 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.9.1",
     "file-loader": "^0.11.2",
-    "fs-extra": "^0.30.0",
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "2.24.1",
     "react-hot-loader": "^4.3.3",

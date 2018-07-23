@@ -2,10 +2,6 @@
     "extends": "airbnb",
     "rules": {
         "no-console": 1,
-        "indent": [
-            "error",
-            4
-        ],
         "no-multiple-empty-lines": [
             2,
             {
@@ -17,7 +13,7 @@
         "no-use-before-define": 1,
         "no-unused-vars": 1,
         "max-len": [
-            1,
+            2,
             {
                 "code": 180
             }
