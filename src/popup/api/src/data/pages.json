@@ -1,0 +1,29 @@
+{
+    "twitter": {
+        "privacies": "https://twitter.com/en/privacy",
+        "terms": "https://twitter.com/en/tos",
+        "standards": "https://help.twitter.com/en/rules-and-policies/twitter-rules"
+    },
+    "facebook": {
+        "privacies": "https://www.facebook.com/about/privacy/update",
+        "terms": "https://www.facebook.com/legal/terms/plain_text_terms",
+        "cookies": "https://www.facebook.com/policies/cookies/",
+        "standards": "https://www.facebook.com/communitystandards/",
+        "commercial": "https://www.facebook.com/legal/commercial_terms",
+        "advertising": "https://www.facebook.com/policies/ads/",
+        "selfServeAdvertising": "https://www.facebook.com/legal/self_service_ads_terms",
+        "pagesGroupsEvents": "https://www.facebook.com/policies/pages_groups_events/",
+        "developers": "https://developers.facebook.com/policy/",
+        "payments": "https://developers.facebook.com/policy/credits",
+        "communityPayments": "https://www.facebook.com/payments_terms",
+        "commerce": "https://www.facebook.com/policies/commerce",
+        "branding": "https://en.facebookbrand.com/guidelines/brand",
+        "music": "https://www.facebook.com/legal/music_guidelines",
+        "intellectualProperty": "https://www.facebook.com/help/intellectual_property?ref=tos"
+    },
+    "google": {
+        "privacies": "https://policies.google.com/privacy",
+        "terms": "https://policies.google.com/terms",
+        "principals": "https://policies.google.com/technologies"
+    }
+}

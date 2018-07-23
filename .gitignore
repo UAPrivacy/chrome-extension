@@ -1,5 +1,4 @@
-node_modules
-build
-secrets.*.js
-.DS_Store
-.vscode/
+/node_modules
+/build
+**/.DS_Store
+/.vscode/
