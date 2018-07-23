@@ -21,12 +21,12 @@ class App extends PureComponent {
         <div className="uk-container uk-container-small">
           <ul className="uk-subnav uk-subnav-pill uk-flex-center">
             <li className={active === 'terms' ? 'uk-active' : ''}>
-              <button onClick={() => this.handleActive('terms')} uk-tooltip="title:User Agreements; pos: left">
+              <button type="button" onClick={() => this.handleActive('terms')} uk-tooltip="title:User Agreements; pos: left">
                 Terms
               </button>
             </li>
             <li className={active === 'privacy' ? 'uk-active' : ''}>
-              <button onClick={() => this.handleActive('privacy')} uk-tooltip="title:Privacy Policies ; pos: right">
+              <button type="button" onClick={() => this.handleActive('privacy')} uk-tooltip="title:Privacy Policies ; pos: right">
                 Privacy
               </button>
             </li>
@@ -41,8 +41,8 @@ class App extends PureComponent {
 }
 
 App.propTypes = {
-  terms: PropTypes.array.isRequired,
-  privacies: PropTypes.array.isRequired,
+  terms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  privacies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default hot(module)(App);

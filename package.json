@@ -1,18 +1,5 @@
 {
-  "name": "UAPrivacy",
-  "version": "1.0.0",
-  "description": "Highlighting the important bits of User Agreements & Privacy Policy for the website you are browsing.",
-  "license": "UNLICENSED",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/UAPrivacy/chrome-extension.git"
-  },
-  "scripts": {
-    "build": "node utils/build.js",
-    "start": "node utils/webserver.js"
-  },
   "author": "Samuel K. Mbaabu",
-  "private": true,
   "dependencies": {
     "axios": "^0.18.0",
     "prop-types": "^15.6.2",
@@ -22,6 +9,7 @@
     "unirest": "^0.5.1",
     "x-ray": "^2.3.3"
   },
+  "description": "Highlighting the important bits of User Agreements & Privacy Policy for the website you are browsing.",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
@@ -45,5 +33,17 @@
     "webpack": "2.2.1",
     "webpack-dev-server": "^2.11.2",
     "write-file-webpack-plugin": "3.4.2"
-  }
+  },
+  "license": "UNLICENSED",
+  "name": "UAPrivacy",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UAPrivacy/chrome-extension.git"
+  },
+  "scripts": {
+    "build": "node utils/build.js",
+    "start": "node utils/webserver.js"
+  },
+  "version": "1.0.0"
 }
