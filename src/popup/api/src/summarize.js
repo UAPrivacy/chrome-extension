@@ -1,5 +1,5 @@
 import { post } from 'unirest';
-import { TEXTSUMMARIZATION_TOKEN } from 'babel-dotenv';
+import { TEXTSUMMARIZATION_TOKEN } from 'secrets';
 import { urls, writeToJSON } from './utils';
 
 function getSummaryTextSummarization({

@@ -1,4 +1,4 @@
-import pagesData from './data/pages.json';
+import pagesData from './staticPages.json';
 
 const attributes = [
     'privacies',

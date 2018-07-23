@@ -14,8 +14,8 @@ async function fetchData(name) {
     });
     return {
         terms,
-        privacies
-    }
+        privacies,
+    };
 }
 
-export default router;
+export default fetchData;

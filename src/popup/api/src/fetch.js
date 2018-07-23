@@ -1,6 +1,6 @@
 import xray from 'x-ray';
 import axios from 'axios';
-import { DIFFBOT_TOKEN } from 'babel-dotenv';
+import { DIFFBOT_TOKEN } from 'secrets';
 import { urls, writeToJSON } from './utils';
 
 const newXray = xray();

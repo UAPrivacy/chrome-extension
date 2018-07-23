@@ -3,7 +3,7 @@ import fetchPageData from './fetch';
 import summarize from './summarize';
 import {
     writeToJSON,
-    fetchAllNames
+    fetchAllNames,
 } from './utils';
 
 async function updateStore(name) {
@@ -17,7 +17,7 @@ async function updateStore(name) {
                 text: textData,
             }));
             summariesFromURLS = await summarize({
-                url
+                url,
             });
             results[key] = {
                 summariesFromText,
@@ -30,13 +30,11 @@ async function updateStore(name) {
     }
 }
 
-export default fetchFromStore;
-
+export default updateStore;
 
 function job() {
     for (const name of fetchAllNames()) {
         updateStore(name).then(data => writeToJSON(`${name}-job.json`, data)).catch(err => console.error(err));
     }
 }
-
-job();
+// job();
