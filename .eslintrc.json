@@ -1,5 +1,5 @@
 {
-    "extends": "airbnb-base",
+    "extends": "airbnb",
     "rules": {
         "no-console": 1,
         "indent": [
