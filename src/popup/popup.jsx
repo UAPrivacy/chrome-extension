@@ -10,9 +10,6 @@ UIkit.use(Icons);
 window.UIkit = UIkit;
 
 import './popup.css';
-// TODO find better way of loading static images into /build
-import logo from '../assets/logo.png';
-import favicon from '../assets/favicon.png';
 
 const Loading = () => (
     <div

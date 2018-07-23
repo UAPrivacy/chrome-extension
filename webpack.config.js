@@ -70,6 +70,10 @@ var options = {
           ...JSON.parse(content.toString())
         }))
       }
+    }, {
+      from: "src/assets/favicon.png",
+    }, {
+      from: "src/assets/logo.png",
     }]),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src", "popup", "popup.html"),
