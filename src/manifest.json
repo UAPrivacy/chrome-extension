@@ -1,18 +1,23 @@
 {
-  "name": "UAPrivacy",
   "background": {
-    "scripts": ["background.bundle.js"],
-    "persistent": false
+    "persistent": false,
+    "scripts": [
+      "background.bundle.js"
+    ]
   },
   "browser_action": {
-    "default_popup": "popup.html",
     "default_icon": "favicon.png",
+    "default_popup": "popup.html",
     "default_title": "UAPrivacy"
   },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "icons": {
     "128": "favicon.png"
   },
   "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "permissions": ["storage", "activeTab"]
+  "name": "UAPrivacy",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ]
 }

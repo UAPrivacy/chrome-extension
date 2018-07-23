@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import { render } from 'react-dom';
-import axios from 'axios';
 // assets
 import 'uikit/dist/css/uikit.min.css';
 import UIkit from 'uikit';
 import Icons from 'uikit/dist/js/uikit-icons';
 import App from './components/App';
+import fetchData from './api';
 
 import './popup.css';
 
@@ -19,8 +19,8 @@ const Loading = () => (
 );
 
 export default class Popup extends PureComponent {
-  static storeLocalStorage(data) {
-    chrome.runtime.sendMessage({ store: true, data }, (response) => {
+  static storeLocalStorage({ key, value }) {
+    chrome.runtime.sendMessage({ store: key, value }, (response) => {
       console.log(response.msg);
     });
   }
@@ -31,53 +31,47 @@ export default class Popup extends PureComponent {
     isLoading: true,
   };
 
-  componentDidMount() {
-    Popup.getURL();
-    this.fetchLocalStorage();
+  async componentDidMount() {
+    const url = await Popup.getURL();
+    this.fetchLocalStorage(url);
   }
 
   static getURL() {
-    chrome.tabs.query(
-      {
-        active: true,
-        lastFocusedWindow: true,
-      },
-      (tabs) => {
-        const [{ url }] = tabs;
-        console.log(url);
-      },
-    );
+    return new Promise((resolve, reject) => {
+      chrome.tabs.query(
+        {
+          active: true,
+          lastFocusedWindow: true,
+        },
+        (tabs) => {
+          const [{ url }] = tabs;
+          resolve(url);
+        },
+      );
+    });
   }
 
-  fetchAPI = () => {
-    axios
-      .get('https://jsonplaceholder.typicode.com/posts')
+  fetchAPI = (url) => {
+    fetchData(url)
       .then((res) => {
-        const results = res.data.map(post => post.body).slice(0, 15);
-
-        const data = {
-          terms: results,
-          privacies: results.slice().reverse(),
-        };
-
-        const { privacies, terms } = data;
+        const { privacies, terms } = res;
         this.setState({
-          terms: data.terms,
-          privacies: data.privacies,
+          terms,
+          privacies,
           isLoading: false,
         });
-        Popup.storeLocalStorage({ terms, privacies });
+        Popup.storeLocalStorage({ key: url, value: { terms, privacies } });
       })
-      .catch(() => {
-        console.error('error fetching clauses');
+      .catch((err) => {
+        console.error(err);
         this.setState({
           isLoading: false,
         });
       });
   };
 
-  fetchLocalStorage = () => {
-    chrome.runtime.sendMessage({ load: true }, (response) => {
+  fetchLocalStorage = (url) => {
+    chrome.runtime.sendMessage({ load: url }, (response) => {
       if (response && response.data) {
         const { data } = response;
         this.setState({
@@ -86,7 +80,7 @@ export default class Popup extends PureComponent {
           isLoading: false,
         });
       } else {
-        this.fetchAPI();
+        this.fetchAPI(url);
       }
     });
   };
