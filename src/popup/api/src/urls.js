@@ -29,9 +29,3 @@ function fetchPages(name) {
 
 const getPages = name => getSelectPages(fetchPages(name), attributes);
 export default getPages;
-
-function test() {
-  ['facebook', 'google', 'twitter'].forEach((url) => {
-    console.log(getPages(url));
-  });
-}

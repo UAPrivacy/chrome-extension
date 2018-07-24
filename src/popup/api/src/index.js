@@ -31,10 +31,3 @@ async function updateStore(name) {
 }
 
 export default updateStore;
-
-function job() {
-  for (const name of fetchAllNames()) {
-    updateStore(name).then(data => writeToJSON(`${name}-job.json`, data)).catch(err => console.error(err));
-  }
-}
-// job();

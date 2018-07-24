@@ -1,30 +1,29 @@
-import { post } from 'unirest';
 import { TEXTSUMMARIZATION_TOKEN } from 'secrets';
-import { urls, writeToJSON } from './utils';
+import axios from 'axios';
 
-function getSummaryTextSummarization({
+async function getSummaryTextSummarization({
   text = '',
   url = '',
   sentnum = 20,
 }) {
-  return new Promise((resolve, reject) => {
-    try {
-      post('https://textanalysis-text-summarization.p.mashape.com/text-summarizer')
-        .header('X-Mashape-Key', TEXTSUMMARIZATION_TOKEN)
-        .header('Content-Type', 'application/json')
-        .header('Accept', 'application/json')
-        .send({
-          url,
-          text,
-          sentnum,
-        })
-        .end((result) => {
-          resolve(result.body);
-        });
-    } catch (error) {
-      reject(error);
-    }
-  });
+  try {
+    const response = await axios.post('https://textanalysis-text-summarization.p.mashape.com/text-summarizer',
+      {
+        url,
+        text,
+        sentnum,
+      },
+      {
+        headers: {
+          'X-Mashape-Key': TEXTSUMMARIZATION_TOKEN,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
 }
 
 const selectorTextSummarization = data => data.sentences;
@@ -42,15 +41,3 @@ function wrapper() {
 
 const getSummary = wrapper();
 export default getSummary;
-
-function test() {
-  Object.entries(urls()).forEach(([key, url]) => {
-    getSummaryTextSummarization({
-      url,
-    }).then((result) => {
-      writeToJSON(`${key}-summary.json`, result);
-    }).catch((err) => {
-      console.error(err);
-    });
-  });
-}
