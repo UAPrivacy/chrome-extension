@@ -56,6 +56,7 @@ export default class Popup extends PureComponent {
     fetchData(url)
       .then((res) => {
         const { privacies, terms } = res;
+        console.log('res:', res);
         this.setState({
           terms,
           privacies,
