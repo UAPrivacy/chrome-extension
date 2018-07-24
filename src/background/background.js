@@ -3,8 +3,6 @@ import {
   storeState,
 } from './storage';
 
-const key = 'data';
-
 function updateBadge(count) {
   chrome.browserAction.setBadgeText({
     text: count.toString(),
@@ -14,7 +12,7 @@ function updateBadge(count) {
 chrome.runtime.onMessage.addListener(
   (request, sender, sendResponse) => {
     if (request.load) {
-      loadState(key).then((data) => {
+      loadState(request.load).then((data) => {
         sendResponse({
           data,
         });
@@ -22,7 +20,7 @@ chrome.runtime.onMessage.addListener(
         console.log('fetched from storage and updated badge');
       }).catch(err => console.error(err));
     } else if (request.store) {
-      storeState(key, request.data).then((msg) => {
+      storeState({ key: request.store, value: request.value }).then((msg) => {
         sendResponse({
           msg,
         });

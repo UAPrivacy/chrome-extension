@@ -11,10 +11,10 @@ export function loadState(key) {
   }));
 }
 
-export function storeState(key, data) {
+export function storeState({ key, value }) {
   return new Promise(((resolve, reject) => {
     try {
-      const stringValue = JSON.stringify(data);
+      const stringValue = JSON.stringify(value);
       chrome.storage.sync.set({
         [key]: stringValue,
       },

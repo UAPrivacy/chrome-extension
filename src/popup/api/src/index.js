@@ -1,10 +1,6 @@
 import getPages from './urls';
 import fetchPageData from './fetch';
 import summarize from './summarize';
-import {
-  writeToJSON,
-  fetchAllNames,
-} from './utils';
 
 async function updateStore(name) {
   const results = {};
