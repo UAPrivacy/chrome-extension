@@ -21,6 +21,7 @@ chrome.runtime.onMessage.addListener(
       }).catch(err => console.error(err));
     } else if (request.store) {
       const data = request.value;
+      console.log(request);
       storeState({ key: request.store, value: data }).then((msg) => {
         sendResponse({
           msg,
@@ -33,18 +34,3 @@ chrome.runtime.onMessage.addListener(
     return true;
   },
 );
-
-// TODO validate
-const QUOTA_BYTES_PER_ITEM = 8192;
-chrome.storage.onChanged.addListener((store, area) => {
-  if (area === 'sync') {
-    chrome.storage.sync.getBytesInUse(key, (bytes) => {
-      if (bytes > QUOTA_BYTES_PER_ITEM - QUOTA_BYTES_PER_ITEM / 64) {
-        chrome.storage.sync.remove(key, () => {
-          console.log('storage cleared');
-        });
-      }
-      console.log(`bytes so far ${bytes}`);
-    });
-  }
-});
