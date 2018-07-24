@@ -22,7 +22,7 @@ async function updateStore(name) {
     }
     return results;
   } catch (e) {
-    return console.error(e);
+    return e;
   }
 }
 

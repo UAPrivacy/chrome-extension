@@ -8,11 +8,7 @@ const attributes = [
 function getSelectPages(data) {
   const pages = {};
   attributes.forEach((attr) => {
-    try {
-      pages[attr] = data[attr];
-    } catch (e) {
-      console.log(e);
-    }
+    pages[attr] = data[attr];
   });
   return pages;
 }
