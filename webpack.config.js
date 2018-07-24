@@ -20,8 +20,8 @@ if (fileSystem.existsSync(secretsPath)) {
 
 var options = {
   entry: {
-    popup: path.join(__dirname, "src", "popup", "popup.jsx"),
-    background: path.join(__dirname, "src", "background", "background.js")
+    popup: ["babel-polyfill", path.join(__dirname, "src", "popup", "popup.jsx")],
+    background: ["babel-polyfill", path.join(__dirname, "src", "background", "background.js")]
   },
   output: {
     path: path.join(__dirname, "build"),
