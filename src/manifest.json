@@ -18,6 +18,7 @@
   "name": "UAPrivacy",
   "permissions": [
     "storage",
-    "activeTab"
+    "activeTab",
+    "unlimitedStorage"
   ]
 }
