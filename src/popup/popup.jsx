@@ -31,7 +31,7 @@ export default class Popup extends PureComponent {
 
   async componentDidMount() {
     // const url = await Popup.getURL();
-    const url = 'facebook';
+    const url = 'googl';
     this.fetchLocalStorage(url);
   }
 
