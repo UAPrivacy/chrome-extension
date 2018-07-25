@@ -20,9 +20,7 @@ const Loading = () => (
 
 export default class Popup extends PureComponent {
   static storeLocalStorage({ key, value }) {
-    chrome.runtime.sendMessage({ store: key, value }, (response) => {
-      console.log(response.msg);
-    });
+    chrome.runtime.sendMessage({ store: key, value }, () => {});
   }
 
   state = {
@@ -56,7 +54,6 @@ export default class Popup extends PureComponent {
     fetchData(url)
       .then((res) => {
         const { privacies, terms } = res;
-        console.log('res:', res);
         this.setState({
           terms,
           privacies,

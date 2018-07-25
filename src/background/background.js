@@ -26,11 +26,14 @@ function storeState({ key, value }) {
     }
   });
 }
-function updateBadge(count) {
+
+function updateBadge(text) {
   chrome.browserAction.setBadgeText({
-    text: count.toString(),
+    text,
   });
 }
+
+const getCountString = data => (data.terms.length + data.privacies.length).toString();
 
 chrome.runtime.onMessage.addListener(
   (request, sender, sendResponse) => {
@@ -39,20 +42,14 @@ chrome.runtime.onMessage.addListener(
         sendResponse({
           data,
         });
-        updateBadge(data.terms.length + data.privacies.length);
-        console.log('fetched from storage and updated badge');
+        updateBadge(getCountString(data));
       }).catch(err => console.error(err));
     } else if (request.store) {
       const data = request.value;
-      console.log(request);
       storeState({ key: request.store, value: data }).then((msg) => {
-        sendResponse({
-          msg,
-        });
-        updateBadge(data.terms.length + data.privacies.length);
-      }).catch(err => sendResponse({
-        msg: err,
-      }));
+        console.log(`msg: ${msg}`);
+        updateBadge(getCountString(data));
+      }).catch(err => console.error(err));
     }
     return true;
   },
