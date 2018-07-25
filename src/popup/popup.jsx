@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { render } from 'react-dom';
+import { hot } from 'react-hot-loader';
 // assets
 import 'uikit/dist/css/uikit.min.css';
 import UIkit from 'uikit';
@@ -18,7 +19,7 @@ const Loading = () => (
   </div>
 );
 
-export default class Popup extends PureComponent {
+class Popup extends PureComponent {
   static storeLocalStorage({ key, value }) {
     chrome.runtime.sendMessage({ store: key, value });
   }
@@ -38,6 +39,7 @@ export default class Popup extends PureComponent {
         const [{ url }] = tabs;
         this.fetch(url)
           .then(({ privacies, terms }) => {
+            console.log(url);
             this.setState({
               terms,
               privacies,
@@ -45,6 +47,7 @@ export default class Popup extends PureComponent {
             });
           })
           .catch((e) => {
+            console.log('i get here');
             this.setState({
               isLoading: false,
             });
@@ -77,4 +80,6 @@ export default class Popup extends PureComponent {
   }
 }
 
-render(<Popup />, window.document.getElementById('app-container'));
+const PopupHot = hot(module)(Popup);
+
+render(<PopupHot />, window.document.getElementById('app-container'));

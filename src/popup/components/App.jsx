@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { hot } from 'react-hot-loader';
 import PropTypes from 'prop-types';
 import Clause from './Clause';
 
@@ -45,4 +44,4 @@ App.propTypes = {
   privacies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default hot(module)(App);
+export default App;
