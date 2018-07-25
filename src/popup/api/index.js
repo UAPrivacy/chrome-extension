@@ -1,19 +1,17 @@
 import fetchFromStore from './src';
 
 async function fetchData(name) {
-  let terms = [];
-  let privacies = [];
   try {
     const results = await fetchFromStore(name);
-    privacies = results.privacies.summariesFromText;
-    terms = results.terms.summariesFromText;
+    const privacies = results.privacies.summariesFromText;
+    const terms = results.terms.summariesFromText;
+    return {
+      privacies,
+      terms,
+    };
   } catch (error) {
-    console.error(error);
+    return error;
   }
-  return {
-    terms,
-    privacies,
-  };
 }
 
 export default fetchData;

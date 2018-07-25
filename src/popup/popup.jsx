@@ -20,7 +20,7 @@ const Loading = () => (
 
 export default class Popup extends PureComponent {
   static storeLocalStorage({ key, value }) {
-    chrome.runtime.sendMessage({ store: key, value }, () => {});
+    chrome.runtime.sendMessage({ store: key, value });
   }
 
   state = {
@@ -36,7 +36,7 @@ export default class Popup extends PureComponent {
   }
 
   static getURL() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       chrome.tabs.query(
         {
           active: true,
