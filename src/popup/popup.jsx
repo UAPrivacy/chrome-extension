@@ -29,10 +29,22 @@ export default class Popup extends PureComponent {
     isLoading: true,
   };
 
-  async componentDidMount() {
-    // const url = await Popup.getURL();
-    const url = 'googl';
-    this.fetchLocalStorage(url);
+  componentDidMount() {
+    Popup.getURL().then((url) => {
+      this.fetch(url)
+        .then(({ privacies, terms }) => {
+          this.setState({
+            terms,
+            privacies,
+            isLoading: false,
+          });
+        })
+        .catch(() => {
+          this.setState({
+            isLoading: false,
+          });
+        });
+    });
   }
 
   static getURL() {
@@ -50,39 +62,23 @@ export default class Popup extends PureComponent {
     });
   }
 
-  fetchAPI = (url) => {
-    fetchData(url)
-      .then((res) => {
-        const { privacies, terms } = res;
-        this.setState({
-          terms,
-          privacies,
-          isLoading: false,
-        });
-        Popup.storeLocalStorage({ key: url, value: { terms, privacies } });
-      })
-      .catch((err) => {
-        console.error(err);
-        this.setState({
-          isLoading: false,
-        });
-      });
-  };
-
-  fetchLocalStorage = (url) => {
+  fetch = url => new Promise((resolve, reject) => {
     chrome.runtime.sendMessage({ load: url }, (response) => {
       if (response && response.data) {
         const { data } = response;
-        this.setState({
-          terms: data.terms,
-          privacies: data.privacies,
-          isLoading: false,
-        });
+        resolve(data);
       } else {
-        this.fetchAPI(url);
+        fetchData(url)
+          .then((res) => {
+            resolve(res);
+            Popup.storeLocalStorage({ key: url, value: res });
+          })
+          .catch((err) => {
+            reject(err);
+          });
       }
     });
-  };
+  });
 
   render() {
     const { isLoading, privacies, terms } = this.state;
