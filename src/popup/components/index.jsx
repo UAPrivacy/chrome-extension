@@ -22,6 +22,7 @@ class Root extends PureComponent {
 
   componentDidMount() {
     Root.getCurrentURL().then((url) => {
+      console.log(url);
       this.fetch(url)
         .then(({ privacies, terms }) => {
           this.setState({
@@ -39,7 +40,7 @@ class Root extends PureComponent {
   }
 
   static getCurrentURL() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       chrome.tabs.query(
         {
           active: true,
