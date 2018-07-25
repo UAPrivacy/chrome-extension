@@ -9,8 +9,6 @@ const Loading = () => (
   </div>
 );
 
-// const Error = () => 'error fetching summaries';
-
 class Root extends PureComponent {
   static storeLocalStorage({ key, value }) {
     chrome.runtime.sendMessage({ store: key, value });
@@ -23,29 +21,35 @@ class Root extends PureComponent {
   };
 
   componentDidMount() {
-    this.fetch('google')
-      .then(({ privacies, terms }) => {
-        this.setState({
-          terms,
-          privacies,
-          isLoading: false,
+    Root.getCurrentURL().then((url) => {
+      this.fetch(url)
+        .then(({ privacies, terms }) => {
+          this.setState({
+            terms,
+            privacies,
+            isLoading: false,
+          });
+        })
+        .catch((e) => {
+          this.setState({
+            isLoading: false,
+          });
         });
-      })
-      .catch((e) => {
-        this.setState({
-          isLoading: false,
-        });
-      });
+    });
+  }
 
-    chrome.tabs.query(
-      {
-        active: true,
-      },
-      (tabs) => {
-        const [{ url }] = tabs;
-        console.log(url);
-      },
-    );
+  static getCurrentURL() {
+    return new Promise((resolve) => {
+      chrome.tabs.query(
+        {
+          active: true,
+        },
+        (tabs) => {
+          const [{ url }] = tabs;
+          resolve(url);
+        },
+      );
+    });
   }
 
   fetch = url => new Promise((resolve, reject) => {
