@@ -30,36 +30,29 @@ export default class Popup extends PureComponent {
   };
 
   componentDidMount() {
-    Popup.getURL().then((url) => {
-      this.fetch(url)
-        .then(({ privacies, terms }) => {
-          this.setState({
-            terms,
-            privacies,
-            isLoading: false,
+    chrome.tabs.query(
+      {
+        active: true,
+        lastFocusedWindow: true,
+      },
+      (tabs) => {
+        const [{ url }] = tabs;
+        this.fetch(url)
+          .then(({ privacies, terms }) => {
+            this.setState({
+              terms,
+              privacies,
+              isLoading: false,
+            });
+          })
+          .catch((err) => {
+            console.err(err);
+            this.setState({
+              isLoading: false,
+            });
           });
-        })
-        .catch(() => {
-          this.setState({
-            isLoading: false,
-          });
-        });
-    });
-  }
-
-  static getURL() {
-    return new Promise((resolve) => {
-      chrome.tabs.query(
-        {
-          active: true,
-          lastFocusedWindow: true,
-        },
-        (tabs) => {
-          const [{ url }] = tabs;
-          resolve(url);
-        },
-      );
-    });
+      },
+    );
   }
 
   fetch = url => new Promise((resolve, reject) => {
