@@ -23,25 +23,27 @@ class Root extends PureComponent {
   };
 
   componentDidMount() {
+    this.fetch('google')
+      .then(({ privacies, terms }) => {
+        this.setState({
+          terms,
+          privacies,
+          isLoading: false,
+        });
+      })
+      .catch((e) => {
+        this.setState({
+          isLoading: false,
+        });
+      });
+
     chrome.tabs.query(
       {
         active: true,
       },
       (tabs) => {
         const [{ url }] = tabs;
-        this.fetch(url)
-          .then(({ privacies, terms }) => {
-            this.setState({
-              terms,
-              privacies,
-              isLoading: false,
-            });
-          })
-          .catch((e) => {
-            this.setState({
-              isLoading: false,
-            });
-          });
+        console.log(url);
       },
     );
   }
