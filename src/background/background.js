@@ -15,7 +15,15 @@ function updateBadge(text) {
   });
 }
 
-const getCountString = data => (data.terms.length + data.privacies.length).toString();
+function getCountString(data) {
+  let count;
+  try {
+    count = data.terms.length + data.privacies.length;
+  } catch (error) {
+    count = 0;
+  }
+  return count.toString();
+}
 
 function storeState({ key, value }) {
   return new Promise((resolve, reject) => {

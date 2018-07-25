@@ -33,7 +33,6 @@ export default class Popup extends PureComponent {
     chrome.tabs.query(
       {
         active: true,
-        lastFocusedWindow: true,
       },
       (tabs) => {
         const [{ url }] = tabs;
@@ -45,8 +44,7 @@ export default class Popup extends PureComponent {
               isLoading: false,
             });
           })
-          .catch((err) => {
-            console.err(err);
+          .catch((e) => {
             this.setState({
               isLoading: false,
             });
