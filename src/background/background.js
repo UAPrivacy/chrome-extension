@@ -57,7 +57,7 @@ chrome.runtime.onMessage.addListener(
           data,
         });
         updateBadge(getCountString(data));
-      });
+      }).catch(err => console.error(err));
     } else if (request.store) {
       const data = request.value;
       storeState({ key: request.store, value: data }).then((msg) => {
