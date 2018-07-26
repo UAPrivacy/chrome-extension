@@ -38,6 +38,10 @@ class App extends PureComponent {
     );
   }
 }
+App.defaultProps = {
+  terms: [],
+  privacies: [],
+};
 
 App.propTypes = {
   terms: PropTypes.arrayOf(PropTypes.string).isRequired,

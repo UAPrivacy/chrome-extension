@@ -22,15 +22,17 @@ class Root extends PureComponent {
 
   async componentDidMount() {
     const url = await Root.getCurrentURL();
-    this.fetch('googl')
+    this.fetch('google')
       .then(({ privacies, terms }) => {
+        console.log('resolving');
         this.setState({
           terms,
           privacies,
           isLoading: false,
         });
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error(`err: ${err}`);
         this.setState({
           isLoading: false,
         });
@@ -54,9 +56,13 @@ class Root extends PureComponent {
 
   fetch = url => new Promise((resolve, reject) => {
     chrome.runtime.sendMessage({ load: url }, (response) => {
-      if (response && response.data) {
-        const { data } = response;
-        resolve(data);
+      if (response) {
+        if (response.data) {
+          const { data } = response;
+          resolve(data);
+        } else {
+          reject(Error('Could not find data'));
+        }
       } else {
         fetchData(url)
           .then((res) => {
@@ -72,6 +78,7 @@ class Root extends PureComponent {
 
   render() {
     const { isLoading, privacies, terms } = this.state;
+    console.log(this.state);
     return isLoading ? <Loading /> : <App privacies={privacies} terms={terms} />;
   }
 }

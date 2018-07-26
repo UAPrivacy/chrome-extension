@@ -38,7 +38,7 @@ function storeState({ key, value }) {
       },
       () => {
         if (chrome.runtime.lastError) {
-          reject(Error('could not store items'));
+          reject(Error(chrome.runtime.lastError));
         } else {
           resolve(`succesfuly saved ${getCountString(value)} items`);
         }
