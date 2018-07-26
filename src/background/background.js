@@ -1,9 +1,13 @@
 function loadState(key) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     chrome.storage.sync.get([key], (data) => {
-      if (data && data[key]) {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+      } else if (data && data[key]) {
         const result = data[key];
         resolve(JSON.parse(result));
+      } else {
+        reject(Error('could not fetch from storage'));
       }
     });
   });
@@ -33,7 +37,11 @@ function storeState({ key, value }) {
         [key]: stringValue,
       },
       () => {
-        resolve(`succesfuly saved ${getCountString(value)} items`);
+        if (chrome.runtime.lastError) {
+          reject(Error('could not store items'));
+        } else {
+          resolve(`succesfuly saved ${getCountString(value)} items`);
+        }
       });
     } catch (error) {
       reject(error);
