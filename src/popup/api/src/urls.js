@@ -6,7 +6,6 @@ const attributes = [
 ];
 
 function getSelectPages(data) {
-  console.log(data);
   const pages = {};
   attributes.forEach((attr) => {
     pages[attr] = data[attr];
@@ -14,7 +13,16 @@ function getSelectPages(data) {
   return pages;
 }
 
-const fetchPages = url => Object.keys(pagesData).find(key => url.includes(key));
+const getKey = url => Object.keys(pagesData).find(key => url.includes(key));
+
+function fetchPages(url) {
+  const key = getKey(url);
+  let data = {};
+  if (key) {
+    data = pagesData[key];
+  }
+  return data;
+}
 
 const getPages = name => getSelectPages(fetchPages(name));
 export default getPages;

@@ -22,7 +22,6 @@ class Root extends PureComponent {
 
   async componentDidMount() {
     const url = await Root.getCurrentURL();
-    console.log(`url: ${url}`);
     this.fetch(url)
       .then(({ privacies, terms }) => {
         this.setState({
