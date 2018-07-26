@@ -22,7 +22,6 @@ class Root extends PureComponent {
 
   componentDidMount() {
     Root.getCurrentURL().then((url) => {
-      console.log(url);
       this.fetch(url)
         .then(({ privacies, terms }) => {
           this.setState({
@@ -31,7 +30,7 @@ class Root extends PureComponent {
             isLoading: false,
           });
         })
-        .catch((e) => {
+        .catch(() => {
           this.setState({
             isLoading: false,
           });
@@ -40,7 +39,7 @@ class Root extends PureComponent {
   }
 
   static getCurrentURL() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       chrome.tabs.query(
         {
           active: true,
@@ -77,4 +76,4 @@ class Root extends PureComponent {
   }
 }
 
-export default hot(module)(Root);
+export default Root;
