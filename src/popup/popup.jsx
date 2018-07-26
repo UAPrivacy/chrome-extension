@@ -7,7 +7,7 @@ import Icons from 'uikit/dist/js/uikit-icons';
 
 import './popup.css';
 
-import Root from './components';
+import Root from './components/Root';
 
 UIkit.use(Icons);
 window.UIkit = UIkit;

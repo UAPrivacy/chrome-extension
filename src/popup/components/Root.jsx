@@ -22,9 +22,9 @@ class Root extends PureComponent {
 
   async componentDidMount() {
     const url = await Root.getCurrentURL();
-    this.fetch('google')
+    console.log(`url: ${url}`);
+    this.fetch(url)
       .then(({ privacies, terms }) => {
-        console.log('resolving');
         this.setState({
           terms,
           privacies,
@@ -78,7 +78,6 @@ class Root extends PureComponent {
 
   render() {
     const { isLoading, privacies, terms } = this.state;
-    console.log(this.state);
     return isLoading ? <Loading /> : <App privacies={privacies} terms={terms} />;
   }
 }
