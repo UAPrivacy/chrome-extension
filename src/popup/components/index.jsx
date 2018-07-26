@@ -20,22 +20,22 @@ class Root extends PureComponent {
     isLoading: true,
   };
 
-  componentDidMount() {
-    Root.getCurrentURL().then((url) => {
-      this.fetch(url)
-        .then(({ privacies, terms }) => {
-          this.setState({
-            terms,
-            privacies,
-            isLoading: false,
-          });
-        })
-        .catch(() => {
-          this.setState({
-            isLoading: false,
-          });
+  async componentDidMount() {
+    const url = await Root.getCurrentURL();
+    console.log(`url: ${url}`);
+    this.fetch('twitter')
+      .then(({ privacies, terms }) => {
+        this.setState({
+          terms,
+          privacies,
+          isLoading: false,
         });
-    });
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
   }
 
   static getCurrentURL() {
@@ -43,6 +43,7 @@ class Root extends PureComponent {
       chrome.tabs.query(
         {
           active: true,
+          lastFocusedWindow: true,
         },
         (tabs) => {
           const [{ url }] = tabs;
@@ -76,4 +77,4 @@ class Root extends PureComponent {
   }
 }
 
-export default Root;
+export default hot(module)(Root);
