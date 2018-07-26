@@ -4,21 +4,13 @@ import summarize from './summarize';
 
 async function updateStore(name) {
   const results = {};
-  let summariesFromText;
-  let summariesFromURLS;
   try {
     const pagesToFetch = getPages(name);
     for (const [key, url] of Object.entries(pagesToFetch)) {
-      summariesFromText = await fetchPageData(url).then(textData => summarize({
+      const summaries = await fetchPageData(url).then(textData => summarize({
         text: textData,
       }));
-      summariesFromURLS = await summarize({
-        url,
-      });
-      results[key] = {
-        summariesFromText,
-        summariesFromURLS,
-      };
+      results[key] = summaries;
     }
     return results;
   } catch (e) {

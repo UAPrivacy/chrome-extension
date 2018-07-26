@@ -4,7 +4,7 @@ import axios from 'axios';
 async function getSummaryTextSummarization({
   text = '',
   url = '',
-  sentnum = 20,
+  sentnum = 15,
 }) {
   try {
     const response = await axios.post('https://textanalysis-text-summarization.p.mashape.com/text-summarizer',

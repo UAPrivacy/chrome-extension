@@ -2,9 +2,7 @@ import fetchFromStore from './src';
 
 async function fetchData(name) {
   try {
-    const results = await fetchFromStore(name);
-    const privacies = results.privacies.summariesFromText;
-    const terms = results.terms.summariesFromText;
+    const { terms, privacies } = await fetchFromStore(name);
     return {
       privacies,
       terms,
