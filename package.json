@@ -1,6 +1,7 @@
 {
   "author": "Samuel K. Mbaabu",
   "dependencies": {
+    "algorithmia": "^0.3.10",
     "axios": "^0.18.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
