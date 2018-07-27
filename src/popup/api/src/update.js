@@ -1,3 +1,1 @@
-import sites from './sites.json';
-
-console.log(sites);
+export { default } from './data/sites.json';
