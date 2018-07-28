@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { hot } from 'react-hot-loader';
 import App from './App';
-import fetchData from '../api';
+import fetchData from '../../api';
 
 const Loading = () => (
   <div className="uk-flex uk-flex-center uk-flex-middle" data-uk-height-viewport>
