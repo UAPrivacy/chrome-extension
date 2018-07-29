@@ -73,7 +73,10 @@ chrome.runtime.onMessage.addListener(
     } else if (request.prefetch) {
       console.log('prefetch requested...');
       getURL().then((url) => {
-        loadState(url).then(() => console.log('prefetch cancelled')).catch((err) => {
+        loadState(url).then((data) => {
+          console.log('prefetch cancelled');
+          updateBadge(getCountString(data));
+        }).catch((err) => {
           fetchFromStore(url).then((data) => {
             storeAndUpdate(url, data);
           });
