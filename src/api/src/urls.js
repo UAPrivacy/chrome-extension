@@ -1,4 +1,4 @@
-import pagesData from './static.json';
+import axios from 'axios';
 
 const attributes = [
   'privacies',
@@ -15,7 +15,7 @@ function getSelectPages(data) {
 
 const getKey = url => Object.keys(pagesData).find(key => url.includes(key));
 
-function fetchPages(url) {
+function fetchPages(url, pagesData) {
   const key = getKey(url);
   let data = {};
   if (key) {
@@ -24,5 +24,12 @@ function fetchPages(url) {
   return data;
 }
 
-const getPages = name => getSelectPages(fetchPages(name));
+async function getPages(name) {
+  const url = 'https://raw.githubusercontent.com/UAPrivacy/server/master/src/routes/data/index.json';
+  const pagesData = await axios.get(url).then(res => res.data).catch((err) => {
+    console.error(err);
+    return {};
+  });
+  return getSelectPages(fetchPages(name, pagesData));
+}
 export default getPages;
