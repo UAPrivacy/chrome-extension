@@ -68,6 +68,7 @@ chrome.runtime.onMessage.addListener(
     } else if (request.store) {
       storeAndUpdate(request.store, request.value);
     } else if (request.prefetch) {
+      console.log(`prefetch requested on ${request.prefetch}`);
       fetchFromStore(request.prefetch).then(data => storeAndUpdate(request.prefetch, data));
     }
     return true;
