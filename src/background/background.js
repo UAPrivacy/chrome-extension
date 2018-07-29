@@ -16,8 +16,7 @@ function loadState(key) {
       if (chrome.runtime.lastError) {
         reject(chrome.runtime.lastError);
       } else if (data && data[key]) {
-        const result = data[key];
-        resolve(JSON.parse(result));
+        resolve(JSON.parse(data[key]));
       } else {
         reject(Error('could not fetch from storage'));
       }
@@ -27,21 +26,17 @@ function loadState(key) {
 
 function storeState({ key, value }) {
   return new Promise((resolve, reject) => {
-    try {
-      const stringValue = JSON.stringify(value);
-      chrome.storage.sync.set({
-        [key]: stringValue,
-      },
-      () => {
-        if (chrome.runtime.lastError) {
-          reject(Error(chrome.runtime.lastError));
-        } else {
-          resolve(`succesfuly saved ${getCountString(value)} items`);
-        }
-      });
-    } catch (error) {
-      reject(error);
-    }
+    const stringValue = JSON.stringify(value);
+    chrome.storage.sync.set({
+      [key]: stringValue,
+    },
+    () => {
+      if (chrome.runtime.lastError) {
+        reject(Error(chrome.runtime.lastError));
+      } else {
+        resolve(`succesfuly saved ${getCountString(value)} items`);
+      }
+    });
   });
 }
 
@@ -73,7 +68,7 @@ chrome.runtime.onMessage.addListener(
     } else if (request.store) {
       storeAndUpdate(request.store, request.value);
     } else if (request.prefetch) {
-      fetchFromStore(request.prefetch).then(data => storeAndUpdate(store.prefetch, data));
+      fetchFromStore(request.prefetch).then(data => storeAndUpdate(request.prefetch, data));
     }
     return true;
   },
