@@ -13,10 +13,10 @@ function getSelectPages(data) {
   return pages;
 }
 
-const getKey = url => Object.keys(pagesData).find(key => url.includes(key));
+const getKey = (url, pagesData) => Object.keys(pagesData).find(key => url.includes(key));
 
 function fetchPages(url, pagesData) {
-  const key = getKey(url);
+  const key = getKey(url, pagesData);
   let data = {};
   if (key) {
     data = pagesData[key];
