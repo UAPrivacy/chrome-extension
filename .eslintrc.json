@@ -34,5 +34,6 @@
         "no-use-before-define": 1,
         "prefer-promise-reject-errors": 1,
         "react/no-array-index-key": 1
-    }
+    },
+    "plugins": ["promise"]
 }
