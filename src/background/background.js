@@ -51,6 +51,16 @@ function updateBadge(text) {
   });
 }
 
+function storeAndUpdate(url, data) {
+  storeState({
+    key: url,
+    value: data,
+  }).then((msg) => {
+    console.log(msg);
+    updateBadge(getCountString(data));
+  }).catch(err => console.error(err));
+}
+
 chrome.runtime.onMessage.addListener(
   (request, sender, sendResponse) => {
     if (request.load) {
@@ -61,24 +71,11 @@ chrome.runtime.onMessage.addListener(
         updateBadge(getCountString(data));
       }).catch(err => console.error(err));
     } else if (request.store) {
-      const data = request.value;
-      storeState({ key: request.store, value: data }).then((msg) => {
-        console.log(msg);
-        updateBadge(getCountString(data));
-      }).catch(err => console.error(err));
+      storeAndUpdate(request.store, request.value);
     } else if (request.prefetch) {
-      fetchData(request.prefetch);
+      fetchFromStore(request.prefetch).then(data => storeAndUpdate(store.prefetch, data));
     }
     return true;
   },
 );
-
-function fetchData(url) {
-  fetchFromStore(url).then((data) => {
-    storeState({
-      key: url,
-      value: data,
-    });
-  });
-}
 
