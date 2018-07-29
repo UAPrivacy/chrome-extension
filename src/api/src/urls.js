@@ -13,10 +13,8 @@ function getSelectPages(data) {
   return pages;
 }
 
-const getKey = (url, pagesData) => Object.keys(pagesData).find(key => url.includes(key));
-
 function fetchPages(url, pagesData) {
-  const key = getKey(url, pagesData);
+  const key = Object.keys(pagesData).find(k => url.includes(k));
   let data = {};
   if (key) {
     data = pagesData[key];
@@ -25,11 +23,12 @@ function fetchPages(url, pagesData) {
 }
 
 async function getPages(name) {
-  const url = 'https://raw.githubusercontent.com/UAPrivacy/server/master/src/routes/data/index.json';
-  const pagesData = await axios.get(url).then(res => res.data).catch((err) => {
-    console.error(err);
-    return {};
-  });
-  return getSelectPages(fetchPages(name, pagesData));
+  try {
+    const url = 'https://raw.githubusercontent.com/UAPrivacy/server/master/src/routes/data/index.json';
+    const pagesData = await axios.get(url).then(res => res.data);
+    return getSelectPages(fetchPages(name, pagesData));
+  } catch (error) {
+    return error;
+  }
 }
 export default getPages;
