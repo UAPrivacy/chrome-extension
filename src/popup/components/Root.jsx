@@ -10,10 +10,6 @@ const Loading = () => (
 );
 
 class Root extends PureComponent {
-  static storeLocalStorage({ key, value }) {
-    chrome.runtime.sendMessage({ store: key, value });
-  }
-
   state = {
     terms: [],
     privacies: [],
@@ -66,7 +62,7 @@ class Root extends PureComponent {
         fetchData(url)
           .then((res) => {
             resolve(res);
-            Root.storeLocalStorage({ key: url, value: res });
+            chrome.runtime.sendMessage({ store: url, value: res });
           })
           .catch((err) => {
             reject(err);

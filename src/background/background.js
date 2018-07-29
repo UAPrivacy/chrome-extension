@@ -1,3 +1,15 @@
+import fetchFromStore from '../api';
+
+function getCountString(data) {
+  let count;
+  try {
+    count = data.terms.length + data.privacies.length;
+  } catch (error) {
+    count = 0;
+  }
+  return count.toString();
+}
+
 function loadState(key) {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get([key], (data) => {
@@ -11,22 +23,6 @@ function loadState(key) {
       }
     });
   });
-}
-
-function updateBadge(text) {
-  chrome.browserAction.setBadgeText({
-    text,
-  });
-}
-
-function getCountString(data) {
-  let count;
-  try {
-    count = data.terms.length + data.privacies.length;
-  } catch (error) {
-    count = 0;
-  }
-  return count.toString();
 }
 
 function storeState({ key, value }) {
@@ -49,6 +45,12 @@ function storeState({ key, value }) {
   });
 }
 
+function updateBadge(text) {
+  chrome.browserAction.setBadgeText({
+    text,
+  });
+}
+
 chrome.runtime.onMessage.addListener(
   (request, sender, sendResponse) => {
     if (request.load) {
@@ -64,8 +66,19 @@ chrome.runtime.onMessage.addListener(
         console.log(msg);
         updateBadge(getCountString(data));
       }).catch(err => console.error(err));
+    } else if (request.prefetch) {
+      fetchData(request.prefetch);
     }
     return true;
   },
 );
+
+function fetchData(url) {
+  fetchFromStore(url).then((data) => {
+    storeState({
+      key: url,
+      value: data,
+    });
+  });
+}
 
