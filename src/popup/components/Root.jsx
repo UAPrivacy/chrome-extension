@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { hot } from 'react-hot-loader';
 import App from './App';
 import fetchData from '../../api';
+import { getCurrentURL } from '../../shared';
 
 const Loading = () => (
   <div className="uk-flex uk-flex-center uk-flex-middle" data-uk-height-viewport>
@@ -17,7 +18,7 @@ class Root extends PureComponent {
   };
 
   async componentDidMount() {
-    const url = await Root.getCurrentURL();
+    const url = await getCurrentURL();
     this.fetch(url)
       .then(({ privacies, terms }) => {
         this.setState({
@@ -32,21 +33,6 @@ class Root extends PureComponent {
           isLoading: false,
         });
       });
-  }
-
-  static getCurrentURL() {
-    return new Promise((resolve) => {
-      chrome.tabs.query(
-        {
-          active: true,
-          lastFocusedWindow: true,
-        },
-        (tabs) => {
-          const [{ url }] = tabs;
-          resolve(url);
-        },
-      );
-    });
   }
 
   fetch = url => new Promise((resolve, reject) => {

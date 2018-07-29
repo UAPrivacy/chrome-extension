@@ -1,4 +1,5 @@
 import fetchFromStore from '../api';
+import { getCurrentURL as getURL } from '../shared';
 
 function getCountString(data) {
   let count;
@@ -81,19 +82,4 @@ chrome.runtime.onMessage.addListener(
     return true;
   },
 );
-
-function getURL() {
-  return new Promise((resolve) => {
-    chrome.tabs.query(
-      {
-        active: true,
-        lastFocusedWindow: true,
-      },
-      (tabs) => {
-        const [{ url }] = tabs;
-        resolve(url);
-      },
-    );
-  });
-}
 
