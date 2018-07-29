@@ -84,7 +84,6 @@ function getURL() {
       },
       (tabs) => {
         const [{ url }] = tabs;
-
         resolve(url);
       },
     );
