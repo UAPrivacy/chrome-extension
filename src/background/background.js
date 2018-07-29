@@ -34,7 +34,7 @@ function storeState({ key, value }) {
       if (chrome.runtime.lastError) {
         reject(Error(chrome.runtime.lastError));
       } else {
-        resolve(`succesfuly saved ${getCountString(value)} items`);
+        resolve(`${key}: succesfuly saved ${getCountString(value)} items`);
       }
     });
   });
@@ -69,7 +69,11 @@ chrome.runtime.onMessage.addListener(
       storeAndUpdate(request.store, request.value);
     } else if (request.prefetch) {
       console.log('prefetch requested...');
-      getURL().then(url => fetchFromStore(url)).then(data => storeAndUpdate(request.prefetch, data));
+      getURL().then((url) => {
+        fetchFromStore(url).then((data) => {
+          storeAndUpdate(url, data);
+        });
+      });
     }
     return true;
   },
