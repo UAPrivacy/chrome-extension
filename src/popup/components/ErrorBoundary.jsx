@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Center } from './Shared';
 
 export default class ErrorBoundary extends Component {
   state = {
@@ -13,16 +15,19 @@ export default class ErrorBoundary extends Component {
   render() {
     const { error } = this.state;
     const { children } = this.props;
-
     if (error) {
       return (
-        <div className="uk-flex uk-flex-center uk-flex-middle" data-uk-height-viewport>
+        <Center>
           <p>
 an error has occurred
           </p>
-        </div>
+        </Center>
       );
     }
     return children;
   }
 }
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.node.isRequired,
+};

@@ -68,8 +68,8 @@ class Root extends PureComponent {
 
   render() {
     const { isLoading, privacies, terms } = this.state;
-    const AppUI = privacies.length > 0 || terms.length > 0 ? <App privacies={privacies} terms={terms} /> : <EmptyState />;
-    return isLoading ? <Loading /> : { AppUI };
+    const UI = privacies.length > 0 || terms.length > 0 ? <App privacies={privacies} terms={terms} /> : <EmptyState />;
+    return isLoading ? <Loading /> : { UI };
   }
 }
 
