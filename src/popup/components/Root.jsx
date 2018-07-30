@@ -3,7 +3,7 @@ import { hot } from 'react-hot-loader';
 import App from './App';
 import fetchData from '../../api';
 import { getCurrentURL } from '../../shared';
-import Center from './Shared';
+import { Center } from './Shared';
 
 const Loading = () => (
   <Center>
@@ -68,8 +68,8 @@ class Root extends PureComponent {
 
   render() {
     const { isLoading, privacies, terms } = this.state;
-    const UI = privacies.length > 0 || terms.length > 0 ? <App privacies={privacies} terms={terms} /> : <EmptyState />;
-    return isLoading ? <Loading /> : { UI };
+    const UI = privacies && terms && (privacies.length > 0 || terms.length > 0) ? <App privacies={privacies} terms={terms} /> : <EmptyState />;
+    return isLoading ? <Loading /> : UI;
   }
 }
 
