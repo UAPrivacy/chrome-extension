@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import { render } from 'react-dom';
 
 import 'uikit/dist/css/uikit.min.css';
@@ -12,4 +12,9 @@ import Root from './components/Root';
 UIkit.use(Icons);
 window.UIkit = UIkit;
 
-render(<Root />, window.document.getElementById('app-container'));
+render(
+  <StrictMode>
+    <Root />
+  </StrictMode>,
+  window.document.getElementById('app-container'),
+);
