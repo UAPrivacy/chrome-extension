@@ -3,11 +3,20 @@ import { hot } from 'react-hot-loader';
 import App from './App';
 import fetchData from '../../api';
 import { getCurrentURL } from '../../shared';
+import Center from './Shared';
 
 const Loading = () => (
-  <div className="uk-flex uk-flex-center uk-flex-middle" data-uk-height-viewport>
+  <Center>
     <span uk-spinner="ratio: 4.5" className="uk-margin-auto-vertical" />
-  </div>
+  </Center>
+);
+
+const EmptyState = () => (
+  <Center>
+    <p>
+no terms to show
+    </p>
+  </Center>
 );
 
 class Root extends PureComponent {
@@ -59,7 +68,8 @@ class Root extends PureComponent {
 
   render() {
     const { isLoading, privacies, terms } = this.state;
-    return isLoading ? <Loading /> : <App privacies={privacies} terms={terms} />;
+    const AppUI = privacies.length > 0 || terms.length > 0 ? <App privacies={privacies} terms={terms} /> : <EmptyState />;
+    return isLoading ? <Loading /> : { AppUI };
   }
 }
 
