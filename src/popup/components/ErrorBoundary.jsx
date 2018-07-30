@@ -16,7 +16,7 @@ export default class ErrorBoundary extends Component {
 
     if (error) {
       return (
-        <div>
+        <div className="uk-flex uk-flex-center uk-flex-middle" data-uk-height-viewport>
           <p>
 an error has occurred
           </p>
