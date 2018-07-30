@@ -19,7 +19,7 @@ export default class ErrorBoundary extends Component {
       return (
         <div>
           <p>
-error
+an error has occurred
           </p>
         </div>
       );
