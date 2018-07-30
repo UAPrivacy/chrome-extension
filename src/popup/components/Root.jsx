@@ -14,7 +14,7 @@ const Loading = () => (
 const EmptyState = () => (
   <Center>
     <p>
-no terms to show
+nothing to show
     </p>
   </Center>
 );
