@@ -8,13 +8,15 @@ const attributes = [
 function getSelectPages(data) {
   const pages = {};
   attributes.forEach((attr) => {
-    pages[attr] = data[attr];
+    if (data[attr]) {
+      pages[attr] = data[attr][0];
+    }
   });
   return pages;
 }
 
 function fetchPages(url, pagesData) {
-  const key = Object.keys(pagesData).find(k => url.includes(k));
+  const key = Object.keys(pagesData).find(k => url.includes(k) || k.includes(url));
   let data = {};
   if (key) {
     data = pagesData[key];
@@ -24,7 +26,7 @@ function fetchPages(url, pagesData) {
 
 async function getPages(name) {
   try {
-    const url = 'https://raw.githubusercontent.com/UAPrivacy/server/master/src/routes/data/index.json';
+    const url = 'https://raw.githubusercontent.com/UAPrivacy/server/master/src/routes/data/index.new.json';
     const pagesData = await axios.get(url).then(res => res.data);
     return getSelectPages(fetchPages(name, pagesData));
   } catch (error) {
