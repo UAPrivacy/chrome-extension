@@ -7,12 +7,12 @@ export function getCurrentURL() {
       },
       (tabs) => {
         const [{ url }] = tabs;
-        resolve(url);
+        resolve(getHostname(url));
       },
     );
   });
 }
 
-export function getHostname(url) {
+function getHostname(url) {
   return new URL(url).hostname;
 }

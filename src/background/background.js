@@ -1,5 +1,5 @@
 import fetchFromStore from '../api';
-import { getCurrentURL as getURL, getHostname } from '../shared';
+import { getCurrentURL as getURL } from '../shared';
 
 function getCountString(data) {
   let count;
@@ -12,13 +12,12 @@ function getCountString(data) {
 }
 
 function loadState(key) {
-  const canonicalKey = getHostname(key);
   return new Promise((resolve, reject) => {
-    chrome.storage.sync.get([canonicalKey], (data) => {
+    chrome.storage.sync.get([key], (data) => {
       if (chrome.runtime.lastError) {
         reject(chrome.runtime.lastError);
-      } else if (data && data[canonicalKey]) {
-        resolve(JSON.parse(data[canonicalKey]));
+      } else if (data && data[key]) {
+        resolve(JSON.parse(data[key]));
       } else {
         reject(Error('could not fetch from storage'));
       }
@@ -27,17 +26,16 @@ function loadState(key) {
 }
 
 function storeState({ key, value }) {
-  const canonicalKey = getHostname(key);
   return new Promise((resolve, reject) => {
     const stringValue = JSON.stringify(value);
     chrome.storage.sync.set({
-      [canonicalKey]: stringValue,
+      [key]: stringValue,
     },
     () => {
       if (chrome.runtime.lastError) {
         reject(Error(chrome.runtime.lastError));
       } else {
-        resolve(`${canonicalKey}: succesfuly saved ${getCountString(value)} items`);
+        resolve(`${key}: succesfuly saved ${getCountString(value)} items`);
       }
     });
   });
@@ -73,6 +71,7 @@ chrome.runtime.onMessage.addListener(
     } else if (request.prefetch) {
       console.log('prefetch requested...');
       getURL().then((url) => {
+        console.log(`url: ${url}`);
         loadState(url).then((data) => {
           console.log('prefetch cancelled');
           updateBadge(getCountString(data));
