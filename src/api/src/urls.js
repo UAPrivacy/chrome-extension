@@ -17,6 +17,7 @@ function getSelectPages(data) {
 
 function fetchPages(url, pagesData) {
   const key = Object.keys(pagesData).find(k => url.includes(k) || k.includes(url));
+  console.log(`key: ${key} vs url: ${url}`);
   let data = {};
   if (key) {
     data = pagesData[key];
