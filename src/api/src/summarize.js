@@ -1,7 +1,7 @@
-import { TEXTSUMMARIZATION_TOKEN } from 'secrets';
+import { TEXTSUMMARIZATION, SUMMARIZEBOT } from 'secrets';
 import axios from 'axios';
 
-async function getSummaryTextSummarization({
+async function textSummarization({
   text = '',
   url = '',
   sentnum = 15,
@@ -15,7 +15,7 @@ async function getSummaryTextSummarization({
       },
       {
         headers: {
-          'X-Mashape-Key': TEXTSUMMARIZATION_TOKEN,
+          'X-Mashape-Key': TEXTSUMMARIZATION,
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
@@ -26,9 +26,55 @@ async function getSummaryTextSummarization({
   }
 }
 
+async function summarizeBot({
+  url,
+  text,
+}) {
+  const endpoint = ' https://www.summarizebot.com/api/summarize';
+  let reqInstance;
+
+  const config = {
+    url: endpoint,
+    params: {
+      apiKey: SUMMARIZEBOT,
+      size: 10,
+      keywords: 10,
+      fragments: 10,
+      language: 'English',
+    },
+  };
+
+  if (text) {
+    reqInstance = axios.create(
+      Object.assign(
+        config, {
+          method: 'post',
+          data: {
+            text,
+          },
+          params: {
+            ...config.params,
+          },
+        },
+      ),
+    );
+  } else {
+    reqInstance = axios.create(Object.assign(config, {
+      method: 'get',
+      params: {
+        ...config.params,
+        url,
+      },
+    }));
+  }
+  reqInstance.request().then((res) => {
+    console.log(res);
+  });
+}
+
 const selectorTextSummarization = data => data.sentences;
 
-const getSummaryActive = getSummaryTextSummarization;
+const getSummaryActive = textSummarization;
 const selector = selectorTextSummarization;
 
 function wrapper() {

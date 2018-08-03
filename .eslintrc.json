@@ -4,6 +4,10 @@
     },
     "extends": "airbnb",
     "parser": "babel-eslint",
+    "plugins": [
+        "json",
+        "promise"
+    ],
     "parserOptions": {
         "ecmaVersion": 8
     },
