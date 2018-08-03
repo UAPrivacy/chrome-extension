@@ -45,6 +45,10 @@ async function summarizeBot({
   };
 
   if (text) {
+    const typedArray = [text.split('')];
+    const blob = new Blob([typedArray], { type: 'application/octet-stream' });
+    const blobURL = URL.createObjectURL(blob);
+
     reqInstance = axios.create(
       Object.assign(
         config, {
@@ -54,7 +58,7 @@ async function summarizeBot({
           },
           params: {
             ...config.params,
-            fileName: text, // ??
+            fileName: blobURL,
           },
           headers: {
             ' Content-Type': 'application/octet-stream',
