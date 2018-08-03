@@ -54,6 +54,10 @@ async function summarizeBot({
           },
           params: {
             ...config.params,
+            fileName: text, // ??
+          },
+          headers: {
+            ' Content-Type': 'application/octet-stream',
           },
         },
       ),
@@ -65,17 +69,20 @@ async function summarizeBot({
         ...config.params,
         url,
       },
+      headers: {
+        ' Content-Type': 'application/json',
+      },
     }));
   }
-  reqInstance.request().then((res) => {
-    console.log(res);
-  });
+  reqInstance.request().then(res => res.data);
+  console.log(res.data);
 }
 
 const selectorTextSummarization = data => data.sentences;
+const selectorSummarizeBot = data => data[0].summary;
 
-const getSummaryActive = textSummarization;
-const selector = selectorTextSummarization;
+const getSummaryActive = summarizeBot;
+const selector = selectorSummarizeBot;
 
 function wrapper() {
   return function summarize(params) {
