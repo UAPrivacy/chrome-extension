@@ -85,8 +85,8 @@ async function summarizeBot({
 const selectorTextSummarization = data => data.sentences;
 const selectorSummarizeBot = data => data[0].summary;
 
-const getSummaryActive = summarizeBot;
-const selector = selectorSummarizeBot;
+const getSummaryActive = textSummarization;
+const selector = selectorTextSummarization;
 
 function wrapper() {
   return function summarize(params) {
