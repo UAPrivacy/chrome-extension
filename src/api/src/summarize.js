@@ -78,8 +78,8 @@ async function summarizeBot({
       },
     }));
   }
-  reqInstance.request().then(res => res.data);
-  console.log(res.data);
+  const { data } = await reqInstance.request();
+  return data;
 }
 
 const selectorTextSummarization = data => data.sentences;
