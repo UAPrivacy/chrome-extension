@@ -20,12 +20,14 @@ async function textSummarization({
           Accept: 'application/json',
         },
       });
+    console.log(response.data);
     return response.data;
   } catch (error) {
     return error;
   }
 }
 
+// untested
 async function summarizeBot({
   url,
   text,
