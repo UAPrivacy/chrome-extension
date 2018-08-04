@@ -7,7 +7,7 @@ async function textSummarization({
   sentnum = 10,
 }) {
   try {
-    const { status, statusText, data } = await axios.post('https://textanalysis-text-summarization.p.mashape.com/text-summarizer',
+    const { status, data } = await axios.post('https://textanalysis-text-summarization.p.mashape.com/text-summarizer',
       {
         url,
         text,
@@ -21,7 +21,7 @@ async function textSummarization({
         },
       });
     if (status >= 400) {
-      throw Error(`status: ${status}, statusText: ${statusText}`);
+      throw Error(`status: ${status}`);
     }
     return data;
   } catch (error) {
