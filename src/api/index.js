@@ -8,7 +8,7 @@ async function fetchData(name) {
       terms,
     };
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 

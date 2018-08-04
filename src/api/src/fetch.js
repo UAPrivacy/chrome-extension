@@ -18,7 +18,7 @@ async function fetchPageDataDiffbot(url) {
     }
     return data.objects;
   } catch (err) {
-    return err;
+    throw err;
   }
 }
 

@@ -9,21 +9,17 @@ async function updateStore(name) {
     if (!isEmptyObj) {
       // TODO try url params?
       for (const [key, url] of Object.entries(pagesToFetch)) {
-        const summaries = await fetchPageData(url).then(textData => summarize({
-          text: textData,
-        })).catch((err) => {
-          if (!(err instanceof Error)) {
-            throw Error(err);
-          }
-          return err;
+        const pageText = await fetchPageData(url);
+        const summaries = await summarize({
+          text: pageText,
         });
         results[key] = summaries;
       }
       return results;
     }
-    throw Error(`${name} page info not found`);
+    throw Error(`${name}: page info not found`);
   } catch (e) {
-    return e;
+    throw e;
   }
 }
 

@@ -25,7 +25,7 @@ async function textSummarization({
     }
     return data;
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 

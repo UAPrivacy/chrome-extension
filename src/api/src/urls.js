@@ -34,7 +34,7 @@ async function getPages(name) {
     }
     return getSelectPages(fetchPages(name, data));
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 export default getPages;
