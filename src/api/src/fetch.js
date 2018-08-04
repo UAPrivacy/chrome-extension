@@ -3,23 +3,19 @@ import { DIFFBOT_TOKEN } from 'secrets';
 
 async function fetchPageDataDiffbot(url) {
   const endpoint = 'https://api.diffbot.com/v3/article';
-  try {
-    const { data, status } = await axios.get(endpoint, {
-      params: {
-        token: DIFFBOT_TOKEN,
-        url,
-      },
-    });
-    if (status >= 400) {
-      throw Error(`status: ${status}`);
-    }
-    if (data.errorCode) {
-      throw Error(data.error);
-    }
-    return data.objects;
-  } catch (err) {
-    throw err;
+  const { data, status } = await axios.get(endpoint, {
+    params: {
+      token: DIFFBOT_TOKEN,
+      url,
+    },
+  });
+  if (status >= 400) {
+    throw Error(`status: ${status}`);
   }
+  if (data.errorCode) {
+    throw Error(data.error);
+  }
+  return data.objects;
 }
 
 const selectorDiffbot = data => data[0].text;

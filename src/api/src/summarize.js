@@ -6,27 +6,23 @@ async function textSummarization({
   url = '',
   sentnum = 10,
 }) {
-  try {
-    const { status, data } = await axios.post('https://textanalysis-text-summarization.p.mashape.com/text-summarizer',
-      {
-        url,
-        text,
-        sentnum,
+  const { status, data } = await axios.post('https://textanalysis-text-summarization.p.mashape.com/text-summarizer',
+    {
+      url,
+      text,
+      sentnum,
+    },
+    {
+      headers: {
+        'X-Mashape-Key': TEXTSUMMARIZATION,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-      {
-        headers: {
-          'X-Mashape-Key': TEXTSUMMARIZATION,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      });
-    if (status >= 400) {
-      throw Error(`status: ${status}`);
-    }
-    return data;
-  } catch (error) {
-    throw error;
+    });
+  if (status >= 400) {
+    throw Error(`status: ${status}`);
   }
+  return data;
 }
 
 async function summarizeBot({
@@ -35,7 +31,6 @@ async function summarizeBot({
 }) {
   const endpoint = ' https://www.summarizebot.com/api/summarize';
   let reqInstance;
-
   const config = {
     url: endpoint,
     params: {
@@ -46,7 +41,6 @@ async function summarizeBot({
       language: 'English',
     },
   };
-
   if (text) {
     const typedArray = [text.split('')];
     const blob = new Blob([typedArray], { type: 'application/octet-stream' });
