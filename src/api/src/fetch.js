@@ -4,13 +4,19 @@ import { DIFFBOT_TOKEN } from 'secrets';
 async function fetchPageDataDiffbot(url) {
   const endpoint = 'https://api.diffbot.com/v3/article';
   try {
-    const results = await axios.get(endpoint, {
+    const { data, status, statusText } = await axios.get(endpoint, {
       params: {
         token: DIFFBOT_TOKEN,
         url,
       },
     });
-    return results.data.objects;
+    if (status >= 400) {
+      throw Error(`status: ${status}, statusText: ${statusText}`);
+    }
+    if (data.errorCode) {
+      throw Error(data.error);
+    }
+    return data.objects;
   } catch (err) {
     return err;
   }

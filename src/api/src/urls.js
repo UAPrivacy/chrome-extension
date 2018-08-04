@@ -28,8 +28,11 @@ function fetchPages(url, pagesData) {
 async function getPages(name) {
   try {
     const url = 'https://raw.githubusercontent.com/UAPrivacy/server/master/src/routes/data/index.new.json';
-    const pagesData = await axios.get(url).then(res => res.data);
-    return getSelectPages(fetchPages(name, pagesData));
+    const { data, status, statusText } = await axios.get(url);
+    if (status >= 400) {
+      throw Error(`status: ${status}, statusText: ${statusText}`);
+    }
+    return getSelectPages(fetchPages(name, data));
   } catch (error) {
     return error;
   }
