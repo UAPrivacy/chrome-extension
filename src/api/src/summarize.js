@@ -29,64 +29,63 @@ async function textSummarization({
   }
 }
 
-// untested
-// async function summarizeBot({
-//   url,
-//   text,
-// }) {
-//   const endpoint = ' https://www.summarizebot.com/api/summarize';
-//   let reqInstance;
+async function summarizeBot({
+  url,
+  text,
+}) {
+  const endpoint = ' https://www.summarizebot.com/api/summarize';
+  let reqInstance;
 
-//   const config = {
-//     url: endpoint,
-//     params: {
-//       apiKey: SUMMARIZEBOT,
-//       size: 10,
-//       keywords: 10,
-//       fragments: 10,
-//       language: 'English',
-//     },
-//   };
+  const config = {
+    url: endpoint,
+    params: {
+      apiKey: SUMMARIZEBOT,
+      size: 10,
+      keywords: 10,
+      fragments: 10,
+      language: 'English',
+    },
+  };
 
-//   if (text) {
-//     const typedArray = [text.split('')];
-//     const blob = new Blob([typedArray], { type: 'application/octet-stream' });
-//     const blobURL = URL.createObjectURL(blob);
+  if (text) {
+    const typedArray = [text.split('')];
+    const blob = new Blob([typedArray], { type: 'application/octet-stream' });
+    const blobURL = URL.createObjectURL(blob);
 
-//     reqInstance = axios.create(
-//       Object.assign(
-//         config, {
-//           method: 'post',
-//           data: {
-//             text,
-//           },
-//           params: {
-//             ...config.params,
-//             fileName: blobURL,
-//           },
-//           headers: {
-//             ' Content-Type': 'application/octet-stream',
-//           },
-//         },
-//       ),
-//     );
-//   } else {
-//     reqInstance = axios.create(Object.assign(config, {
-//       method: 'get',
-//       params: {
-//         ...config.params,
-//         url,
-//       },
-//       headers: {
-//         ' Content-Type': 'application/json',
-//       },
-//     }));
-//   }
-//   const { data } = await reqInstance.request();
-//   return data;
-// }
+    reqInstance = axios.create(
+      Object.assign(
+        config, {
+          method: 'post',
+          data: {
+            text,
+          },
+          params: {
+            ...config.params,
+            fileName: blobURL,
+          },
+          headers: {
+            ' Content-Type': 'application/octet-stream',
+          },
+        },
+      ),
+    );
+  } else {
+    reqInstance = axios.create(Object.assign(config, {
+      method: 'get',
+      params: {
+        ...config.params,
+        url,
+      },
+      headers: {
+        ' Content-Type': 'application/json',
+      },
+    }));
+  }
+  const { data } = await reqInstance.request();
+  return data;
+}
 
-// const selectorSummarizeBot = data => data[0].summary;
+const selectorSummarizeBot = data => data[0].summary;
 const selectorTextSummarization = data => data.sentences;
 
 const getSummaryActive = textSummarization;

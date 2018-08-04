@@ -4,12 +4,14 @@ import { getCurrentURL as getURL } from '../shared';
 function getCountString(data) {
   let count;
   try {
-    count = data.terms.length + data.privacies.length;
+    count = getLength(data);
   } catch (error) {
     count = 0;
   }
   return count.toString();
 }
+
+const getLength = ({ terms, privacies }) => terms.length + privacies.length;
 
 function loadState(key) {
   return new Promise((resolve, reject) => {
@@ -27,17 +29,21 @@ function loadState(key) {
 
 function storeState({ key, value }) {
   return new Promise((resolve, reject) => {
-    const stringValue = JSON.stringify(value);
-    chrome.storage.sync.set({
-      [key]: stringValue,
-    },
-    () => {
-      if (chrome.runtime.lastError) {
-        reject(Error(chrome.runtime.lastError));
-      } else {
-        resolve(`${key}: succesfuly saved ${getCountString(value)} items`);
-      }
-    });
+    if (getLength(value) > 0) {
+      const stringValue = JSON.stringify(value);
+      chrome.storage.sync.set({
+        [key]: stringValue,
+      },
+      () => {
+        if (chrome.runtime.lastError) {
+          reject(Error(chrome.runtime.lastError));
+        } else {
+          resolve(`${key}: succesfuly saved ${getCountString(value)} items`);
+        }
+      });
+    } else {
+      reject(Error('nothing to save'));
+    }
   });
 }
 

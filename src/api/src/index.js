@@ -9,9 +9,12 @@ async function updateStore(name) {
     if (!isEmptyObj(pagesToFetch)) {
       // TODO try url params?
       for (const [key, url] of Object.entries(pagesToFetch)) {
-        const pageText = await fetchPageData(url);
+        // const pageText = await fetchPageData(url);
+        // const summaries = await summarize({
+        //   text: pageText,
+        // });
         const summaries = await summarize({
-          text: pageText,
+          url,
         });
         results[key] = summaries;
       }
