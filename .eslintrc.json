@@ -1,20 +1,24 @@
 {
     "env": {
-        "node": true
+        "browser": true
     },
     "extends": "airbnb",
+    "globals": {
+        "chrome": true
+    },
     "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 8
+    },
     "plugins": [
         "json",
         "promise"
     ],
-    "parserOptions": {
-        "ecmaVersion": 8
-    },
     "rules": {
         "class-methods-use-this": 1,
         "import/no-extraneous-dependencies": 1,
         "import/no-unresolved": 1,
+        "import/prefer-default-export": 1,
         "max-len": [
             2,
             {
@@ -38,7 +42,6 @@
         "no-use-before-define": 1,
         "prefer-destructuring": 1,
         "prefer-promise-reject-errors": 1,
-        "react/no-array-index-key": 1,
-        "import/prefer-default-export": 1
+        "react/no-array-index-key": 1
     }
 }

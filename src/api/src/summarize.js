@@ -1,4 +1,4 @@
-import { TEXTSUMMARIZATION } from 'secrets';
+import { TEXTSUMMARIZATION, ALGORITHMIA, SUMMARIZEBOT } from 'secrets';
 import axios from 'axios';
 
 async function textSummarization({
@@ -79,11 +79,31 @@ async function summarizeBot({
   return data;
 }
 
+async function websiteSummary(url) {
+  const { data, status } = await axios.post('https://api.algorithmia.com/v1/algo/hotels/WebsiteSummary/0.1.4', {
+    url,
+  }, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Simple ${ALGORITHMIA}`,
+    },
+  });
+  if (status >= 400) {
+    throw Error(`status: ${status}`);
+  }
+  if (data.error) {
+    throw Error(data.error.message);
+  }
+  return data;
+}
+
+const selectorWebsiteSummary = data => data;
+
 const selectorSummarizeBot = data => data[0].summary;
 const selectorTextSummarization = data => data.sentences;
 
-const getSummaryActive = textSummarization;
-const selector = selectorTextSummarization;
+const getSummaryActive = websiteSummary;
+const selector = selectorWebsiteSummary;
 
 function wrapper() {
   return function summarize(params) {
