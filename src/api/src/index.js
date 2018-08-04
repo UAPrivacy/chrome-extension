@@ -6,7 +6,7 @@ async function updateStore(name) {
   const results = {};
   try {
     const pagesToFetch = await getPages(name);
-    if (!isEmptyObj) {
+    if (!isEmptyObj(pagesToFetch)) {
       // TODO try url params?
       for (const [key, url] of Object.entries(pagesToFetch)) {
         const pageText = await fetchPageData(url);
