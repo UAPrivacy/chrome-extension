@@ -86,6 +86,7 @@ async function websiteSummary(url) {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Simple ${ALGORITHMIA}`,
+      Accept: 'application/json',
     },
   });
   if (status >= 400) {
@@ -102,8 +103,8 @@ const selectorWebsiteSummary = data => data;
 const selectorSummarizeBot = data => data[0].summary;
 const selectorTextSummarization = data => data.sentences;
 
-const getSummaryActive = websiteSummary;
-const selector = selectorWebsiteSummary;
+const getSummaryActive = textSummarization;
+const selector = selectorTextSummarization;
 
 function wrapper() {
   return function summarize(params) {
