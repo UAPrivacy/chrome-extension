@@ -1,14 +1,16 @@
-import getPages from './urls';
-import extractor from './extract';
+import getURLs from './urls';
+import extract from './extract';
 import summarize from './summarize';
 
-async function updateStore(name) {
+const isEmpty = obj => Object.keys(obj).length === 0 && obj.constructor === Object;
+
+async function fetchSummaries(name) {
   const results = {};
-  const pagesToFetch = await getPages(name);
-  if (!isEmptyObj(pagesToFetch)) {
+  const pagesToFetch = await getURLs(name);
+  if (!isEmpty(pagesToFetch)) {
     // TODO try url params?
     for (const [key, url] of Object.entries(pagesToFetch)) {
-      const pageText = await extractor(url);
+      const pageText = await extract(url);
       const summaries = await summarize({
         text: pageText,
       });
@@ -22,6 +24,4 @@ async function updateStore(name) {
   throw Error(`${name}: page info not found`);
 }
 
-const isEmptyObj = obj => Object.keys(obj).length === 0 && obj.constructor === Object;
-
-export default updateStore;
+export default fetchSummaries;

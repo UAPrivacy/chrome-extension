@@ -1,6 +1,6 @@
-import getURLs from './github';
-import getLinks from './getLinks';
+import github from './github';
+// import algorithmia from './algorithmia';
 
-const getURLsActive = getURLs;
+const getURLs = github;
 
-export default main;
+export default getURLs;

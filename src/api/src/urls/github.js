@@ -1,28 +1,26 @@
 import axios from 'axios';
 
-const categories = [
-  'privacies',
-  'terms',
-];
-
-function selector(urls) {
+function selector(urlsObj) {
+  const categories = [
+    'privacies',
+    'terms',
+  ];
   const pages = {};
-  categories.forEach((attr) => {
-    if (urls[attr]) {
-      pages[attr] = urls[attr][0];
+  categories.forEach((category) => {
+    if (urlsObj[category]) {
+      [pages[category]] = urlsObj[category];
     }
   });
   return pages;
 }
 
-function findURLs(url, urls) {
-  const key = Object.keys(urls).find(k => url.includes(k) || k.includes(url));
+function findURLs(name, urlsObj) {
+  const key = Object.keys(urlsObj).find(k => name.includes(k) || k.includes(name));
   // console.log(`key: ${key} vs url: ${url}`); // missing key detector
-  let data = {};
-  if (key) {
-    data = urls[key];
+  if (!key) {
+    throw Error(`${name} entry not found`);
   }
-  return data;
+  return urlsObj[key];
 }
 
 async function getURLs() {
@@ -34,4 +32,4 @@ async function getURLs() {
   return data;
 }
 
-export default name => selector(findURLs(name, getURLs()));
+export default async name => selector(findURLs(name, await getURLs()));

@@ -1,15 +1,12 @@
-import fetchFromStore from './src';
+import fetchSummaries from './src';
 
-async function fetchData(name) {
-  try {
-    const { terms, privacies } = await fetchFromStore(name);
-    return {
-      privacies,
-      terms,
-    };
-  } catch (error) {
-    throw error;
-  }
+// TODO delete file?
+async function fetch(name) {
+  const { terms, privacies } = await fetchSummaries(name);
+  return {
+    privacies,
+    terms,
+  };
 }
 
-export default fetchData;
+export default fetch;
