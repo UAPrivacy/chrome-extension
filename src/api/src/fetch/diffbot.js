@@ -20,16 +20,7 @@ async function fetchPageDataDiffbot(url) {
 
 const selectorDiffbot = data => data[0].text;
 
-const fetchPageDataActive = fetchPageDataDiffbot;
-const selector = selectorDiffbot;
-
-function wrapper() {
-  return function fetch(url) {
-    return new Promise((resolve, reject) => {
-      fetchPageDataActive(url).then(data => selector(data)).then(data => resolve(data)).catch(err => reject(err));
-    });
-  };
-}
-
-const fetchPageData = wrapper();
-export default fetchPageData;
+export default {
+  selector: selectorDiffbot,
+  fetch: fetchPageDataDiffbot,
+};
