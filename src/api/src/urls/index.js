@@ -1,4 +1,4 @@
-import axios from 'axios';
+import getPages from './github';
 
 const attributes = [
   'privacies',
@@ -25,12 +25,5 @@ function fetchPages(url, pagesData) {
   return data;
 }
 
-async function getPages(name) {
-  const url = 'https://raw.githubusercontent.com/UAPrivacy/server/master/src/routes/data/index.new.json';
-  const { data, status } = await axios.get(url);
-  if (status >= 400) {
-    throw Error(`status: ${status}`);
-  }
-  return getSelectPages(fetchPages(name, data));
-}
-export default getPages;
+const main = name => getSelectPages(fetchPages(name, getPages()));
+export default main;
