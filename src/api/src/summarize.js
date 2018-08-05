@@ -85,7 +85,7 @@ async function websiteSummary(url) {
   }, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Simple ${ALGORITHMIA}`,
+      Authorization: `Basic ${ALGORITHMIA}`,
       Accept: 'application/json',
     },
   });

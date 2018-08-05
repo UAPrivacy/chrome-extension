@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { DIFFBOT_TOKEN } from 'secrets';
+import { DIFFBOT } from 'secrets';
 
 async function fetchPageDataDiffbot(url) {
   const endpoint = 'https://api.diffbot.com/v3/article';
   const { data, status } = await axios.get(endpoint, {
     params: {
-      token: DIFFBOT_TOKEN,
+      token: DIFFBOT,
       url,
     },
   });
