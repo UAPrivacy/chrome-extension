@@ -1,7 +1,7 @@
 import { ALGORITHMIA } from 'secrets';
 import axios from 'axios';
 
-async function websiteSummary(url) {
+async function summarize(url) {
   const { data, status } = await axios.post('https://api.algorithmia.com/v1/algo/hotels/WebsiteSummary/0.1.4', {
     url,
   }, {
@@ -20,9 +20,9 @@ async function websiteSummary(url) {
   return data;
 }
 
-const selectorWebsiteSummary = data => data;
+const selector = data => data;
 
 export default {
-  summarize: websiteSummary,
-  selector: selectorWebsiteSummary,
+  summarize,
+  selector,
 };

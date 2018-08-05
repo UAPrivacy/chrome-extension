@@ -1,5 +1,5 @@
 import getPages from './urls';
-import fetchPageData from './fetch';
+import extractor from './extract';
 import summarize from './summarize';
 
 async function updateStore(name) {
@@ -8,7 +8,7 @@ async function updateStore(name) {
   if (!isEmptyObj(pagesToFetch)) {
     // TODO try url params?
     for (const [key, url] of Object.entries(pagesToFetch)) {
-      const pageText = await fetchPageData(url);
+      const pageText = await extractor(url);
       const summaries = await summarize({
         text: pageText,
       });

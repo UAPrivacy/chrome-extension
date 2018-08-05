@@ -1,7 +1,7 @@
 import { TEXTSUMMARIZATION } from 'secrets';
 import axios from 'axios';
 
-async function textSummarization({
+async function summarize({
   text = '',
   url = '',
   sentnum = 10,
@@ -25,9 +25,9 @@ async function textSummarization({
   return data;
 }
 
-const selectorTextSummarization = data => data.sentences;
+const selector = data => data.sentences;
 
 export default {
-  summarize: textSummarization,
-  selector: selectorTextSummarization,
+  summarize,
+  selector,
 };

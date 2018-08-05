@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-async function getPages() {
+async function getURLs() {
   const url = 'https://raw.githubusercontent.com/UAPrivacy/server/master/src/routes/data/index.new.json';
   const { data, status } = await axios.get(url);
   if (status >= 400) {
@@ -9,4 +9,4 @@ async function getPages() {
   return data;
 }
 
-export default getPages;
+export default getURLs;

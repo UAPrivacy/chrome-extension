@@ -1,7 +1,7 @@
 import { SUMMARIZEBOT } from 'secrets';
 import axios from 'axios';
 
-async function summarizeBot({
+async function summarize({
   url,
   text,
 }) {
@@ -61,9 +61,9 @@ async function summarizeBot({
   return data;
 }
 
-const selectorSummarizeBot = data => data[0].summary;
+const selector = data => data[0].summary;
 
 export default {
-  summarize: selectorSummarizeBot,
-  selector: summarizeBot,
+  summarize,
+  selector,
 };
