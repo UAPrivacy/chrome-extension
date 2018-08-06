@@ -4,7 +4,7 @@ import { Center } from './Shared';
 
 export default class ErrorBoundary extends Component {
   state = {
-    error: false,
+    error: false
   };
 
   componentDidCatch(error, info) {
@@ -20,7 +20,7 @@ export default class ErrorBoundary extends Component {
         <Center>
           <p>
 an error has occurred
-          </p>
+</p>
         </Center>
       );
     }
@@ -29,5 +29,5 @@ an error has occurred
 }
 
 ErrorBoundary.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 };
