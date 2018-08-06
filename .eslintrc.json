@@ -3,7 +3,7 @@
         "browser": true,
         "es6": true
     },
-    "extends": ["airbnb", "eslint:recommended", "plugin:promise/recommended", "plugin:import/errors", "plugin:prettier/recommended",  "prettier/react", "plugin:jsx-a11y/recommended", "plugin:react/recommended"]  ,
+    "extends": ["airbnb", "eslint:recommended", "plugin:promise/recommended", "plugin:import/errors", "plugin:prettier/recommended",    "plugin:jsx-a11y/recommended", "plugin:react/recommended"]  ,
     "globals": {
         "chrome": true
     },
@@ -50,6 +50,7 @@
         "no-use-before-define": 1,
         "prefer-destructuring": 1,
         "prefer-promise-reject-errors": 1,
-        "react/no-array-index-key": 1
+        "react/no-array-index-key": 1,
+        "react/jsx-one-expression-per-line": 0
     }
 }

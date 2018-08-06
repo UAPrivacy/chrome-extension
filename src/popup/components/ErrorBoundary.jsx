@@ -18,9 +18,7 @@ export default class ErrorBoundary extends Component {
     if (error) {
       return (
         <Center>
-          <p>
-an error has occurred
-</p>
+          <p>an error has occurred</p>
         </Center>
       );
     }

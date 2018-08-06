@@ -13,9 +13,7 @@ const Loading = () => (
 
 const EmptyState = () => (
   <Center>
-    <p>
-nothing to show
-</p>
+    <p>nothing to show</p>
   </Center>
 );
 
@@ -30,7 +28,7 @@ class Root extends PureComponent {
     const url = await getCurrentURL();
     this.fetch(url)
       .then(({ privacies, terms }) => {
-        this.setState({
+        return this.setState({
           terms,
           privacies,
           isLoading: false
@@ -58,7 +56,7 @@ class Root extends PureComponent {
           fetchData(url)
             .then(res => {
               resolve(res);
-              chrome.runtime.sendMessage({ store: url, value: res });
+              return chrome.runtime.sendMessage({ store: url, value: res });
             })
             .catch(err => {
               reject(err);
