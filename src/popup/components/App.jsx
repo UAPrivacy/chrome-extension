@@ -4,10 +4,10 @@ import Clause from './Clause';
 
 class App extends PureComponent {
   state = {
-    active: 'terms',
+    active: 'terms'
   };
 
-  handleActive = (which) => {
+  handleActive = which => {
     this.setState({ active: which });
   };
 
@@ -20,18 +20,29 @@ class App extends PureComponent {
         <div className="uk-container uk-container-small">
           <ul className="uk-subnav uk-subnav-pill uk-flex-center">
             <li className={active === 'terms' ? 'uk-active' : ''}>
-              <a onClick={() => this.handleActive('terms')} uk-tooltip="title:User Agreements; pos: left">
+              <a
+                onClick={() => this.handleActive('terms')}
+                uk-tooltip="title:User Agreements; pos: left"
+              >
                 Terms
               </a>
             </li>
             <li className={active === 'privacy' ? 'uk-active' : ''}>
-              <a onClick={() => this.handleActive('privacy')} uk-tooltip="title:Privacy Policies ; pos: right">
+              <a
+                onClick={() => this.handleActive('privacy')}
+                uk-tooltip="title:Privacy Policies ; pos: right"
+              >
                 Privacy
               </a>
             </li>
           </ul>
-          <ul className="uk-list uk-list-divider" uk-scrollspy="cls: uk-animation-fade; target: > li; delay: 300; repeat: true">
-            {clauses.map((clause, idx) => <Clause key={idx} text={clause} />)}
+          <ul
+            className="uk-list uk-list-divider"
+            uk-scrollspy="cls: uk-animation-fade; target: > li; delay: 300; repeat: true"
+          >
+            {clauses.map((clause, idx) => (
+              <Clause key={idx} text={clause} />
+            ))}
           </ul>
         </div>
       </div>
@@ -41,7 +52,7 @@ class App extends PureComponent {
 
 App.propTypes = {
   terms: PropTypes.arrayOf(PropTypes.string).isRequired,
-  privacies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  privacies: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 export default App;

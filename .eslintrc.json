@@ -2,7 +2,7 @@
     "env": {
         "browser": true
     },
-    "extends": ["airbnb", "eslint:recommended", "plugin:promise/recommended", "plugin/json/error", "plugin:import/errors", "plugin:prettier/recommended"]  ,
+    "extends": ["airbnb", "eslint:recommended", "plugin:promise/recommended", "plugin:import/errors", "plugin:prettier/recommended"]  ,
     "globals": {
         "chrome": true
     },

@@ -15,7 +15,7 @@ const EmptyState = () => (
   <Center>
     <p>
 nothing to show
-    </p>
+</p>
   </Center>
 );
 
@@ -23,7 +23,7 @@ class Root extends PureComponent {
   state = {
     terms: [],
     privacies: [],
-    isLoading: true,
+    isLoading: true
   };
 
   async componentDidMount() {
@@ -33,42 +33,48 @@ class Root extends PureComponent {
         this.setState({
           terms,
           privacies,
-          isLoading: false,
+          isLoading: false
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(`err: ${err}`);
         this.setState({
-          isLoading: false,
+          isLoading: false
         });
       });
   }
 
-  fetch = url => new Promise((resolve, reject) => {
-    chrome.runtime.sendMessage({ load: url }, (response) => {
-      if (response) {
-        if (response.data) {
-          const { data } = response;
-          resolve(data);
+  fetch = url =>
+    new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage({ load: url }, response => {
+        if (response) {
+          if (response.data) {
+            const { data } = response;
+            resolve(data);
+          } else {
+            reject(Error('Could not find data'));
+          }
         } else {
-          reject(Error('Could not find data'));
+          fetchData(url)
+            .then(res => {
+              resolve(res);
+              chrome.runtime.sendMessage({ store: url, value: res });
+            })
+            .catch(err => {
+              reject(err);
+            });
         }
-      } else {
-        fetchData(url)
-          .then((res) => {
-            resolve(res);
-            chrome.runtime.sendMessage({ store: url, value: res });
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      }
+      });
     });
-  });
 
   render() {
     const { isLoading, privacies, terms } = this.state;
-    const UI = privacies && terms && (privacies.length > 0 || terms.length > 0) ? <App privacies={privacies} terms={terms} /> : <EmptyState />;
+    const UI =
+      privacies && terms && (privacies.length > 0 || terms.length > 0) ? (
+        <App privacies={privacies} terms={terms} />
+      ) : (
+        <EmptyState />
+      );
     return isLoading ? <Loading /> : UI;
   }
 }

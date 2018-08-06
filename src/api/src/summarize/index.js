@@ -8,7 +8,10 @@ function wrapper() {
   return function main(params) {
     const { summarize, selector } = summarizer;
     return new Promise((resolve, reject) => {
-      summarize(params).then(data => selector(data)).then(data => resolve(data)).catch(err => reject(err));
+      summarize(params)
+        .then(data => selector(data))
+        .then(data => resolve(data))
+        .catch(err => reject(err));
     });
   };
 }

@@ -1,14 +1,14 @@
 export function getCurrentURL() {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     chrome.tabs.query(
       {
         active: true,
-        lastFocusedWindow: true,
+        lastFocusedWindow: true
       },
-      (tabs) => {
+      tabs => {
         const [{ url }] = tabs;
         resolve(getHostname(url));
-      },
+      }
     );
   });
 }

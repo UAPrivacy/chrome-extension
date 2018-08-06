@@ -6,8 +6,8 @@ async function extract(url) {
   const { data, status } = await axios.get(endpoint, {
     params: {
       token: DIFFBOT,
-      url,
-    },
+      url
+    }
   });
   if (status >= 400) {
     throw Error(`status: ${status}`);
@@ -22,5 +22,5 @@ const selector = data => data[0].text;
 
 export default {
   selector,
-  extract,
+  extract
 };

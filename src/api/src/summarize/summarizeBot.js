@@ -1,10 +1,7 @@
 import { SUMMARIZEBOT } from 'secrets';
 import axios from 'axios';
 
-async function summarize({
-  url,
-  text,
-}) {
+async function summarize({ url, text }) {
   const endpoint = ' https://www.summarizebot.com/api/summarize';
   let reqInstance;
   const config = {
@@ -14,8 +11,8 @@ async function summarize({
       size: 10,
       keywords: 10,
       fragments: 10,
-      language: 'English',
-    },
+      language: 'English'
+    }
   };
   if (text) {
     const typedArray = [text.split('')];
@@ -23,33 +20,33 @@ async function summarize({
     const blobURL = URL.createObjectURL(blob);
 
     reqInstance = axios.create(
-      Object.assign(
-        config, {
-          method: 'post',
-          // data: {
-          //   text,
-          // },
-          params: {
-            ...config.params,
-            fileName: blobURL,
-          },
-          headers: {
-            'Content-Type': 'application/octet-stream',
-          },
+      Object.assign(config, {
+        method: 'post',
+        // data: {
+        //   text,
+        // },
+        params: {
+          ...config.params,
+          fileName: blobURL
         },
-      ),
+        headers: {
+          'Content-Type': 'application/octet-stream'
+        }
+      })
     );
   } else {
-    reqInstance = axios.create(Object.assign(config, {
-      method: 'get',
-      params: {
-        ...config.params,
-        url,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }));
+    reqInstance = axios.create(
+      Object.assign(config, {
+        method: 'get',
+        params: {
+          ...config.params,
+          url
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+    );
   }
   const { data, status } = await reqInstance.request();
   if (status >= 400) {
@@ -65,5 +62,5 @@ const selector = data => data[0].summary;
 
 export default {
   summarize,
-  selector,
+  selector
 };

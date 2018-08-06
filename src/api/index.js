@@ -5,7 +5,7 @@ async function fetch(name) {
   const { terms, privacies } = await fetchSummaries(name);
   return {
     privacies,
-    terms,
+    terms
   };
 }
 

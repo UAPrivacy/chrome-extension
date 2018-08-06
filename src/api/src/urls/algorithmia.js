@@ -11,14 +11,14 @@ const updateResults = (data, url, key) => {
       data[k][key].push(url);
     } else {
       Object.assign(data[k], {
-        [key]: [url],
+        [key]: [url]
       });
     }
   } else {
     const entry = {
       [k]: {
-        [key]: [url],
-      },
+        [key]: [url]
+      }
     };
     Object.assign(data, entry);
   }
@@ -29,7 +29,8 @@ function checkLinks(data, url) {
   if (terms.test(url) || tos.test(url)) {
     updateResults(data, url, 'terms');
     updateOccurred = true;
-  } if (privacies.test(url)) {
+  }
+  if (privacies.test(url)) {
     updateOccurred = true;
     updateResults(data, url, 'privacies');
   }
@@ -37,14 +38,14 @@ function checkLinks(data, url) {
 }
 
 function getLinks(url) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     try {
-      _client(ALGORITHMIA)
-        .algo('web/GetLinks/0.1.5')
-        .pipe(url)
-        .then((response) => {
-          resolve(response.result);
-        });
+      // _client(ALGORITHMIA)
+      //   .algo('web/GetLinks/0.1.5')
+      //   .pipe(url)
+      //   .then(response => {
+      //     resolve(response.result);
+      //   });
     } catch (error) {
       console.error(`${url}: could not get links \n ${error}`);
       resolve([]);
@@ -55,13 +56,14 @@ function getLinks(url) {
 async function update() {
   const checkLinksResults = {};
   const results = {};
-  for (const { URL } of sites) {
+  for (const { URL } of 'sites') {
     const links = await getLinks(URL);
     if (links && links.length > 0) {
       console.log(`${links.length} links were fetched from ${URL}`);
-      links.forEach((link) => {
+      links.forEach(link => {
         checkLinksResults[link] = checkLinks(results, link);
       });
     }
   }
+}
 export default update;

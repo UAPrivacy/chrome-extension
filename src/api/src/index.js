@@ -2,7 +2,8 @@ import getURLs from './urls';
 import extract from './extract';
 import summarize from './summarize';
 
-const isEmpty = obj => Object.keys(obj).length === 0 && obj.constructor === Object;
+const isEmpty = obj =>
+  Object.keys(obj).length === 0 && obj.constructor === Object;
 
 async function fetchSummaries(name) {
   const results = {};
@@ -12,7 +13,7 @@ async function fetchSummaries(name) {
     for (const [key, url] of Object.entries(pagesToFetch)) {
       const pageText = await extract(url);
       const summaries = await summarize({
-        text: pageText,
+        text: pageText
       });
       // const summaries = await summarize({
       //   url,
