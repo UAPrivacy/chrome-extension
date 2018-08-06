@@ -8,7 +8,7 @@ function selector(urlsObj) {
   const pages = {};
   categories.forEach((category) => {
     if (urlsObj[category]) {
-      [pages[category]] = urlsObj[category];
+      pages[category] = [urlsObj[category]];
     }
   });
   return pages;
