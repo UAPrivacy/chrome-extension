@@ -34,6 +34,7 @@ class Root extends PureComponent {
         isLoading: false
       });
     } catch (e) {
+      // test out ErrorBoundary by not catching the error
       console.error(`error mounting component: ${e}`);
       this.setState({
         isLoading: false

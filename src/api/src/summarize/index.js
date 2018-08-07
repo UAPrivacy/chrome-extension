@@ -1,8 +1,8 @@
 import summarizeBot from './summarizeBot';
-// import textSummarization from './textSummarization';
-// import websiteSummary from './websiteSummary';
+import textSummarization from './textSummarization';
+import websiteSummary from './websiteSummary';
 
-const summarizer = summarizeBot;
+const summarizer = textSummarization;
 
 function wrapper() {
   return function main(params) {

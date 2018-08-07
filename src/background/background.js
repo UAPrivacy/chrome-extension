@@ -1,4 +1,4 @@
-import fetchFromStore from '../api/src';
+import fetchSummaries from '../api/src';
 import { getCurrentURL as getURL } from '../shared';
 
 const getLength = ({ terms, privacies }) => terms.length + privacies.length;
@@ -92,7 +92,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             updateBadge(getCount(data));
           })
           .catch(() => {
-            fetchFromStore(url)
+            fetchSummaries(url)
               .then(data => {
                 storeThenUpdateBadge(url, data)
                   .then(msg => console.log(msg))
