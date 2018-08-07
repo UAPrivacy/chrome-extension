@@ -2,38 +2,40 @@ import axios from 'axios';
 
 function selector(cacheObj) {
   const categories = ['privacies', 'terms'];
-  const pages = {};
+  const results = {};
   categories.forEach(category => {
     const urlsObj = cacheObj[category];
     if (urlsObj) {
       if (typeof urlsObj === 'string') {
-        pages[category] = urlsObj;
+        results[category] = urlsObj;
       }
 
       if (Array.isArray(urlsObj)) {
-        pages[category] = [urlsObj];
+        results[category] = [urlsObj];
       }
     }
   });
-  return pages;
+  return results;
 }
 
 const findKey = (possiblekeys, name) =>
   possiblekeys.find(k => name.includes(k) || k.includes(name));
 
-function findURLs(name, cache) {
+function findURLs(url, cache) {
   const { auto, manual } = cache;
   let key;
-  key = findKey(Object.keys(manual), name);
+  key = findKey(Object.keys(manual), url);
 
-  if (!key) {
-    key = findKey(Object.keys(auto), name);
+  if (key) {
+    return manual[key];
   }
-  // console.log(`key: ${key} vs url: ${url}`); // missing key detector
-  if (!key) {
-    throw Error(`${name} entry not found`);
+
+  key = findKey(Object.keys(auto), url);
+
+  if (key) {
+    return auto[key];
   }
-  return cache[key];
+  throw Error(`${url} entry not found`);
 }
 
 const getURL = url => axios.get(url);
@@ -70,4 +72,4 @@ async function getCache() {
   return cache;
 }
 
-export default async name => selector(findURLs(name, await getCache()));
+export default async url => selector(findURLs(url, await getCache()));
