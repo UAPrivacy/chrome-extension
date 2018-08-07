@@ -1,6 +1,6 @@
 import github from './github';
-// import algorithmia from './algorithmia';
+import algorithmia from './algorithmia';
 
-const getURLs = github;
+function urls(url) {}
 
-export default getURLs;
+export default urls;

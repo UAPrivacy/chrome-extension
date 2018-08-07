@@ -1,69 +1,66 @@
+import { ALGORITHMIA } from 'secrets';
+
 const terms = /terms|agreement/gi;
 const tos = /\/tos/gi;
 const privacies = /privacy/gi;
 
-const getHostName = url => new URL(url).hostname;
-
-const updateResults = (data, url, key) => {
-  const k = getHostName(url);
-  if (data[k]) {
-    if (data[k][key] && data[k][key].indexOf(url) === -1) {
-      data[k][key].push(url);
-    } else {
-      Object.assign(data[k], {
-        [key]: [url]
-      });
-    }
-  } else {
-    const entry = {
-      [k]: {
-        [key]: [url]
-      }
-    };
-    Object.assign(data, entry);
-  }
-};
-
-function checkLinks(data, url) {
-  let updateOccurred = false;
+function checkURLs(url) {
   if (terms.test(url) || tos.test(url)) {
-    updateResults(data, url, 'terms');
-    updateOccurred = true;
+    return 'terms';
   }
   if (privacies.test(url)) {
-    updateOccurred = true;
-    updateResults(data, url, 'privacies');
-  }
-  return updateOccurred;
-}
-
-function getLinks(url) {
-  return new Promise(resolve => {
-    try {
-      // _client(ALGORITHMIA)
-      //   .algo('web/GetLinks/0.1.5')
-      //   .pipe(url)
-      //   .then(response => {
-      //     resolve(response.result);
-      //   });
-    } catch (error) {
-      console.error(`${url}: could not get links \n ${error}`);
-      resolve([]);
-    }
-  });
-}
-
-async function update() {
-  const checkLinksResults = {};
-  const results = {};
-  for (const { URL } of 'sites') {
-    const links = await getLinks(URL);
-    if (links && links.length > 0) {
-      console.log(`${links.length} links were fetched from ${URL}`);
-      links.forEach(link => {
-        checkLinksResults[link] = checkLinks(results, link);
-      });
-    }
+    return 'privacies';
   }
 }
-export default update;
+
+async function getLinks(url) {
+  const endpoint = 'https://api.algorithmia.com/v1/algo/web/GetLinks/0.1.5';
+  const { data, status } = await axios.post(
+    endpoint,
+    {
+      url
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${ALGORITHMIA}`,
+        Accept: 'application/json'
+      }
+    }
+  );
+  if (status >= 400) {
+    throw Error(`status: ${status}`);
+  }
+  if (data.error) {
+    throw Error(data.error.message);
+  }
+  return data;
+}
+
+const isEmptyObj = obj =>
+  Object.keys(obj).length === 0 && obj.constructor === Object;
+async function findURLs(url) {
+  const urls = await getLinks(url);
+  if (urls && urls.length > 0) {
+    const results = {};
+    for (const u of urls) {
+      if (results['terms'] && results['privacies']) {
+        return results;
+      }
+      const category = checkURLs(u);
+      if (category === 'terms') {
+        results['terms'] = u;
+      }
+      if (category === 'privacies') {
+        results['privacies'] = u;
+      }
+    }
+
+    if (isEmptyObj(results)) {
+      throw Error`${url} could not find categories`;
+    }
+  } else {
+    throw Error`${url} could not find links`;
+  }
+}
+export default findURLs;

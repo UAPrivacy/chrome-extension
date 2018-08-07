@@ -13,6 +13,6 @@ export function getCurrentURL() {
   });
 }
 
-function getHostname(url) {
+export function getHostname(url) {
   return new URL(url).hostname;
 }
