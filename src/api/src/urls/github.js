@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isEmptyObj } from '../shared';
 
 function selector(cacheObj) {
   const categories = ['privacies', 'terms'];
@@ -15,6 +16,8 @@ function selector(cacheObj) {
       }
     }
   });
+
+  if (isEmptyObj(results)) throw Error`manual results not found`;
   return results;
 }
 

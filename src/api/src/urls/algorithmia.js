@@ -1,11 +1,12 @@
 import { ALGORITHMIA } from 'secrets';
 import axios from 'axios';
-
-const terms = /terms|agreement/gi;
-const tos = /\/tos/gi;
-const privacies = /privacy/gi;
+import { isEmptyObj } from '../shared';
 
 function checkURLs(url) {
+  const terms = /terms|agreement/gi;
+  const tos = /\/tos/gi;
+  const privacies = /privacy/gi;
+
   if (terms.test(url) || tos.test(url)) {
     return 'terms';
   }
@@ -32,14 +33,12 @@ async function getURLs(url) {
   if (status >= 400) {
     throw Error(`status: ${status}`);
   }
+  // works?
   if (data.error) {
     throw Error(data.error.message);
   }
   return data;
 }
-
-const isEmptyObj = obj =>
-  Object.keys(obj).length === 0 && obj.constructor === Object;
 
 async function findURLs(url) {
   const urls = await getURLs(url);

@@ -1,14 +1,12 @@
 import getURLs from './urls';
 import extract from './extract';
 import summarize from './summarize';
-
-const isEmpty = obj =>
-  Object.keys(obj).length === 0 && obj.constructor === Object;
+import { isEmptyObj } from './shared';
 
 async function fetchSummaries(name) {
   const results = {};
   const pagesToFetch = await getURLs(name);
-  if (!isEmpty(pagesToFetch)) {
+  if (!isEmptyObj(pagesToFetch)) {
     // TODO try url params?
     for (const [key, url] of Object.entries(pagesToFetch)) {
       const pageText = await extract(url);
