@@ -15,9 +15,6 @@ async function fetchSummaries(name) {
       const summaries = await summarize({
         text: pageText
       });
-      // const summaries = await summarize({
-      //   url,
-      // });
       results[key] = summaries;
     }
     return results;
