@@ -10,8 +10,10 @@ const Center = ({ children }) => (
   </div>
 );
 
+const EmptyDiv = () => <div />;
+
 Center.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-export { Center };
+export { Center, EmptyDiv };

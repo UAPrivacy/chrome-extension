@@ -20,20 +20,22 @@ class App extends PureComponent {
         <div className="uk-container uk-container-small">
           <ul className="uk-subnav uk-subnav-pill uk-flex-center">
             <li className={active === 'terms' ? 'uk-active' : ''}>
-              <a
+              <button
+                type="button"
                 onClick={() => this.handleActive('terms')}
                 uk-tooltip="title:User Agreements; pos: left"
               >
                 Terms
-              </a>
+              </button>
             </li>
             <li className={active === 'privacy' ? 'uk-active' : ''}>
-              <a
+              <button
+                type="button"
                 onClick={() => this.handleActive('privacy')}
                 uk-tooltip="title:Privacy Policies ; pos: right"
               >
                 Privacy
-              </a>
+              </button>
             </li>
           </ul>
           <ul

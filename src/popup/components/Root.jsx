@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { hot } from 'react-hot-loader';
 import App from './App';
-import fetchData from '../../api';
+import fetchData from '../../api/src';
 import { getCurrentURL } from '../../shared';
 import { Center } from './Shared';
 
@@ -28,14 +28,14 @@ class Root extends PureComponent {
     const url = await getCurrentURL();
     this.fetch(url)
       .then(({ privacies, terms }) => {
-        return this.setState({
+        this.setState({
           terms,
           privacies,
           isLoading: false
         });
       })
       .catch(err => {
-        console.error(`err: ${err}`);
+        console.error(`error fetching state: ${err}`);
         this.setState({
           isLoading: false
         });
@@ -50,13 +50,13 @@ class Root extends PureComponent {
             const { data } = response;
             resolve(data);
           } else {
-            reject(Error('Could not find data'));
+            reject(Error('could not find data in storage'));
           }
         } else {
           fetchData(url)
             .then(res => {
               resolve(res);
-              return chrome.runtime.sendMessage({ store: url, value: res });
+              chrome.runtime.sendMessage({ store: url, value: res });
             })
             .catch(err => {
               reject(err);

@@ -51,6 +51,7 @@
         "prefer-destructuring": 1,
         "prefer-promise-reject-errors": 1,
         "react/no-array-index-key": 1,
-        "react/jsx-one-expression-per-line": 0
+        "react/jsx-one-expression-per-line": 0,
+        "promise/always-return": 0
     }
 }

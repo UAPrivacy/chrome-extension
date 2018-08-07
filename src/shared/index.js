@@ -1,3 +1,6 @@
+export function getHostname(url) {
+  return new URL(url).hostname;
+}
 export function getCurrentURL() {
   return new Promise(resolve => {
     chrome.tabs.query(
@@ -11,8 +14,4 @@ export function getCurrentURL() {
       }
     );
   });
-}
-
-export function getHostname(url) {
-  return new URL(url).hostname;
 }
