@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { hot } from 'react-hot-loader';
 import App from './App';
-import fetchData from '../../api/src';
+// import fetchSummaries from '../../api/src/index';
 import { getCurrentURL } from '../../shared';
 import { Center } from './Shared';
 
@@ -25,8 +25,13 @@ class Root extends PureComponent {
   };
 
   async componentDidMount() {
-    const url = await getCurrentURL();
-    this.fetch(url)
+    const url = await getCurrentURL().catch(() => {
+      console.error(err);
+      this.setState({
+        isLoading: false
+      });
+    });
+    this.fetchState(url)
       .then(({ privacies, terms }) => {
         this.setState({
           terms,
@@ -42,18 +47,13 @@ class Root extends PureComponent {
       });
   }
 
-  fetch = url =>
+  fetchState = url =>
     new Promise((resolve, reject) => {
       chrome.runtime.sendMessage({ load: url }, response => {
-        if (response) {
-          if (response.data) {
-            const { data } = response;
-            resolve(data);
-          } else {
-            reject(Error('could not find data in storage'));
-          }
+        if (response && response.data) {
+          resolve(response.data);
         } else {
-          fetchData(url)
+          fetchSummaries(url)
             .then(res => {
               resolve(res);
               chrome.runtime.sendMessage({ store: url, value: res });
@@ -67,6 +67,7 @@ class Root extends PureComponent {
 
   render() {
     const { isLoading, privacies, terms } = this.state;
+    // verify
     const UI =
       privacies && terms && (privacies.length > 0 || terms.length > 0) ? (
         <App privacies={privacies} terms={terms} />

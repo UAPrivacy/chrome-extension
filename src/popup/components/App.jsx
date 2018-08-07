@@ -7,7 +7,7 @@ class App extends PureComponent {
     active: 'terms'
   };
 
-  handleActive = which => {
+  handleActiveTab = which => {
     this.setState({ active: which });
   };
 
@@ -22,7 +22,7 @@ class App extends PureComponent {
             <li className={active === 'terms' ? 'uk-active' : ''}>
               <button
                 type="button"
-                onClick={() => this.handleActive('terms')}
+                onClick={() => this.handleActiveTab('terms')}
                 uk-tooltip="title:User Agreements; pos: left"
               >
                 Terms
@@ -31,7 +31,7 @@ class App extends PureComponent {
             <li className={active === 'privacy' ? 'uk-active' : ''}>
               <button
                 type="button"
-                onClick={() => this.handleActive('privacy')}
+                onClick={() => this.handleActiveTab('privacy')}
                 uk-tooltip="title:Privacy Policies ; pos: right"
               >
                 Privacy

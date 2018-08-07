@@ -2,7 +2,7 @@ export function getHostname(url) {
   return new URL(url).hostname;
 }
 export function getCurrentURL() {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     chrome.tabs.query(
       {
         active: true,
@@ -10,8 +10,19 @@ export function getCurrentURL() {
       },
       tabs => {
         const [{ url }] = tabs;
-        resolve(getHostname(url));
+        if (url) {
+          resolve(getHostname(url));
+        } else {
+          reject(Error`could not fetch current URL`);
+        }
       }
     );
   });
 }
+
+const isEmptyObj = obj =>
+  Object.keys(obj).length === 0 && obj.constructor === Object;
+
+const emptyFunc = () => {};
+
+export { isEmptyObj, emptyFunc };

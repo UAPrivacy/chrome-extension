@@ -1,7 +1,7 @@
 import fetchFromStore from '../api';
 import { getCurrentURL as getURL } from '../shared';
 
-function getCountString(data) {
+function getCount(data) {
   let count;
   try {
     count = getLength(data);
@@ -39,7 +39,7 @@ function storeState({ key, value }) {
           if (chrome.runtime.lastError) {
             reject(Error(chrome.runtime.lastError));
           } else {
-            resolve(`${key}: succesfuly saved ${getCountString(value)} items`);
+            resolve(`${key}: succesfuly saved ${getCount(value)} items`);
           }
         }
       );
@@ -55,14 +55,14 @@ function updateBadge(text) {
   });
 }
 
-function storeAndUpdate(url, data) {
+function storeThenUpdateBadge(url, data) {
   storeState({
     key: url,
     value: data
   })
     .then(msg => {
       console.log(msg);
-      return updateBadge(getCountString(data));
+      updateBadge(getCount(data));
     })
     .catch(err => console.error(err));
 }
@@ -74,27 +74,31 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({
           data
         });
-        return updateBadge(getCountString(data));
+        updateBadge(getCount(data));
       })
       .catch(err => console.error(err));
   } else if (request.store) {
-    storeAndUpdate(request.store, request.value);
+    storeThenUpdateBadge(request.store, request.value);
   } else if (request.prefetch) {
     console.log('prefetch requested...');
-    return getURL().then(url => {
-      return loadState(url)
-        .then(data => {
-          console.log('prefetch cancelled');
-          return updateBadge(getCountString(data));
-        })
-        .catch(() => {
-          fetchFromStore(url)
-            .then(data => {
-              return storeAndUpdate(url, data);
-            })
-            .catch(error => console.error(`error prefetching: ${error}`));
-        });
-    });
+    return getURL()
+      .then(url => {
+        return loadState(url)
+          .then(data => {
+            console.log('prefetch cancelled');
+            return updateBadge(getCount(data));
+          })
+          .catch(() => {
+            fetchFromStore(url)
+              .then(data => {
+                return storeThenUpdateBadge(url, data);
+              })
+              .catch(error => console.error(`error prefetching: ${error}`));
+          });
+      })
+      .catch(err => {
+        console.error(`could not get URL: ${err}`);
+      });
   }
   return true;
 });

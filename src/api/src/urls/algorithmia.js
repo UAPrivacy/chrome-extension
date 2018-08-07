@@ -1,6 +1,6 @@
 import { ALGORITHMIA } from 'secrets';
 import axios from 'axios';
-import { isEmptyObj } from '../shared';
+import { isEmptyObj } from '../../../shared';
 
 function checkURLs(url) {
   const terms = /terms|agreement/gi;

@@ -1,7 +1,7 @@
 import getURLs from './urls';
 import extract from './extract';
 import summarize from './summarize';
-import { isEmptyObj } from './shared';
+import { isEmptyObj } from '../../shared';
 
 async function fetchSummaries(name) {
   const results = {};

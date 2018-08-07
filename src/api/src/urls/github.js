@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { isEmptyObj } from '../shared';
+import { isEmptyObj } from '../../../shared';
 
 function selector(cacheObj) {
   const categories = ['privacies', 'terms'];
