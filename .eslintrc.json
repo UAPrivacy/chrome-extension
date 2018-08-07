@@ -34,7 +34,7 @@
             }
         ],
         "no-await-in-loop": 1,
-        "no-console": 1,
+        "no-console": 0,
         "no-multiple-empty-lines": [
             2,
             {
@@ -52,6 +52,7 @@
         "prefer-promise-reject-errors": 1,
         "react/no-array-index-key": 1,
         "react/jsx-one-expression-per-line": 0,
-        "promise/always-return": 0
+        "promise/always-return": 0,
+        "promise/no-nesting": 0
     }
 }

@@ -1,5 +1,7 @@
-import fetchFromStore from '../api';
+import fetchFromStore from '../api/src';
 import { getCurrentURL as getURL } from '../shared';
+
+const getLength = ({ terms, privacies }) => terms.length + privacies.length;
 
 function getCount(data) {
   let count;
@@ -10,8 +12,6 @@ function getCount(data) {
   }
   return count.toString();
 }
-
-const getLength = ({ terms, privacies }) => terms.length + privacies.length;
 
 function loadState(key) {
   return new Promise((resolve, reject) => {
@@ -56,15 +56,17 @@ function updateBadge(text) {
 }
 
 function storeThenUpdateBadge(url, data) {
-  storeState({
-    key: url,
-    value: data
-  })
-    .then(msg => {
-      console.log(msg);
-      updateBadge(getCount(data));
+  return new Promise((resolve, reject) => {
+    storeState({
+      key: url,
+      value: data
     })
-    .catch(err => console.error(err));
+      .then(msg => {
+        updateBadge(getCount(data));
+        resolve(msg);
+      })
+      .catch(err => reject(err));
+  });
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -78,26 +80,29 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       })
       .catch(err => console.error(err));
   } else if (request.store) {
-    storeThenUpdateBadge(request.store, request.value);
+    storeThenUpdateBadge(request.store, request.value)
+      .then(msg => console.log(msg))
+      .catch(err => console.error(err));
   } else if (request.prefetch) {
-    console.log('prefetch requested...');
-    return getURL()
+    getURL()
       .then(url => {
-        return loadState(url)
+        loadState(url)
           .then(data => {
             console.log('prefetch cancelled');
-            return updateBadge(getCount(data));
+            updateBadge(getCount(data));
           })
           .catch(() => {
             fetchFromStore(url)
               .then(data => {
-                return storeThenUpdateBadge(url, data);
+                storeThenUpdateBadge(url, data)
+                  .then(msg => console.log(msg))
+                  .catch(err => console.error(`error prefetching: ${err}`));
               })
               .catch(error => console.error(`error prefetching: ${error}`));
           });
       })
       .catch(err => {
-        console.error(`could not get URL: ${err}`);
+        console.error(`error prefetching: ${err}`);
       });
   }
   return true;

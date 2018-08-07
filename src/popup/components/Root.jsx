@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { hot } from 'react-hot-loader';
 import App from './App';
-// import fetchSummaries from '../../api/src/index';
+import fetchSummaries from '../../api/src/index';
 import { getCurrentURL } from '../../shared';
 import { Center } from './Shared';
 
@@ -25,26 +25,20 @@ class Root extends PureComponent {
   };
 
   async componentDidMount() {
-    const url = await getCurrentURL().catch(() => {
-      console.error(err);
+    try {
+      const url = await getCurrentURL();
+      const { privacies, terms } = await this.fetchState(url);
+      this.setState({
+        terms,
+        privacies,
+        isLoading: false
+      });
+    } catch (e) {
+      console.error(`error mounting component: ${e}`);
       this.setState({
         isLoading: false
       });
-    });
-    this.fetchState(url)
-      .then(({ privacies, terms }) => {
-        this.setState({
-          terms,
-          privacies,
-          isLoading: false
-        });
-      })
-      .catch(err => {
-        console.error(`error fetching state: ${err}`);
-        this.setState({
-          isLoading: false
-        });
-      });
+    }
   }
 
   fetchState = url =>
@@ -67,7 +61,7 @@ class Root extends PureComponent {
 
   render() {
     const { isLoading, privacies, terms } = this.state;
-    // verify
+    // verify if only one list can render
     const UI =
       privacies && terms && (privacies.length > 0 || terms.length > 0) ? (
         <App privacies={privacies} terms={terms} />
