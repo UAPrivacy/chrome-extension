@@ -1,4 +1,5 @@
 import { ALGORITHMIA } from 'secrets';
+import axios from 'axios';
 
 const terms = /terms|agreement/gi;
 const tos = /\/tos/gi;
@@ -13,7 +14,7 @@ function checkURLs(url) {
   }
 }
 
-async function getLinks(url) {
+async function getURLs(url) {
   const endpoint = 'https://api.algorithmia.com/v1/algo/web/GetLinks/0.1.5';
   const { data, status } = await axios.post(
     endpoint,
@@ -39,20 +40,19 @@ async function getLinks(url) {
 
 const isEmptyObj = obj =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
+
 async function findURLs(url) {
-  const urls = await getLinks(url);
+  const urls = await getURLs(url);
   if (urls && urls.length > 0) {
+    const categories = ['privacies', 'terms'];
     const results = {};
     for (const u of urls) {
-      if (results['terms'] && results['privacies']) {
+      if (Object.keys(results).every(key => categories.includes(key))) {
         return results;
       }
       const category = checkURLs(u);
-      if (category === 'terms') {
-        results['terms'] = u;
-      }
-      if (category === 'privacies') {
-        results['privacies'] = u;
+      if (category) {
+        results[category] = u;
       }
     }
 
@@ -60,7 +60,7 @@ async function findURLs(url) {
       throw Error`${url} could not find categories`;
     }
   } else {
-    throw Error`${url} could not find links`;
+    throw Error`${url} could not find urls`;
   }
 }
 export default findURLs;
