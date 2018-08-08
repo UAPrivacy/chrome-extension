@@ -34,7 +34,6 @@ async function getURLs(url) {
 
 async function findURLs(url) {
   const urls = await getURLs(url);
-  // console.log(`no. of urls found: ${urls.length}`);
   if (urls && urls.length > 0) {
     const categories = ['privacies', 'terms'];
     const results = {};
