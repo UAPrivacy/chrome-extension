@@ -17,29 +17,19 @@ function checkURLs(url) {
 
 async function getURLs(url) {
   const endpoint = 'https://api.algorithmia.com/v1/algo/web/GetLinks/0.1.5';
-
-  const { data, status } = await axios.post(
-    endpoint,
-    {
-      url
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Basic ${ALGORITHMIA}`,
-        Accept: 'application/json'
-      },
-      auth: {
-        username: 'samiezkay',
-        password: ALGORITHMIA
-      }
+  const { data, status } = await axios.post(endpoint, url, {
+    headers: {
+      'Content-Type': 'text/plain',
+      Authorization: `Simple ${ALGORITHMIA}`
     }
-  );
-  console.log(status, data);
+  });
+  if (data.error) {
+    throw Error(data.error.message);
+  }
   if (status >= 400) {
     throw Error(`status: ${status}`);
   }
-  return data;
+  return data.result;
 }
 
 async function findURLs(url) {
