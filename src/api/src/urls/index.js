@@ -12,6 +12,7 @@ async function urlsGetter(url) {
       const missingKey = categories.find(key => !keys.includes(key));
       mergeAttempt = true;
       Object.assign(results, await findURLsWithKey(url, missingKey));
+      console.log(`${url} merge happened for ${missingKey}`);
     }
   } catch (e) {
     if (mergeAttempt) return results;
