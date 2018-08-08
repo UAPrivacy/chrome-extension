@@ -5,21 +5,21 @@ import { isEmptyObj } from '../../shared';
 
 async function fetchSummaries(name) {
   const results = {};
-  const pagesToFetch = await getURLs(name);
-  if (!isEmptyObj(pagesToFetch)) {
-    for (const [key, url] of Object.entries(pagesToFetch)) {
-      const pageText = await extract(url);
-      const summariesFromText = await summarize({
-        text: pageText
+  const urlsObj = await getURLs(name);
+  if (urlsObj && !isEmptyObj(urlsObj)) {
+    for (const [key, url] of Object.entries(urlsObj)) {
+      const text = await extract(url);
+      const summaries = await summarize({
+        text: text
       });
-      results[key] = summariesFromText;
+      results[key] = summaries;
     }
     if (isEmptyObj(results)) {
-      throw Error`No summaries were found`;
+      throw Error`no summaries were found`;
     }
     return results;
   }
-  throw Error(`${name}: page info not found`);
+  throw Error(`${name}: could not fetch URLs`);
 }
 
 export default fetchSummaries;
