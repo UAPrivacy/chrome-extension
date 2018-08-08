@@ -17,7 +17,7 @@ function selector(cacheObj) {
     }
   });
 
-  if (isEmptyObj(results)) throw Error`manual results not found`;
+  if (isEmptyObj(results)) throw Error(`manual results not found`);
   return results;
 }
 

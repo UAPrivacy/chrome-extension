@@ -13,7 +13,7 @@ export function getCurrentURL() {
         if (url) {
           resolve(getHostname(url));
         } else {
-          reject(Error`could not fetch current URL`);
+          reject(Error(`could not fetch current URL`));
         }
       }
     );

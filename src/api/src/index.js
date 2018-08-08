@@ -15,7 +15,7 @@ async function fetchSummaries(name) {
       results[key] = summaries;
     }
     if (isEmptyObj(results)) {
-      throw Error`no summaries were found`;
+      throw Error(`no summaries were found`);
     }
     return results;
   }
