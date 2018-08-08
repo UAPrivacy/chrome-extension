@@ -1,7 +1,7 @@
 import { TEXTSUMMARIZATION } from 'secrets';
 import axios from 'axios';
 
-async function summarize({ text = '', url = '', sentnum = 10 }) {
+async function summarize({ text = '', url = '', sentnum = 12 }) {
   const { status, data } = await axios.post(
     'https://textanalysis-text-summarization.p.mashape.com/text-summarizer',
     {
