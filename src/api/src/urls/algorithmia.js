@@ -17,6 +17,7 @@ function checkURLs(url) {
 
 async function getURLs(url) {
   const endpoint = 'https://api.algorithmia.com/v1/algo/web/GetLinks/0.1.5';
+
   const { data, status } = await axios.post(
     endpoint,
     {
@@ -27,15 +28,16 @@ async function getURLs(url) {
         'Content-Type': 'application/json',
         Authorization: `Basic ${ALGORITHMIA}`,
         Accept: 'application/json'
+      },
+      auth: {
+        username: 'samiezkay',
+        password: ALGORITHMIA
       }
     }
   );
+  console.log(status, data);
   if (status >= 400) {
     throw Error(`status: ${status}`);
-  }
-  // works?
-  if (data.error) {
-    throw Error(data.error.message);
   }
   return data;
 }

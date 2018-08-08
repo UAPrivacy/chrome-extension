@@ -12,7 +12,7 @@ function selector(cacheObj) {
       }
 
       if (Array.isArray(urlsObj)) {
-        results[category] = [urlsObj];
+        [results[category]] = urlsObj;
       }
     }
   });

@@ -4,11 +4,14 @@ import algorithmia from './algorithmia';
 async function urlsGetter(url) {
   let results;
   try {
-    results = await github(url);
-    console.log(`successfully fetched from github`);
+    throw Error;
+    // results = await github(url);
+    // console.log(`successfully fetched from github: ${JSON.stringify(results)}`);
   } catch (e) {
     results = await algorithmia(url);
-    console.log(`successfully fetched from algorithmia`);
+    console.log(
+      `successfully fetched from algorithmia: ${JSON.stringify(results)}`
+    );
   }
   return results;
 }
