@@ -7,7 +7,6 @@ async function urlsGetter(url) {
   try {
     results = await github(url);
     const categories = ['terms', 'privacies'];
-
     const keys = Object.keys(results);
     if (keys.length < categories.length) {
       const missingKey = categories.find(key => !keys.includes(key));
@@ -16,7 +15,7 @@ async function urlsGetter(url) {
     }
   } catch (e) {
     if (mergeAttempt) return results;
-    Object.assign(results, await algorithmia(url));
+    results = await algorithmia(url);
   }
   return results;
 }

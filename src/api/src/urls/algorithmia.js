@@ -49,6 +49,7 @@ async function findURLs(url) {
     if (isEmptyObj(results)) {
       throw Error`${url} could not find categories`;
     }
+
     return results;
   } else {
     throw Error`${url} could not find urls`;
