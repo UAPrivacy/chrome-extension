@@ -13,21 +13,13 @@ class Root extends PureComponent {
   };
 
   async componentDidMount() {
-    try {
-      const url = await getCurrentURL();
-      const { privacies, terms } = await this.fetchState(url);
-      this.setState({
-        terms: terms ? terms : [],
-        privacies: privacies ? privacies : [],
-        isLoading: false
-      });
-    } catch (e) {
-      // test out ErrorBoundary by not catching the error
-      console.error(`error mounting component: ${e}`);
-      this.setState({
-        isLoading: false
-      });
-    }
+    const url = await getCurrentURL();
+    const { privacies, terms } = await this.fetchState(url);
+    this.setState({
+      terms: terms ? terms : [],
+      privacies: privacies ? privacies : [],
+      isLoading: false
+    });
   }
 
   fetchState = url =>

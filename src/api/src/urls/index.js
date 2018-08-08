@@ -3,17 +3,19 @@ import algorithmia, { findURLsWithKey } from './algorithmia';
 
 async function urlsGetter(url) {
   let results;
+  let mergeAttempt = false;
   try {
     results = await github(url);
+    const categories = ['terms', 'privacies'];
     const keys = Object.keys(results);
-    if (keys.length === 1) {
-      const missingKey = ['terms', 'privacies'].find(
-        key => !keys.includes(key)
-      );
-      findURLsWithKey(url, missingKey);
+    if (keys.length < categories.length) {
+      const missingKey = categories.find(key => !keys.includes(key));
+      mergeAttempt = true;
+      Object.assign(results, await findURLsWithKey(url, missingKey));
     }
   } catch (e) {
-    results = await algorithmia(url);
+    if (mergeAttempt) return results;
+    Object.assign(results, await algorithmia(url));
   }
   return results;
 }
