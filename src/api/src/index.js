@@ -6,18 +6,23 @@ import { isEmptyObj } from '../../shared';
 async function fetchSummaries(url) {
   const results = {};
   const urlsObj = await getURLs(url);
+  console.log(urlsObj);
   if (!isEmptyObj(urlsObj)) {
     for (const [key, urlValue] of Object.entries(urlsObj)) {
-      const text = await extract(urlValue);
-      if (!text) throw Error(`${url} text not found`);
-      const summaries = await summarize({
-        text: text
-      });
-      if (!summaries === 0) throw Error(`${url} no summaries found`);
-      results[key] = summaries;
+      if (key && urlValue) {
+        const text = await extract(urlValue);
+
+        if (!text) throw Error(`${url} text not found`);
+        const summaries = await summarize({
+          text: text
+        });
+
+        if (!summaries === 0) throw Error(`${url} no summaries found`);
+        results[key] = summaries;
+      }
     }
     if (isEmptyObj(results)) {
-      throw Error(`no summaries were found`);
+      throw Error(`${url} no summaries were found after loop`);
     }
     return results;
   }

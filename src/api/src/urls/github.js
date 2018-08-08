@@ -79,7 +79,7 @@ const main = async url => selector(findURLs(url, await getCache()));
 
 async function getCacheWithKey(url, key) {
   const results = await main(url);
-  return { key: results[key] };
+  if (results[key]) return { [key]: results[key] };
 }
 
 export { main as default, getCacheWithKey };
