@@ -31,7 +31,6 @@ async function getURLs(url) {
   }
   return data.result;
 }
-
 async function findURLs(url) {
   const urls = await getURLs(url);
   if (urls && urls.length > 0) {
@@ -55,4 +54,8 @@ async function findURLs(url) {
     throw Error`${url} could not find urls`;
   }
 }
-export default findURLs;
+async function findURLsWithKey(url, key) {
+  const results = await findURLs(url);
+  return results[key];
+}
+export { findURLsWithKey, findURLs as default };

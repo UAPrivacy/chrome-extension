@@ -75,4 +75,11 @@ async function getCache() {
   return cache;
 }
 
-export default async url => selector(findURLs(url, await getCache()));
+const main = async url => selector(findURLs(url, await getCache()));
+
+async function getCacheWithKey(url, key) {
+  const results = await main(url);
+  return results[key];
+}
+
+export { main as default, getCacheWithKey };

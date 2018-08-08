@@ -99,7 +99,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                   .then(msg => console.log(msg))
                   .catch(err => console.error(`error prefetching: ${err}`));
               })
-              .catch(error => console.error(`error prefetching: ${error}`));
+              .catch(err => console.error(`error prefetching: ${err}`));
           });
       })
       .catch(err => {

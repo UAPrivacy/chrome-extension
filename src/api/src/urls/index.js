@@ -1,16 +1,19 @@
 import github from './github';
-import algorithmia from './algorithmia';
+import algorithmia, { findURLsWithKey } from './algorithmia';
 
 async function urlsGetter(url) {
   let results;
   try {
     results = await github(url);
-    console.log(`successfully fetched from cache: ${JSON.stringify(results)}`);
+    const keys = Object.keys(results);
+    if (keys.length === 1) {
+      const missingKey = ['terms', 'privacies'].find(
+        key => !keys.includes(key)
+      );
+      findURLsWithKey(url, missingKey);
+    }
   } catch (e) {
     results = await algorithmia(url);
-    console.log(
-      `successfully fetched from algorithmia: ${JSON.stringify(results)}`
-    );
   }
   return results;
 }
