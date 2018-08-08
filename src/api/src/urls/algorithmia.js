@@ -4,7 +4,7 @@ import { isEmptyObj } from '../../../shared';
 
 function checkURLs(url) {
   const terms = /terms|\/tos/gi;
-  const userAgreement = /user.*agreement/gi;
+  const userAgreement = /agreement/gi;
   const privacies = /privacy/gi;
   // const policy = /policy/gi;
   if (terms.test(url) || userAgreement.test(url)) {
