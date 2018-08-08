@@ -56,6 +56,6 @@ async function findURLs(url) {
 }
 async function findURLsWithKey(url, key) {
   const results = await findURLs(url);
-  return results[key];
+  return { key: results[key] };
 }
 export { findURLsWithKey, findURLs as default };

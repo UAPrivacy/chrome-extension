@@ -34,7 +34,7 @@
             }
         ],
         "no-await-in-loop": 1,
-        "no-console": 0,
+        "no-console": 1,
         "no-multiple-empty-lines": [
             2,
             {

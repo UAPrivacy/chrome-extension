@@ -16,7 +16,6 @@ function selector(cacheObj) {
       }
     }
   });
-
   if (isEmptyObj(results)) throw Error`manual results not found`;
   return results;
 }
@@ -79,7 +78,7 @@ const main = async url => selector(findURLs(url, await getCache()));
 
 async function getCacheWithKey(url, key) {
   const results = await main(url);
-  return results[key];
+  return { key: results[key] };
 }
 
 export { main as default, getCacheWithKey };
