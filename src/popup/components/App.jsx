@@ -8,7 +8,7 @@ class App extends PureComponent {
     super(props);
     const { terms } = this.props;
     this.state = {
-      active: terms.length > 0 ? 'terms' : 'privacies'
+      active: terms.length > 0 ? 'terms' : 'privacy'
     };
   }
 
@@ -25,22 +25,22 @@ class App extends PureComponent {
         <div className="uk-container uk-container-small">
           <ul className="uk-subnav uk-subnav-pill uk-flex-center">
             <li className={active === 'terms' ? 'uk-active' : ''}>
-              <button
+              <a
                 type="button"
                 onClick={() => this.handleActiveTab('terms')}
                 uk-tooltip="title:User Agreements; pos: left"
               >
                 Terms
-              </button>
+              </a>
             </li>
             <li className={active === 'privacy' ? 'uk-active' : ''}>
-              <button
+              <a
                 type="button"
                 onClick={() => this.handleActiveTab('privacy')}
                 uk-tooltip="title:Privacy Policies ; pos: right"
               >
                 Privacy
-              </button>
+              </a>
             </li>
           </ul>
           <ul
