@@ -6,7 +6,7 @@ import { isEmptyObj } from '../../shared';
 async function fetchSummaries(url) {
   const results = {};
   const urlsObj = await getURLs(url);
-  console.log(urlsObj);
+
   if (!isEmptyObj(urlsObj)) {
     for (const [key, urlValue] of Object.entries(urlsObj)) {
       if (key && urlValue) {
