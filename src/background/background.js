@@ -1,17 +1,18 @@
 import fetchSummaries from '../api/src';
 import { getCurrentURL as getURL } from '../shared';
 
-const getLength = ({ terms, privacies }) => terms.length + privacies.length;
-
-function getCount(data) {
-  let count;
-  try {
-    count = getLength(data);
-  } catch (error) {
-    count = 0;
+const getLength = ({ terms, privacies }) => {
+  let length = 0;
+  if (terms) {
+    length += terms.length;
   }
-  return count.toString();
-}
+  if (privacies) {
+    length += privacies.length;
+  }
+  return length;
+};
+
+const getCount = data => getLength(data).toString();
 
 function loadState(key) {
   return new Promise((resolve, reject) => {

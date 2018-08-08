@@ -10,10 +10,20 @@ const Center = ({ children }) => (
   </div>
 );
 
-const EmptyDiv = () => <div />;
-
 Center.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-export { Center, EmptyDiv };
+const Loading = () => (
+  <Center>
+    <span uk-spinner="ratio: 4.5" className="uk-margin-auto-vertical" />
+  </Center>
+);
+
+const EmptyState = () => (
+  <Center>
+    <p>nothing to show</p>
+  </Center>
+);
+
+export { Center, EmptyState, Loading };

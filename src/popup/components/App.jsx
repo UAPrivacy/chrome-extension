@@ -1,11 +1,16 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Clause from './Clause';
+import { EmptyState } from './Shared';
 
 class App extends PureComponent {
-  state = {
-    active: 'terms'
-  };
+  constructor(props) {
+    super(props);
+    const { terms } = this.props;
+    this.state = {
+      active: terms.length > 0 ? 'terms' : 'privacies'
+    };
+  }
 
   handleActiveTab = which => {
     this.setState({ active: which });
@@ -42,9 +47,11 @@ class App extends PureComponent {
             className="uk-list uk-list-divider"
             uk-scrollspy="cls: uk-animation-fade; target: > li; delay: 300; repeat: true"
           >
-            {clauses.map((clause, idx) => (
-              <Clause key={idx} text={clause} />
-            ))}
+            {clauses.length > 0 ? (
+              clauses.map((clause, idx) => <Clause key={idx} text={clause} />)
+            ) : (
+              <EmptyState />
+            )}
           </ul>
         </div>
       </div>

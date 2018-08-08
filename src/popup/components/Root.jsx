@@ -3,19 +3,7 @@ import { hot } from 'react-hot-loader';
 import App from './App';
 import fetchSummaries from '../../api/src/index';
 import { getCurrentURL } from '../../shared';
-import { Center } from './Shared';
-
-const Loading = () => (
-  <Center>
-    <span uk-spinner="ratio: 4.5" className="uk-margin-auto-vertical" />
-  </Center>
-);
-
-const EmptyState = () => (
-  <Center>
-    <p>nothing to show</p>
-  </Center>
-);
+import { EmptyState, Loading } from './Shared';
 
 class Root extends PureComponent {
   state = {
@@ -29,8 +17,8 @@ class Root extends PureComponent {
       const url = await getCurrentURL();
       const { privacies, terms } = await this.fetchState(url);
       this.setState({
-        terms,
-        privacies,
+        terms: terms ? terms : [],
+        privacies: privacies ? privacies : [],
         isLoading: false
       });
     } catch (e) {
@@ -62,7 +50,6 @@ class Root extends PureComponent {
 
   render() {
     const { isLoading, privacies, terms } = this.state;
-    // verify if only one list can render
     const UI =
       privacies && terms && (privacies.length > 0 || terms.length > 0) ? (
         <App privacies={privacies} terms={terms} />
