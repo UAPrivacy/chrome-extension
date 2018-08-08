@@ -1,5 +1,6 @@
 import github from './github';
 import algorithmia, { findURLsWithKey } from './algorithmia';
+import { isEmptyObj } from '../../../shared';
 
 async function urlsGetter(url) {
   let results;
@@ -11,8 +12,11 @@ async function urlsGetter(url) {
     if (keys.length < categories.length) {
       const missingKey = categories.find(key => !keys.includes(key));
       mergeAttempt = true;
-      Object.assign(results, await findURLsWithKey(url, missingKey));
-      console.log(`${url} merge happened for ${missingKey}`);
+      const results2 = await findURLsWithKey(url, missingKey);
+      if (!isEmptyObj(results2)) {
+        Object.assign(results, results2);
+        console.log(`${url} merge happened for ${missingKey}`);
+      }
     }
   } catch (e) {
     if (mergeAttempt) return results;
