@@ -5,7 +5,7 @@ async function urlsGetter(url) {
   let results;
   try {
     results = await github(url);
-    console.log(`successfully fetched from github: ${JSON.stringify(results)}`);
+    console.log(`successfully fetched from cache: ${JSON.stringify(results)}`);
   } catch (e) {
     results = await algorithmia(url);
     console.log(
