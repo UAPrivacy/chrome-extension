@@ -23,6 +23,7 @@ async function summarize(url) {
   }
   return data;
 }
+
 const selector = data => data[0].summary.map(obj => obj.sentence);
 
 export default {
