@@ -31,6 +31,7 @@ async function getURLs(url) {
   }
   return data.result;
 }
+
 async function findURLs(url) {
   const urls = await getURLs(url);
   if (urls && urls.length > 0) {

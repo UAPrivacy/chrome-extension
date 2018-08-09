@@ -1,13 +1,11 @@
 import getURLs from './urls';
-import extract from './extract';
 import summarize from './summarize';
 import { isEmptyObj } from '../../shared';
 
 async function fetch(url) {
-  // const text = await extract(url);
-  // if (!text) throw Error(`${url} text not found`);
   const summaries = await summarize({ url });
-  if (!summaries === 0) throw Error(`${url} no summaries found`);
+  if (!summaries || summaries.length === 0)
+    throw Error(`${url} no summaries found`);
   return summaries;
 }
 
