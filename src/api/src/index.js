@@ -4,9 +4,9 @@ import summarize from './summarize';
 import { isEmptyObj } from '../../shared';
 
 async function fetch(url) {
-  const text = await extract(url);
-  if (!text) throw Error(`${url} text not found`);
-  const summaries = await summarize({ text });
+  // const text = await extract(url);
+  // if (!text) throw Error(`${url} text not found`);
+  const summaries = await summarize({ url });
   if (!summaries === 0) throw Error(`${url} no summaries found`);
   return summaries;
 }

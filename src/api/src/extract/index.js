@@ -7,8 +7,7 @@ function wrapper() {
     const { extract, selector } = extractor;
     return new Promise((resolve, reject) => {
       extract(url)
-        .then(data => selector(data))
-        .then(data => resolve(data))
+        .then(data => resolve(selector(data)))
         .catch(err => reject(err));
     });
   };

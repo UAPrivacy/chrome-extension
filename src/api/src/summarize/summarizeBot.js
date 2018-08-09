@@ -2,10 +2,9 @@ import { SUMMARIZEBOT } from 'secrets';
 import axios from 'axios';
 
 async function summarize({ url, text }) {
-  const endpoint = ' https://www.summarizebot.com/api/summarize';
   let reqInstance;
   const config = {
-    url: endpoint,
+    url: 'https://www.summarizebot.com/api/summarize',
     params: {
       apiKey: SUMMARIZEBOT,
       size: 10,
@@ -15,19 +14,15 @@ async function summarize({ url, text }) {
     }
   };
   if (text) {
-    const typedArray = [text.split('')];
-    const blob = new Blob([typedArray], { type: 'application/octet-stream' });
-    const blobURL = URL.createObjectURL(blob);
-
+    const blob = new Blob([text], { type: 'application/octet-stream' });
     reqInstance = axios.create(
       Object.assign(config, {
         method: 'post',
-        // data: {
-        //   text,
-        // },
+        data: {
+          fileName: blob
+        },
         params: {
-          ...config.params,
-          fileName: blobURL
+          ...config.params
         },
         headers: {
           'Content-Type': 'application/octet-stream'
@@ -49,6 +44,7 @@ async function summarize({ url, text }) {
     );
   }
   const { data, status } = await reqInstance.request();
+
   if (status >= 400) {
     throw Error(`status: ${status}`);
   }
