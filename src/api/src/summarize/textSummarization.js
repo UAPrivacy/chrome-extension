@@ -1,7 +1,7 @@
 import { TEXTSUMMARIZATION } from 'secrets';
 import axios from 'axios';
 
-async function summarize({ text = '', url = '', sentnum = 12 }) {
+async function summarize({ text = '', url = '', sentnum = 8 }) {
   const { status, data } = await axios.post(
     'https://textanalysis-text-summarization.p.mashape.com/text-summarizer',
     {
@@ -19,6 +19,9 @@ async function summarize({ text = '', url = '', sentnum = 12 }) {
   );
   if (status >= 400) {
     throw Error(`status: ${status}`);
+  }
+  if (data.error) {
+    throw Error(data.error.message);
   }
   return data;
 }
