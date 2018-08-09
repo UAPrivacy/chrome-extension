@@ -15,7 +15,6 @@ async function urlsGetter(url) {
       const results2 = await findURLsWithKey(url, missingKey);
       if (!isEmptyObj(results2)) {
         Object.assign(results, results2);
-        console.log(`${url} merge happened for ${missingKey}`);
       }
     }
   } catch (e) {

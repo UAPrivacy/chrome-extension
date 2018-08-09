@@ -3,22 +3,22 @@ import extract from './extract';
 import summarize from './summarize';
 import { isEmptyObj } from '../../shared';
 
-async function fetchSummaries(url) {
+async function fetch(url) {
+  const text = await extract(url);
+  if (!text) throw Error(`${url} text not found`);
+  const summaries = await summarize({ text });
+  if (!summaries === 0) throw Error(`${url} no summaries found`);
+  return summaries;
+}
+
+async function main(url) {
   const results = {};
   const urlsObj = await getURLs(url);
 
   if (!isEmptyObj(urlsObj)) {
     for (const [key, urlValue] of Object.entries(urlsObj)) {
       if (key && urlValue) {
-        const text = await extract(urlValue);
-
-        if (!text) throw Error(`${url} text not found`);
-        const summaries = await summarize({
-          text: text
-        });
-
-        if (!summaries === 0) throw Error(`${url} no summaries found`);
-        results[key] = summaries;
+        results[key] = await fetch(urlValue);
       }
     }
     if (isEmptyObj(results)) {
@@ -28,6 +28,5 @@ async function fetchSummaries(url) {
   }
   throw Error(`${url}: could not fetch its URLs`);
 }
-const fetchWrapper = url => setTimeout(() => fetchSummaries(url), 12000);
 
-export default fetchWrapper;
+export default main;
