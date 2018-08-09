@@ -28,5 +28,6 @@ async function fetchSummaries(url) {
   }
   throw Error(`${url}: could not fetch its URLs`);
 }
+const fetchWrapper = url => setTimeout(() => fetchSummaries(url), 12000);
 
-export default fetchSummaries;
+export default fetchWrapper;
