@@ -3,12 +3,12 @@ import axios from 'axios';
 
 const NO_OF_SENTENCES = 8;
 
-async function summarize({ url, sentnum = NO_OF_SENTENCES }) {
+async function summarize(url) {
   const { status, data } = await axios.post(
     'https://textanalysis-text-summarization.p.mashape.com/text-summarizer-url',
     {
       url,
-      sentnum
+      sentnum: NO_OF_SENTENCES
     },
     {
       headers: {
