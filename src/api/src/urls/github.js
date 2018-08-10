@@ -24,6 +24,8 @@ function selector(cacheObj) {
 const findKey = (possiblekeys, name) =>
   possiblekeys.find(k => name.includes(k) || k.includes(name));
 
+function findKeyBestMatch(possiblekeys, name) {}
+
 function findURLs(url, cache) {
   const { auto, manual } = cache;
   let key;
