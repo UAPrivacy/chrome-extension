@@ -5,7 +5,7 @@ const NO_OF_SENTENCES = 8;
 
 async function summarize(url) {
   const { status, data } = await axios.post(
-    'https://textanalysis-text-summarization.p.mashape.com/text-summarizer-url',
+    'https://meaningcloud-summarization-v1.p.mashape.com/summarization-1.0',
     {
       url,
       sentnum: NO_OF_SENTENCES
@@ -13,6 +13,7 @@ async function summarize(url) {
     {
       headers: {
         'X-Mashape-Key': MASHAPE,
+        'Content-Type': 'application/json',
         Accept: 'application/json'
       }
     }

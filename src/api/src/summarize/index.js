@@ -1,5 +1,5 @@
 import summarizeBot from './summarizeBot';
-// import textSummarization from './textSummarization';
+import textSummarization from './textSummarization';
 
 const summarizer = summarizeBot;
 
