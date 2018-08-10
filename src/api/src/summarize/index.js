@@ -4,10 +4,10 @@ import summarizeBot from './summarizeBot';
 const summarizer = summarizeBot;
 
 function wrapper() {
-  return function main(params) {
+  return function main(url) {
     const { summarize, selector } = summarizer;
     return new Promise((resolve, reject) => {
-      summarize(params)
+      summarize(url)
         .then(data => resolve(selector(data)))
         .catch(err => reject(err));
     });
