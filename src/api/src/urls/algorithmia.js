@@ -4,10 +4,11 @@ import { isEmptyObj } from '../../../shared';
 
 function checkURLs(url) {
   const terms = /terms|\/tos/gi;
+  const notTerms = /&search|\/search/gi;
   const userAgreement = /agreement/gi;
   const privacies = /privacy/gi;
   // const policy = /policy/gi;
-  if (terms.test(url) || userAgreement.test(url)) {
+  if ((terms.test(url) || userAgreement.test(url)) && !notTerms(url)) {
     return 'terms';
   }
   if (privacies.test(url)) {

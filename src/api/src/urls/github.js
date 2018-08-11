@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { findBestMatch } from 'string-similarity';
 import { isEmptyObj } from '../../../shared';
 
 function selector(cacheObj) {
@@ -21,10 +22,9 @@ function selector(cacheObj) {
   return results;
 }
 
-const findKey = (possiblekeys, name) =>
-  possiblekeys.find(k => name.includes(k) || k.includes(name));
-
-function findKeyBestMatch(possiblekeys, name) {}
+function findKey(possiblekeys, name) {
+  return findBestMatch(name, possiblekeys).bestMatch.target;
+}
 
 function findURLs(url, cache) {
   const { auto, manual } = cache;

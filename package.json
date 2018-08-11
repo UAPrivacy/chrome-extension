@@ -6,10 +6,10 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "node-summary": "^1.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "string-similarity": "^1.2.0",
     "uikit": "^3.0.0-rc.8"
   },
   "description": "Highlighting the important bits of User Agreements & Privacy Policy for the website you are browsing.",

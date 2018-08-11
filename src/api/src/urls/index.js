@@ -21,6 +21,7 @@ async function urlsGetter(url) {
     if (mergeAttempt) return results;
     results = await algorithmia(url);
   }
+
   return results;
 }
 
