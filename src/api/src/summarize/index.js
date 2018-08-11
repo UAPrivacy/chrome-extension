@@ -1,6 +1,5 @@
 import summarizeBot from './summarizeBot';
 import textSummarization from './textSummarization';
-import smmry from './smmry';
 
 const summarizer = summarizeBot;
 
