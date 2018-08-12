@@ -1,7 +1,7 @@
 import summarizeBot from './summarizeBot';
 import textSummarization from './textSummarization';
 
-const summarizer = summarizeBot;
+const summarizer = textSummarization;
 
 function wrapper() {
   return function main(url) {
