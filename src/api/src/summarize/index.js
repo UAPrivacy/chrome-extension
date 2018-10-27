@@ -1,10 +1,10 @@
 import summarizeBot from './summarizeBot';
 import textSummarization from './textSummarization';
 
-const summarizer = summarizeBot;
+const summarizer = textSummarization;
 
 function wrapper() {
-  return function main(url) {
+  return function helper(url) {
     const { summarize, selector } = summarizer;
     return new Promise((resolve, reject) => {
       summarize(url)
