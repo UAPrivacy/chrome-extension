@@ -1,6 +1,6 @@
-import getURLs from './urls';
-import summarize from './summarize';
-import { isEmptyObj } from '../../shared';
+import getURLs from './src/urls';
+import summarize from './src/summarize';
+import { isEmptyObj } from '../shared';
 
 async function fetch(url) {
   const summaries = await summarize(url);

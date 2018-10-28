@@ -47,7 +47,7 @@ const getURL = url => axios.get(url);
 
 function checkErrorStatus(status) {
   if (status >= 400) {
-    throw Error(`status: ${status}`);
+    throw Error(`error status: ${status}`);
   }
   return true;
 }

@@ -3,7 +3,7 @@
         "browser": true,
         "es6": true
     },
-    "extends": ["airbnb", "eslint:recommended", "plugin:promise/recommended", "plugin:import/errors", "plugin:prettier/recommended",    "plugin:jsx-a11y/recommended", "plugin:react/recommended"]  ,
+    "extends": ["airbnb", "eslint:recommended", "plugin:promise/recommended", "plugin:import/errors", "plugin:prettier/recommended", "plugin:jsx-a11y/recommended", "plugin:react/recommended"],
     "globals": {
         "chrome": true
     },
@@ -12,7 +12,7 @@
         "ecmaVersion": 8,
         "ecmaFeatures": {
             "jsx": true
-          }
+        }
     },
     "plugins": [
         "json",
@@ -34,7 +34,7 @@
             }
         ],
         "no-await-in-loop": 1,
-        "no-console": 1,
+        "no-console": 0,
         "no-multiple-empty-lines": [
             2,
             {

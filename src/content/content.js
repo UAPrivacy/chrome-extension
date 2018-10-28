@@ -1,5 +1,9 @@
-function main() {
-  chrome.runtime.sendMessage({ prefetch: true });
-}
-
-window.addEventListener('load', main, false);
+window.addEventListener(
+  'load',
+  () => {
+    chrome.runtime.sendMessage({
+      prefetch: true
+    });
+  },
+  false
+);

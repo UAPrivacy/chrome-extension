@@ -73,7 +73,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
       });
       await updateBadge(getLengthString(data));
     } catch (e) {
-      // console.error(`error loading: ${e}`);
+      console.error(`error loading: ${e}`);
     }
   } else if (request.store) {
     const { store: key, value } = request;
@@ -84,17 +84,16 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
       });
       await updateBadge(getLengthString(value));
     } catch (e) {
-      // console.error(`error storing: ${e}`);
+      console.error(`error storing: ${e}`);
     }
   } else if (request.prefetch) {
-    let key;
-    let value;
+    let key, value;
     try {
       key = await getURL();
       value = await loadState(key);
-      // console.log('prefetch cancelled');
+      console.log('prefetch cancelled');
     } catch (error) {
-      // console.error(`error prefetching: ${error}`);
+      console.error(`error prefetching: ${error}`);
       if (key) {
         try {
           value = await fetchSummaries(key);
@@ -103,7 +102,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
             value
           });
         } catch (error) {
-          // console.error(`error prefetching: ${error}`);
+          console.error(`error prefetching: ${error}`);
         }
       }
     } finally {
