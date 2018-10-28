@@ -33,26 +33,26 @@ async function getURLs(url) {
   return data.result;
 }
 
-async function findURLs(url) {
-  const urls = await getURLs(url);
+async function findURLs(URL) {
+  const urls = await getURLs(URL);
   if (urls && urls.length > 0) {
     const categories = ['privacies', 'terms'];
     const results = {};
-    for (const u of urls) {
+    for (const url of urls) {
       if (Object.keys(results).length >= categories.length) {
         return results;
       }
-      const category = checkURLs(u);
+      const category = checkURLs(url);
       if (category) {
-        results[category] = u;
+        results[category] = url;
       }
     }
     if (isEmptyObj(results)) {
-      throw Error(`${url} could not find categories`);
+      throw Error(`${URL} could not find categories`);
     }
     return results;
   } else {
-    throw Error(`${url} could not find urls`);
+    throw Error(`${URL} could not find urls`);
   }
 }
 async function findURLsWithKey(url, key) {

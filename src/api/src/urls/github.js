@@ -43,7 +43,7 @@ function findURLs(url, cache) {
   throw Error(`${url} entry not found`);
 }
 
-const getURL = url => axios.get(url);
+const getRequest = url => axios.get(url);
 
 function checkErrorStatus(status) {
   if (status >= 400) {
@@ -60,8 +60,8 @@ async function getCache() {
     'https://raw.githubusercontent.com/UAPrivacy/generators/master/src/data/cache-urls-manual.json';
 
   const [manual, auto] = await Promise.all([
-    getURL(autoURL),
-    getURL(manualURL)
+    getRequest(autoURL),
+    getRequest(manualURL)
   ]);
 
   const cache = {};
