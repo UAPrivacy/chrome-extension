@@ -12,7 +12,7 @@ const getLength = ({ terms, privacies }) => {
   return length;
 };
 
-const getCount = data => getLength(data).toString();
+const getLengthString = data => getLength(data).toString();
 
 function loadState(key) {
   return new Promise((resolve, reject) => {
@@ -40,7 +40,7 @@ function storeState({ key, value }) {
           if (chrome.runtime.lastError) {
             reject(Error(chrome.runtime.lastError));
           } else {
-            resolve(`${key}: succesfuly saved ${getCount(value)} items`);
+            resolve(`${key}: succesfuly saved ${getLengthString(value)} items`);
           }
         }
       );
@@ -51,60 +51,64 @@ function storeState({ key, value }) {
 }
 
 function updateBadge(text) {
-  chrome.browserAction.setBadgeText({
-    text
+  return new Promise(resolve => {
+    chrome.browserAction.setBadgeText(
+      {
+        text
+      },
+      () => {
+        resolve();
+      }
+    );
   });
 }
 
-function storeThenUpdateBadge(url, data) {
-  return new Promise((resolve, reject) => {
-    storeState({
-      key: url,
-      value: data
-    })
-      .then(msg => {
-        updateBadge(getCount(data));
-        resolve(msg);
-      })
-      .catch(err => reject(err));
-  });
-}
-
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   if (request.load) {
-    loadState(request.load)
-      .then(data => {
-        sendResponse({
-          data
-        });
-        updateBadge(getCount(data));
-      })
-      .catch(err => console.error(err));
-  } else if (request.store) {
-    storeThenUpdateBadge(request.store, request.value)
-      .then(msg => console.log(msg))
-      .catch(err => console.error(err));
-  } else if (request.prefetch) {
-    getURL()
-      .then(url => {
-        loadState(url)
-          .then(data => {
-            console.log('prefetch cancelled');
-            updateBadge(getCount(data));
-          })
-          .catch(() => {
-            fetchSummaries(url)
-              .then(data => {
-                storeThenUpdateBadge(url, data)
-                  .then(msg => console.log(msg))
-                  .catch(err => console.error(`error prefetching: ${err}`));
-              })
-              .catch(err => console.error(`error prefetching: ${err}`));
-          });
-      })
-      .catch(err => {
-        console.error(`error prefetching: ${err}`);
+    let data;
+    try {
+      data = await loadState(request.load);
+      await sendResponse({
+        data
       });
+      await updateBadge(getLengthString(data));
+    } catch (e) {
+      // console.error(`error loading: ${e}`);
+    }
+  } else if (request.store) {
+    const { store: key, value } = request;
+    try {
+      await storeState({
+        key,
+        value
+      });
+      await updateBadge(getLengthString(value));
+    } catch (e) {
+      // console.error(`error storing: ${e}`);
+    }
+  } else if (request.prefetch) {
+    let key;
+    let value;
+    try {
+      key = await getURL();
+      value = await loadState(key);
+      // console.log('prefetch cancelled');
+    } catch (error) {
+      // console.error(`error prefetching: ${error}`);
+      if (key) {
+        try {
+          value = await fetchSummaries(key);
+          await storeState({
+            key,
+            value
+          });
+        } catch (error) {
+          // console.error(`error prefetching: ${error}`);
+        }
+      }
+    } finally {
+      await updateBadge(getLengthString(value));
+    }
   }
   return true;
 });
