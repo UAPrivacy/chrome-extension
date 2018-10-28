@@ -47,11 +47,9 @@ async function findURLs(url) {
         results[category] = u;
       }
     }
-
     if (isEmptyObj(results)) {
       throw Error(`${url} could not find categories`);
     }
-
     return results;
   } else {
     throw Error(`${url} could not find urls`);
@@ -59,6 +57,9 @@ async function findURLs(url) {
 }
 async function findURLsWithKey(url, key) {
   const results = await findURLs(url);
-  if (results[key]) return { [key]: results[key] };
+  if (results[key])
+    return {
+      [key]: results[key]
+    };
 }
 export { findURLsWithKey, findURLs as default };
