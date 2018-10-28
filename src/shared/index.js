@@ -1,6 +1,5 @@
-export function getHostname(url) {
-  return new URL(url).hostname;
-}
+export const getHostname = url => new URL(url).hostname;
+
 export function getCurrentURL() {
   return new Promise((resolve, reject) => {
     chrome.tabs.query(
@@ -20,9 +19,5 @@ export function getCurrentURL() {
   });
 }
 
-const isEmptyObj = obj =>
+export const isEmptyObj = obj =>
   !obj && Object.keys(obj).length === 0 && obj.constructor === Object;
-
-const emptyFunc = () => {};
-
-export { isEmptyObj, emptyFunc };
