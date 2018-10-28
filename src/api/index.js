@@ -12,7 +12,6 @@ async function fetch(url) {
 async function main(url) {
   const results = {};
   const urlsObj = await getURLs(url);
-
   if (!isEmptyObj(urlsObj)) {
     for (const [key, urlToFetch] of Object.entries(urlsObj)) {
       if (key && urlToFetch) {

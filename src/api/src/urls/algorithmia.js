@@ -40,7 +40,8 @@ async function findURLs(URL) {
     const categories = ['privacies', 'terms'];
     const results = {};
     for (const url of urls) {
-      if (Object.keys(results).length >= categories.length) {
+      const keys = Object.keys(results);
+      if (keys.length >= categories.length) {
         return results;
       }
       const category = checkURLs(url);
