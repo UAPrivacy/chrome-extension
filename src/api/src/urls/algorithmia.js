@@ -24,6 +24,7 @@ async function getURLs(url) {
       Authorization: `Simple ${ALGORITHMIA}`
     }
   });
+  // TODO test
   if (data.error) {
     throw Error(data.error.message);
   }
