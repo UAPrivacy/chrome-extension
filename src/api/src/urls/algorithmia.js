@@ -1,6 +1,7 @@
 import { ALGORITHMIA } from 'secrets';
 import axios from 'axios';
 import { isEmptyObj } from '../../../shared';
+import { CATEGORIES } from '../utils';
 
 function checkURLs(url) {
   const terms = /terms|\/tos/gi;
@@ -37,11 +38,10 @@ async function getURLs(url) {
 async function findURLs(URL) {
   const urls = await getURLs(URL);
   if (urls && urls.length > 0) {
-    const categories = ['privacies', 'terms'];
     const results = {};
     for (const url of urls) {
       const keys = Object.keys(results);
-      if (keys.length >= categories.length) {
+      if (keys.length >= CATEGORIES.length) {
         return results;
       }
       const category = checkURLs(url);
