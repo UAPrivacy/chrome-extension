@@ -29,10 +29,6 @@ async function getCache() {
   if (status >= 400) {
     throw Error(`error status: ${status}`);
   }
-  // TODO test
-  if (cache.error) {
-    throw Error(cache.error.message);
-  }
   return cache;
 }
 

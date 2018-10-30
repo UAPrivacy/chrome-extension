@@ -9,7 +9,7 @@ async function fetch(url) {
   return summaries;
 }
 
-async function main(URL) {
+async function fetchSummaries(URL) {
   const results = {};
   const urls = await getURLs(URL);
   if (!isObjectEmpty(urls)) {
@@ -22,4 +22,4 @@ async function main(URL) {
   throw Error(`urls not found`);
 }
 
-export default main;
+export default fetchSummaries;

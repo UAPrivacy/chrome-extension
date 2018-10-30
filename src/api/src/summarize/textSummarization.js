@@ -20,10 +20,6 @@ async function summarize(url) {
   if (status >= 400) {
     throw Error(`status: ${status}`);
   }
-  // TODO test
-  if (data.error) {
-    throw Error(data.error.message);
-  }
   return data;
 }
 

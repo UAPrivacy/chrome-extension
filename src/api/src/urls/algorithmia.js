@@ -24,10 +24,6 @@ async function fetchURLs(url) {
       Authorization: `Simple ${ALGORITHMIA}`
     }
   });
-  // TODO test
-  if (data.error) {
-    throw Error(data.error.message);
-  }
   if (status >= 400) {
     throw Error(`status: ${status}`);
   }
