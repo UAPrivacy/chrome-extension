@@ -2,7 +2,6 @@ import { MASHAPE } from 'secrets';
 import axios from 'axios';
 
 const NO_OF_SENTENCES = 8;
-
 async function summarize(url) {
   const { status, data } = await axios.post(
     'https://textanalysis-text-summarization.p.mashape.com/text-summarizer-url',
@@ -13,16 +12,26 @@ async function summarize(url) {
     {
       headers: {
         'X-Mashape-Key': MASHAPE,
-        Accept: 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       }
     }
   );
-
   if (status >= 400) {
     throw Error(`status: ${status}`);
   }
   return data;
 }
+
+axios.interceptors.request.use(request => {
+  console.log('Starting Request', request);
+  return request;
+});
+
+axios.interceptors.response.use(response => {
+  console.log('Response:', response);
+  return response;
+});
 
 const selector = data => data.sentences;
 
