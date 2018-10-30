@@ -7,7 +7,6 @@ function getCategory(url) {
   const isNotTerms = /&search|\/search/gi;
   const isUserAgreement = /agreement/gi;
   const isPrivacies = /privacy/gi;
-  // const policy = /policy/gi;
   if ((isTerms.test(url) || isUserAgreement.test(url)) && !isNotTerms(url)) {
     return 'terms';
   }
