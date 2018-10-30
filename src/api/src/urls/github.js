@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { findBestMatch } from 'string-similarity';
-import { CATEGORIES } from '../utils';
-import { isEmptyObj } from '../../../shared';
+import { isEmptyObj, CATEGORIES } from '../../../shared';
 
 function selector(cache) {
   const results = {};

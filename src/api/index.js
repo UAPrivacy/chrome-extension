@@ -5,25 +5,21 @@ import { isEmptyObj } from '../shared';
 async function fetch(url) {
   const summaries = await summarize(url);
   if (!summaries || summaries.length === 0)
-    throw Error(`${url} no summaries found`);
+    throw Error(`unable to fetch summaries: ${url}`);
   return summaries;
 }
 
-async function main(url) {
+async function main(URL) {
   const results = {};
-  const urlsObj = await getURLs(url);
-  if (!isEmptyObj(urlsObj)) {
-    for (const [key, urlToFetch] of Object.entries(urlsObj)) {
-      if (key && urlToFetch) {
-        results[key] = await fetch(urlToFetch);
-      }
+  const urls = await getURLs(URL);
+  if (!isEmptyObj(urls)) {
+    for (const [key, url] of Object.entries(urls)) {
+      if (key && url) results[key] = await fetch(url);
     }
-    if (isEmptyObj(results)) {
-      throw Error(`${url} no summaries were found after loop`);
-    }
+    if (isEmptyObj(results)) throw Error(`no results after fetching: ${URL}`);
     return results;
   }
-  throw Error(`${url}: could not fetch its URLs`);
+  throw Error(`urls not found`);
 }
 
 export default main;
