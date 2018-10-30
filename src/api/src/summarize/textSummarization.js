@@ -17,6 +17,7 @@ async function summarize(url) {
       }
     }
   );
+
   if (status >= 400) {
     throw Error(`status: ${status}`);
   }
