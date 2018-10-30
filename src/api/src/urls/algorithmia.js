@@ -13,6 +13,7 @@ function getCategory(url) {
   if (isPrivacies.test(url)) {
     return 'privacies';
   }
+  return null;
 }
 
 async function fetchURLs(url) {
@@ -36,11 +37,11 @@ async function fetchURLs(url) {
 async function findURLs(URL) {
   const urls = await fetchURLs(URL);
   const results = {};
-  for (const url of urls) {
+  urls.forEach(url => {
     const category = getCategory(url);
     if (category) results[category] = url;
-  }
-  if (isObjectEmpty(results)) throw Error(`${URL} categories not found`);
+  });
+  if (isObjectEmpty(results)) throw Error(`no categories found`);
   return results;
 }
 async function findURLsCategory(url, category) {

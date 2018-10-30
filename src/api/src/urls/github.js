@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { findBestMatch } from 'string-similarity';
+import { findBestMatch as _findBestMatch } from 'string-similarity';
 import { isObjectEmpty, CATEGORIES } from '../../../shared';
 
 function selector(cache) {
@@ -12,12 +12,12 @@ function selector(cache) {
   return results;
 }
 
-function findKey(keys, name) {
-  return findBestMatch(name, keys).bestMatch.target;
+function findBestMatch(keys, name) {
+  return _findBestMatch(name, keys).bestMatch.target;
 }
 
 function findURLs(url, cache) {
-  const key = findKey(Object.keys(cache), url);
+  const key = findBestMatch(Object.keys(cache), url);
   if (key) return cache[key];
   else throw Error(`url not found: ${url}`);
 }
