@@ -3,8 +3,8 @@ import textSummarization from './textSummarization';
 
 const summarizer = textSummarization;
 
-function wrapper() {
-  return function helper(url) {
+function main() {
+  return function getSummaries(url) {
     const { summarize, selector } = summarizer;
     return new Promise((resolve, reject) => {
       summarize(url)
@@ -14,4 +14,4 @@ function wrapper() {
   };
 }
 
-export default wrapper();
+export default main();

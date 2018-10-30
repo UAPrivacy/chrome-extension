@@ -1,4 +1,4 @@
-import fetchSummaries from '../api/src';
+import fetchSummaries from '../api';
 import { getCurrentURL as getURL } from '../shared';
 
 const getLength = ({ terms, privacies }) => {

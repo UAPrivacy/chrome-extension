@@ -1,28 +1,26 @@
 import github from './github';
 import algorithmia, { findURLsCategory } from './algorithmia';
 import { isEmptyObj } from '../../../shared';
+import { CATEGORIES } from '../utils';
 
-async function urlsGetter(url) {
-  let results;
-  let mergeAttempt = false;
+async function getURLs(url) {
+  let results, shouldMerge;
   try {
     results = await github(url);
-    const categories = ['terms', 'privacies'];
     const keys = Object.keys(results);
-    if (keys.length < categories.length) {
-      const missingKey = categories.find(key => !keys.includes(key));
-      mergeAttempt = true;
-      const results2 = await findURLsCategory(url, missingKey);
-      if (!isEmptyObj(results2)) {
-        Object.assign(results, results2);
+    if (keys.length < CATEGORIES.length) {
+      const missingKey = CATEGORIES.find(key => !keys.includes(key));
+      shouldMerge = true;
+      const resultsTwo = await findURLsCategory(url, missingKey);
+      if (!isEmptyObj(resultsTwo)) {
+        results = Object.assign(results, resultsTwo);
       }
     }
   } catch (e) {
-    if (mergeAttempt) return results;
+    if (shouldMerge) return results;
     results = await algorithmia(url);
   }
-
   return results;
 }
 
-export default urlsGetter;
+export default getURLs;

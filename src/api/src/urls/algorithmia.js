@@ -15,7 +15,7 @@ function getCategory(url) {
   }
 }
 
-async function getURLs(url) {
+async function fetchURLs(url) {
   const endpoint = 'https://api.algorithmia.com/v1/algo/web/GetLinks/0.1.5';
   const { data, status } = await axios.post(endpoint, url, {
     headers: {
@@ -34,7 +34,7 @@ async function getURLs(url) {
 }
 
 async function findURLs(URL) {
-  const urls = await getURLs(URL);
+  const urls = await fetchURLs(URL);
   const results = {};
   for (const url of urls) {
     const category = getCategory(url);
