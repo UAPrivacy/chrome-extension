@@ -22,7 +22,7 @@ function loadState(key) {
       } else if (data && data[key]) {
         resolve(JSON.parse(data[key]));
       } else {
-        reject(Error('could not fetch from storage'));
+        reject(Error('unable to fetch from storage'));
       }
     });
   });
@@ -40,7 +40,7 @@ function storeState({ key, value }) {
           if (chrome.runtime.lastError) {
             reject(Error(chrome.runtime.lastError));
           } else {
-            resolve(`${key}: succesfuly saved ${getLengthString(value)} items`);
+            resolve(`${getLengthString(value)} items saved`);
           }
         }
       );

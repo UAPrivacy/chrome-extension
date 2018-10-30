@@ -12,14 +12,14 @@ export function getCurrentURL() {
         if (url) {
           resolve(getHostname(url));
         } else {
-          reject(Error(`could not fetch current URL`));
+          reject(Error(`unable to get current url`));
         }
       }
     );
   });
 }
 
-export const isEmptyObj = obj =>
+export const isObjectEmpty = obj =>
   !obj && Object.keys(obj).length === 0 && obj.constructor === Object;
 
 export const CATEGORIES = ['terms', 'privacies'];

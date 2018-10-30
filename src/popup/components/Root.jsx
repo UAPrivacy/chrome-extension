@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { hot } from 'react-hot-loader';
 import App from './App';
-import fetchSummaries from '../../api/src/index';
+import fetchSummaries from '../../api';
 import { getCurrentURL } from '../../shared';
 import { EmptyState, Loading } from './Shared';
 

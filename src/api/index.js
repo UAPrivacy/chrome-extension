@@ -1,6 +1,6 @@
 import getURLs from './src/urls';
 import summarize from './src/summarize';
-import { isEmptyObj } from '../shared';
+import { isObjectEmpty } from '../shared';
 
 async function fetch(url) {
   const summaries = await summarize(url);
@@ -12,11 +12,11 @@ async function fetch(url) {
 async function main(URL) {
   const results = {};
   const urls = await getURLs(URL);
-  if (!isEmptyObj(urls)) {
-    for (const [key, url] of Object.entries(urls)) {
-      if (key && url) results[key] = await fetch(url);
-    }
-    if (isEmptyObj(results)) throw Error(`no results after fetching: ${URL}`);
+  if (!isObjectEmpty(urls)) {
+    for (const [category, url] of Object.entries(urls))
+      if (category && url) results[category] = await fetch(url);
+    if (isObjectEmpty(results))
+      throw Error(`no results after fetching: ${URL}`);
     return results;
   }
   throw Error(`urls not found`);

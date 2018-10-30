@@ -1,6 +1,6 @@
 import github from './github';
 import algorithmia, { findURLsCategory } from './algorithmia';
-import { isEmptyObj, CATEGORIES } from '../../../shared';
+import { isObjectEmpty, CATEGORIES } from '../../../shared';
 
 async function getURLs(url) {
   let results, shouldMerge;
@@ -11,7 +11,7 @@ async function getURLs(url) {
       const missingKey = CATEGORIES.find(key => !keys.includes(key));
       shouldMerge = true;
       const resultsTwo = await findURLsCategory(url, missingKey);
-      if (!isEmptyObj(resultsTwo)) {
+      if (!isObjectEmpty(resultsTwo)) {
         results = Object.assign(results, resultsTwo);
       }
     }

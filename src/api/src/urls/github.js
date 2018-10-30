@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { findBestMatch } from 'string-similarity';
-import { isEmptyObj, CATEGORIES } from '../../../shared';
+import { isObjectEmpty, CATEGORIES } from '../../../shared';
 
 function selector(cache) {
   const results = {};
@@ -8,7 +8,7 @@ function selector(cache) {
     const urls = cache[category];
     if (urls) results[category] = urls;
   });
-  if (isEmptyObj(results)) throw Error(`categories not found`);
+  if (isObjectEmpty(results)) throw Error(`categories not found`);
   return results;
 }
 

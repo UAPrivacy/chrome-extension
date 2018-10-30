@@ -1,6 +1,6 @@
 import { ALGORITHMIA } from 'secrets';
 import axios from 'axios';
-import { isEmptyObj } from '../../../shared';
+import { isObjectEmpty } from '../../../shared';
 
 function getCategory(url) {
   const isTerms = /terms|\/tos/gi;
@@ -40,7 +40,7 @@ async function findURLs(URL) {
     const category = getCategory(url);
     if (category) results[category] = url;
   }
-  if (isEmptyObj(results)) throw Error(`${URL} categories not found`);
+  if (isObjectEmpty(results)) throw Error(`${URL} categories not found`);
   return results;
 }
 async function findURLsCategory(url, category) {

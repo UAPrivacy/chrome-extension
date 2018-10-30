@@ -26,7 +26,6 @@ class App extends PureComponent {
           <ul className="uk-subnav uk-subnav-pill uk-flex-center">
             <li className={active === 'terms' ? 'uk-active' : ''}>
               <a
-                type="button"
                 onClick={this.handleActiveTab('terms')}
                 uk-tooltip="title:User Agreements; pos: left"
               >
@@ -35,7 +34,6 @@ class App extends PureComponent {
             </li>
             <li className={active === 'privacy' ? 'uk-active' : ''}>
               <a
-                type="button"
                 onClick={this.handleActiveTab('privacy')}
                 uk-tooltip="title:Privacy Policies ; pos: right"
               >
