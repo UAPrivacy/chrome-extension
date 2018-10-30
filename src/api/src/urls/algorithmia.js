@@ -1,18 +1,17 @@
 import { ALGORITHMIA } from 'secrets';
 import axios from 'axios';
 import { isEmptyObj } from '../../../shared';
-import { CATEGORIES } from '../utils';
 
-function checkURLs(url) {
-  const terms = /terms|\/tos/gi;
-  const notTerms = /&search|\/search/gi;
-  const userAgreement = /agreement/gi;
-  const privacies = /privacy/gi;
+function getCategory(url) {
+  const isTerms = /terms|\/tos/gi;
+  const isNotTerms = /&search|\/search/gi;
+  const isUserAgreement = /agreement/gi;
+  const isPrivacies = /privacy/gi;
   // const policy = /policy/gi;
-  if ((terms.test(url) || userAgreement.test(url)) && !notTerms(url)) {
+  if ((isTerms.test(url) || isUserAgreement.test(url)) && !isNotTerms(url)) {
     return 'terms';
   }
-  if (privacies.test(url)) {
+  if (isPrivacies.test(url)) {
     return 'privacies';
   }
 }
@@ -37,31 +36,20 @@ async function getURLs(url) {
 
 async function findURLs(URL) {
   const urls = await getURLs(URL);
-  if (urls && urls.length > 0) {
-    const results = {};
-    for (const url of urls) {
-      const keys = Object.keys(results);
-      if (keys.length >= CATEGORIES.length) {
-        return results;
-      }
-      const category = checkURLs(url);
-      if (category) {
-        results[category] = url;
-      }
-    }
-    if (isEmptyObj(results)) {
-      throw Error(`${URL} could not find categories`);
-    }
-    return results;
-  } else {
-    throw Error(`${URL} could not find urls`);
+  const results = {};
+  for (const url of urls) {
+    const category = getCategory(url);
+    if (category) results[category] = url;
   }
+  if (isEmptyObj(results)) throw Error(`${URL} categories not found`);
+  return results;
 }
-async function findURLsWithKey(url, key) {
+async function findURLsCategory(url, category) {
   const results = await findURLs(url);
-  if (results[key])
-    return {
-      [key]: results[key]
-    };
+  return results && results[category]
+    ? {
+        [category]: results[category]
+      }
+    : null;
 }
-export { findURLsWithKey, findURLs as default };
+export { findURLsCategory, findURLs as default };
