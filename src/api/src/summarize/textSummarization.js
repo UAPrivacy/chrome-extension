@@ -4,10 +4,11 @@ import axios from 'axios';
 const NO_OF_SENTENCES = 8;
 async function summarize(url) {
   const { status, data } = await axios.post(
-    'https://textanalysis-text-summarization.p.mashape.com/text-summarizer-url',
+    'https://textanalysis-text-summarization.p.mashape.com/text-summarizer',
     {
       url,
-      sentnum: NO_OF_SENTENCES
+      sentnum: NO_OF_SENTENCES,
+      text: ''
     },
     {
       headers: {
@@ -23,15 +24,15 @@ async function summarize(url) {
   return data;
 }
 
-axios.interceptors.request.use(request => {
-  console.log('Starting Request', request);
-  return request;
-});
+// axios.interceptors.request.use(request => {
+//   console.log('Starting Request', request);
+//   return request;
+// });
 
-axios.interceptors.response.use(response => {
-  console.log('Response:', response);
-  return response;
-});
+// axios.interceptors.response.use(response => {
+//   console.log('Response:', response);
+//   return response;
+// });
 
 const selector = data => data.sentences;
 
