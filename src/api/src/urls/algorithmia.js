@@ -43,6 +43,7 @@ async function findURLs(URL) {
   if (isObjectEmpty(results)) throw Error(`no categories found`);
   return results;
 }
+
 async function findURLsCategory(url, category) {
   const results = await findURLs(url);
   return results && results[category]

@@ -14,6 +14,24 @@ const getLength = ({ terms, privacies } = {}) => {
 
 const getLengthString = data => getLength(data).toString();
 
+function createNotification({ text }) {
+  chrome.notifications.clear('addTodo', function() {
+    chrome.notifications.create(
+      'addTodo',
+      {
+        type: 'basic',
+        title: 'Todo added',
+        message: `added "${text}"`,
+        iconUrl: 'favicon.png',
+        contextMessage: `message`
+      },
+      function() {
+        console.log('displayed notification successfully');
+      }
+    );
+  });
+}
+
 function loadState(key) {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get([key], data => {

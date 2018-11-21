@@ -2,6 +2,7 @@ import { SUMMARIZEBOT } from 'secrets';
 import axios from 'axios';
 
 const PERCENTAGE = 12;
+
 async function summarize(url) {
   const endpoint = 'https://www.summarizebot.com/api/summarize';
   const { data, status } = await axios.get(endpoint, {
