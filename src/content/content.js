@@ -1,5 +1,5 @@
 window.addEventListener(
-  'load',
+  "load",
   () => {
     chrome.runtime.sendMessage({
       prefetch: true

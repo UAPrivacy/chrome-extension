@@ -1,6 +1,6 @@
-import github from './github';
-import algorithmia, { findURLsCategory } from './algorithmia';
-import { isObjectEmpty, CATEGORIES } from '../../../shared';
+import github from "./github";
+import algorithmia, { findURLsCategory } from "./algorithmia";
+import { isObjectEmpty, CATEGORIES } from "../../../shared";
 
 async function getURLs(url) {
   let results, shouldMerge;

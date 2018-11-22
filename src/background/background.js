@@ -1,5 +1,5 @@
-import fetchSummaries from '../api';
-import { getCurrentURL as getURL } from '../shared';
+import fetchSummaries from "../api";
+import { getCurrentURL as getURL } from "../shared";
 
 const getLength = ({ terms, privacies } = {}) => {
   let length = 0;
@@ -14,23 +14,23 @@ const getLength = ({ terms, privacies } = {}) => {
 
 const getLengthString = data => getLength(data).toString();
 
-function createNotification({ text }) {
-  chrome.notifications.clear('addTodo', function() {
-    chrome.notifications.create(
-      'addTodo',
-      {
-        type: 'basic',
-        title: 'Todo added',
-        message: `added "${text}"`,
-        iconUrl: 'favicon.png',
-        contextMessage: `message`
-      },
-      function() {
-        console.log('displayed notification successfully');
-      }
-    );
-  });
-}
+// function createNotification({ text }) {
+//   chrome.notifications.clear("addTodo", function() {
+//     chrome.notifications.create(
+//       "addTodo",
+//       {
+//         type: "basic",
+//         title: "Todo added",
+//         message: `added "${text}"`,
+//         iconUrl: "favicon.png",
+//         contextMessage: `message`
+//       },
+//       function() {
+//         console.log("displayed notification successfully");
+//       }
+//     );
+//   });
+// }
 
 function loadState(key) {
   return new Promise((resolve, reject) => {
@@ -40,7 +40,7 @@ function loadState(key) {
       } else if (data && data[key]) {
         resolve(JSON.parse(data[key]));
       } else {
-        reject(Error('unable to fetch from storage'));
+        reject(Error("unable to fetch from storage"));
       }
     });
   });
@@ -63,7 +63,7 @@ function storeState({ key, value }) {
         }
       );
     } else {
-      reject(Error('nothing to save'));
+      reject(Error("nothing to save"));
     }
   });
 }
@@ -109,7 +109,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     try {
       key = await getURL();
       value = await loadState(key);
-      console.log('prefetch cancelled');
+      console.log("prefetch cancelled");
     } catch (error) {
       console.error(`error prefetching: ${error}`);
       if (key) {

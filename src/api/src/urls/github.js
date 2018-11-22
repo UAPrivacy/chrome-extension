@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { findBestMatch as _findBestMatch } from 'string-similarity';
-import { isObjectEmpty, CATEGORIES } from '../../../shared';
+import axios from "axios";
+import { findBestMatch as _findBestMatch } from "string-similarity";
+import { isObjectEmpty, CATEGORIES } from "../../../shared";
 
 function selector(cache) {
   const results = {};
@@ -24,7 +24,7 @@ function findURLs(url, cache) {
 
 async function getCache() {
   const url =
-    'https://raw.githubusercontent.com/UAPrivacy/generators/master/src/data/cache-urls.json';
+    "https://raw.githubusercontent.com/UAPrivacy/generators/master/src/data/cache-urls.json";
   const { data: cache, status } = await axios.get(url);
   if (status >= 400) {
     throw Error(`error status: ${status}`);

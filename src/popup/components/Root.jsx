@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
-import { hot } from 'react-hot-loader';
-import App from './App';
-import fetchSummaries from '../../api';
-import { getCurrentURL } from '../../shared';
-import { EmptyState, Loading } from './Shared';
+import React, { PureComponent } from "react";
+import { hot } from "react-hot-loader";
+import App from "./App";
+import fetchSummaries from "../../api";
+import { getCurrentURL } from "../../shared";
+import { EmptyState, Loading } from "./Shared";
 
 class Root extends PureComponent {
   state = {

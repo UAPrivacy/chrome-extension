@@ -1,21 +1,21 @@
-import { MASHAPE } from 'secrets';
-import axios from 'axios';
+import { MASHAPE } from "secrets";
+import axios from "axios";
 
 const NO_OF_SENTENCES = 8;
 
 async function summarize(url) {
   const { status, data } = await axios.post(
-    'https://textanalysis-text-summarization.p.mashape.com/text-summarizer',
+    "https://textanalysis-text-summarization.p.mashape.com/text-summarizer",
     {
       url,
       sentnum: NO_OF_SENTENCES,
-      text: ''
+      text: ""
     },
     {
       headers: {
-        'X-Mashape-Key': MASHAPE,
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
+        "X-Mashape-Key": MASHAPE,
+        Accept: "application/json",
+        "Content-Type": "application/json"
       }
     }
   );

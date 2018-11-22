@@ -1,14 +1,14 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import Clause from './Clause';
-import { EmptyState } from './Shared';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import Clause from "./Clause";
+import { EmptyState } from "./Shared";
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
     const { terms } = this.props;
     this.state = {
-      active: terms.length > 0 ? 'terms' : 'privacy'
+      active: terms.length > 0 ? "terms" : "privacy"
     };
   }
 
@@ -19,26 +19,28 @@ class App extends PureComponent {
   render() {
     const { active } = this.state;
     const { terms, privacies } = this.props;
-    const clauses = active === 'terms' ? terms : privacies;
+    const clauses = active === "terms" ? terms : privacies;
     return (
       <div className="uk-section uk-section-xsmall">
         <div className="uk-container uk-container-small">
           <ul className="uk-subnav uk-subnav-pill uk-flex-center">
-            <li className={active === 'terms' ? 'uk-active' : ''}>
+            <li className={active === "terms" ? "uk-active" : ""}>
+              {/* eslint-disable */}
               <a
-                onClick={this.handleActiveTab('terms')}
+                onClick={this.handleActiveTab("terms")}
                 uk-tooltip="title:User Agreements; pos: left"
               >
                 Terms
               </a>
             </li>
-            <li className={active === 'privacy' ? 'uk-active' : ''}>
+            <li className={active === "privacy" ? "uk-active" : ""}>
               <a
-                onClick={this.handleActiveTab('privacy')}
+                onClick={this.handleActiveTab("privacy")}
                 uk-tooltip="title:Privacy Policies ; pos: right"
               >
                 Privacy
               </a>
+              {/* eslint-enable */}
             </li>
           </ul>
           <ul
