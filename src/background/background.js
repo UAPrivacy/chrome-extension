@@ -14,30 +14,10 @@ const getLength = ({ terms, privacies } = {}) => {
 
 const getLengthString = data => getLength(data).toString();
 
-// function createNotification({ text }) {
-//   chrome.notifications.clear("addTodo", function() {
-//     chrome.notifications.create(
-//       "addTodo",
-//       {
-//         type: "basic",
-//         title: "Todo added",
-//         message: `added "${text}"`,
-//         iconUrl: "favicon.png",
-//         contextMessage: `message`
-//       },
-//       function() {
-//         console.log("displayed notification successfully");
-//       }
-//     );
-//   });
-// }
-
 function loadState(key) {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get([key], data => {
-      if (chrome.runtime.lastError) {
-        reject(chrome.runtime.lastError);
-      } else if (data && data[key]) {
+      if (data && data[key]) {
         resolve(JSON.parse(data[key]));
       } else {
         reject(Error("unable to fetch from storage"));
@@ -49,10 +29,9 @@ function loadState(key) {
 function storeState({ key, value }) {
   return new Promise((resolve, reject) => {
     if (getLength(value) > 0) {
-      const stringValue = JSON.stringify(value);
       chrome.storage.sync.set(
         {
-          [key]: stringValue
+          [key]: JSON.stringify(value)
         },
         () => {
           if (chrome.runtime.lastError) {
@@ -122,6 +101,8 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
         } catch (error) {
           console.error(`error prefetching: ${error}`);
         }
+      } else {
+        console.error("could not even get the url key");
       }
     } finally {
       await updateBadge(getLengthString(value));

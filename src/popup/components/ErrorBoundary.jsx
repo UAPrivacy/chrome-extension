@@ -8,7 +8,7 @@ export default class ErrorBoundary extends PureComponent {
   };
 
   componentDidCatch(error, info) {
-    console.error(`component caught error: ${error}\n${info}`);
+    console.error(`component error: ${error}\n${info}`);
     this.setState({ error: true });
   }
 

@@ -1,7 +1,9 @@
-import summarizeBot from "./summarizeBot";
-import textSummarization from "./textSummarization";
+// import smmry from "./smmry";
+import summarization from "./summarization";
 
-const summarizer = textSummarization;
+// const APIs = [smmry, summarization];
+// const summarizer = APIs[Math.floor(Math.random() * APIs.length)];
+const summarizer = summarization;
 
 function main() {
   return function getSummaries(url) {

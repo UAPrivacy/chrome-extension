@@ -24,7 +24,7 @@ function findURLs(url, cache) {
 
 async function getCache() {
   const url =
-    "https://raw.githubusercontent.com/UAPrivacy/generators/master/src/data/cache-urls.json";
+    "https://raw.githubusercontent.com/UAPrivacy/APIs/master/src/dataURLs/cacheURLs.json";
   const { data: cache, status } = await axios.get(url);
   if (status >= 400) {
     throw Error(`error status: ${status}`);

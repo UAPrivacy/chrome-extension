@@ -12,16 +12,6 @@ class Root extends PureComponent {
     isLoading: true
   };
 
-  async componentDidMount() {
-    const url = await getCurrentURL();
-    const { privacies, terms } = await this.fetchState(url);
-    this.setState({
-      terms: terms ? terms : [],
-      privacies: privacies ? privacies : [],
-      isLoading: false
-    });
-  }
-
   fetchState = url =>
     new Promise((resolve, reject) => {
       chrome.runtime.sendMessage({ load: url }, response => {
@@ -39,6 +29,16 @@ class Root extends PureComponent {
         }
       });
     });
+
+  async componentDidMount() {
+    const url = await getCurrentURL();
+    const { privacies, terms } = await this.fetchState(url);
+    this.setState({
+      terms: terms ? terms : [],
+      privacies: privacies ? privacies : [],
+      isLoading: false
+    });
+  }
 
   render() {
     const { isLoading, privacies, terms } = this.state;

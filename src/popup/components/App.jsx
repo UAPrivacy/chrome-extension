@@ -12,8 +12,8 @@ class App extends PureComponent {
     };
   }
 
-  handleActiveTab = which => () => {
-    this.setState({ active: which });
+  handleActiveTab = category => () => {
+    this.setState({ active: category });
   };
 
   render() {

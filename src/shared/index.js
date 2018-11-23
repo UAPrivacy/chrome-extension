@@ -19,6 +19,11 @@ export function getCurrentURL() {
   });
 }
 
+export const createQueryString = params =>
+  Object.keys(params)
+    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(params[key]))
+    .join("&");
+
 export const isObjectEmpty = obj =>
   !obj && Object.keys(obj).length === 0 && obj.constructor === Object;
 

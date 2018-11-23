@@ -16,5 +16,5 @@ render(
       <Root />
     </ErrorBoundary>
   </StrictMode>,
-  window.document.getElementById("app-container")
+  document.getElementById("app-container")
 );
