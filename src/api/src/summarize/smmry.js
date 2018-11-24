@@ -16,7 +16,16 @@ async function summarize(url) {
   return data;
 }
 
-const selector = data => data.sm_api_content.split(". ");
+function selector(data) {
+  let result;
+  try {
+    result = data.sm_api_content.split(". ");
+  } catch (error) {
+    console.error("selector error" + error);
+    result = [];
+  }
+  return result;
+}
 
 export default {
   summarize,

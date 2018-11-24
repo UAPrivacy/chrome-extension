@@ -24,7 +24,16 @@ async function summarize(url) {
   return data;
 }
 
-const selector = data => data.summary.split(". ");
+function selector(data) {
+  let result;
+  try {
+    result = data.summary.split(". ");
+  } catch (error) {
+    console.error("selector error" + error);
+    result = [];
+  }
+  return result;
+}
 
 export default {
   summarize,
