@@ -60,54 +60,65 @@ function updateBadge(text) {
   });
 }
 
+async function handleLoadRequest(request, sendResponse) {
+  let data;
+  try {
+    data = await loadState(request.load);
+    await sendResponse({
+      data
+    });
+    await updateBadge(getLengthString(data));
+  } catch (e) {
+    console.error(`error loading: ${e}`);
+  }
+}
+
+async function handleStoreRequest(request) {
+  const { store: key, value } = request;
+  try {
+    await storeState({
+      key,
+      value
+    });
+    await updateBadge(getLengthString(value));
+  } catch (e) {
+    console.error(`error storing: ${e}`);
+  }
+}
+
+async function handlePrefetchRequest() {
+  let key, value;
+  try {
+    key = await getURL();
+    value = await loadState(key);
+    console.log("prefetch has been cancelled");
+  } catch (error) {
+    console.error(`error prefetching: ${error}`);
+    if (key) {
+      try {
+        value = await fetchSummaries(key);
+        // await storeState({
+        //   key,
+        //   value
+        // });
+      } catch (error) {
+        console.error(`error prefetching: ${error}`);
+      }
+    } else {
+      console.error("could not even get the url key");
+    }
+  } finally {
+    await updateBadge(getLengthString(value));
+  }
+}
+
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   if (request.load) {
-    let data;
-    try {
-      data = await loadState(request.load);
-      await sendResponse({
-        data
-      });
-      await updateBadge(getLengthString(data));
-    } catch (e) {
-      console.error(`error loading: ${e}`);
-    }
+    await handleLoadRequest(request, sendResponse);
   } else if (request.store) {
-    const { store: key, value } = request;
-    try {
-      await storeState({
-        key,
-        value
-      });
-      await updateBadge(getLengthString(value));
-    } catch (e) {
-      console.error(`error storing: ${e}`);
-    }
+    await handleStoreRequest(request);
   } else if (request.prefetch) {
-    let key, value;
-    try {
-      key = await getURL();
-      console.log(key);
-      value = await loadState(key);
-      console.log("prefetch cancelled");
-    } catch (error) {
-      console.error(`error prefetching: ${error}`);
-      if (key) {
-        try {
-          value = await fetchSummaries(key);
-          await storeState({
-            key,
-            value
-          });
-        } catch (error) {
-          console.error(`error prefetching: ${error}`);
-        }
-      } else {
-        console.error("could not even get the url key");
-      }
-    } finally {
-      await updateBadge(getLengthString(value));
-    }
+    await handlePrefetchRequest();
   }
   return true;
 });

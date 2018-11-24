@@ -28,7 +28,7 @@ async function fetchURLs(url) {
     }
   });
   if (status >= 400) {
-    throw Error(`status: ${status}`);
+    throw Error(`error fetching urls: ${status}`);
   }
   return data.result;
 }

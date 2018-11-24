@@ -20,7 +20,7 @@ async function summarize(url) {
       }
     }
   );
-  if (status >= 400) throw Error(`status: ${status}`);
+  if (status >= 400) throw Error(`error fetching summaries: ${status}`);
   return data;
 }
 
