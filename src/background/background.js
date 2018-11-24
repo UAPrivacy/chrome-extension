@@ -87,6 +87,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     let key, value;
     try {
       key = await getURL();
+      console.log(key);
       value = await loadState(key);
       console.log("prefetch cancelled");
     } catch (error) {
