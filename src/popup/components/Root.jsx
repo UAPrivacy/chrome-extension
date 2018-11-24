@@ -21,7 +21,7 @@ class Root extends PureComponent {
           fetchSummaries(url)
             .then(res => {
               resolve(res);
-              // chrome.runtime.sendMessage({ store: url, value: res });
+              chrome.runtime.sendMessage({ store: url, value: res });
             })
             .catch(err => {
               reject(err);

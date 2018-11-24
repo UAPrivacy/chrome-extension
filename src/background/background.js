@@ -95,10 +95,10 @@ async function handlePrefetchRequest() {
     if (key) {
       try {
         value = await fetchSummaries(key);
-        // await storeState({
-        //   key,
-        //   value
-        // });
+        await storeState({
+          key,
+          value
+        });
       } catch (error) {
         console.error(`error prefetching: ${error}`);
       }

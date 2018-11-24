@@ -12,7 +12,6 @@ async function fetch(url) {
 async function fetchSummaries(URL) {
   const results = {};
   const urls = await getURLs(URL);
-
   if (!isObjectEmpty(urls)) {
     for (const [category, url] of Object.entries(urls))
       if (category && url) results[category] = await fetch(url);
