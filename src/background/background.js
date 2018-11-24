@@ -1,6 +1,7 @@
 import fetchSummaries from "../api";
 import { getCurrentURL as getURL } from "../shared";
 
+// TODO refactor to more pure ?
 const getLength = ({ terms, privacies } = {}) => {
   let length = 0;
   if (terms) {

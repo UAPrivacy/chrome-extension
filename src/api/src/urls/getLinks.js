@@ -28,13 +28,13 @@ async function fetchURLs(url) {
     }
   });
   if (status >= 400) throw Error(`error fetching urls: ${status}`);
-
   return data.result;
 }
 
 async function findURLs(URL) {
   const urls = await fetchURLs(URL);
   const results = {};
+  // TODO avoid overwriting first results?
   urls.forEach(url => {
     const category = getCategory(url);
     if (category) results[category] = url;
@@ -43,12 +43,4 @@ async function findURLs(URL) {
   return results;
 }
 
-async function findURLsCategory(url, category) {
-  const results = await findURLs(url);
-  return results && results[category]
-    ? {
-        [category]: results[category]
-      }
-    : null;
-}
-export { findURLsCategory, findURLs as default };
+export default findURLs;
