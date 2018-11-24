@@ -34,12 +34,14 @@ async function fetchURLs(url) {
 async function findURLs(URL) {
   const urls = await fetchURLs(URL);
   const results = {};
-  // TODO avoid overwriting first results?
-  urls.forEach(url => {
-    const category = getCategory(url);
-    if (category) results[category] = url;
-  });
-  if (isObjectEmpty(results)) throw Error(`no categories found`);
+  if (urls) {
+    for (const url of urls) {
+      const category = getCategory(url);
+      if (category)
+        if (!results.hasOwnProperty(category)) results[category] = url;
+    }
+    if (isObjectEmpty(results)) throw Error(`no categories found`);
+  } else throw Error("urls not found");
   return results;
 }
 
