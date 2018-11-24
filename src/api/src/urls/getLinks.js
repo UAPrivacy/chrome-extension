@@ -27,9 +27,8 @@ async function fetchURLs(url) {
       Authorization: `Simple ${ALGORITHMIA}`
     }
   });
-  if (status >= 400) {
-    throw Error(`error fetching urls: ${status}`);
-  }
+  if (status >= 400) throw Error(`error fetching urls: ${status}`);
+
   return data.result;
 }
 

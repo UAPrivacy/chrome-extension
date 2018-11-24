@@ -6,16 +6,13 @@ async function getURLs(url) {
   let results, shouldMerge;
   try {
     results = await github(url);
-
     const keys = Object.keys(results);
     if (keys.length < CATEGORIES.length) {
       const missingKey = CATEGORIES.find(key => !keys.includes(key));
       shouldMerge = true;
       const resultsTwo = await findURLsCategory(url, missingKey);
-
-      if (!isObjectEmpty(resultsTwo)) {
+      if (!isObjectEmpty(resultsTwo))
         results = Object.assign(results, resultsTwo);
-      }
     }
   } catch (e) {
     if (shouldMerge) return results;
