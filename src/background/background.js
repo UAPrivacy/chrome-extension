@@ -118,5 +118,13 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   } else if (request.prefetch) {
     await handlePrefetchRequest();
   }
+
+  logLocalStorage();
   return true;
 });
+
+function logLocalStorage() {
+  chrome.storage.sync.get(null, function(result) {
+    console.log(Object.keys(result));
+  });
+}
