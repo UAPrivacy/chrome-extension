@@ -28,7 +28,7 @@ class App extends PureComponent {
               {/* eslint-disable */}
               <a
                 onClick={this.handleActiveTab("terms")}
-                uk-tooltip="title:User Agreements; pos: left"
+                uk-tooltip="title:Terms of Service; pos: left"
               >
                 Terms
               </a>

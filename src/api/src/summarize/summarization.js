@@ -29,7 +29,6 @@ function selector(data) {
   try {
     result = data.summary.split(". ");
   } catch (error) {
-    console.error("selector error" + error);
     result = [];
   }
   return result;

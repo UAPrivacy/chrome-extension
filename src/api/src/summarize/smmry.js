@@ -21,7 +21,6 @@ function selector(data) {
   try {
     result = data.sm_api_content.split(". ");
   } catch (error) {
-    console.error("selector error" + error);
     result = [];
   }
   return result;

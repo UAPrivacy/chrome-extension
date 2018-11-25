@@ -1,3 +1,4 @@
+import axios from "axios";
 import getURLs from "./src/urls";
 import summarize from "./src/summarize";
 import { isObjectEmpty } from "../shared";
@@ -21,5 +22,19 @@ async function fetchSummaries(URL) {
   }
   throw Error(`urls not found`);
 }
+
+// start logging
+
+axios.interceptors.request.use(request => {
+  console.log("Starting Request", request);
+  return request;
+});
+
+axios.interceptors.response.use(response => {
+  console.log("Response:", response);
+  return response;
+});
+
+// end logging
 
 export default fetchSummaries;
