@@ -23,12 +23,9 @@
         "react"
     ],
     "rules": {
+        "import/no-unresolved": 1,
         "no-console": 0,
-        "react/jsx-one-expression-per-line": 0,
-        "promise/always-return": 0,
-        "promise/no-nesting": 0,
-        "react/no-array-index-key": 0,
         "react/sort-comp": 0,
-        "import/no-unresolved": 1
+        "promise/catch-or-return": 0
     }
 }

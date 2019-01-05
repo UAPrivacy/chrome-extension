@@ -1,67 +1,51 @@
 import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-import Clause from "./Clause";
-import { EmptyState } from "./Shared";
+import { hot } from "react-hot-loader";
+import Main from "./Main";
+import fetchSummaries from "../../api";
+import { getCurrentURL } from "../../shared";
+import { EmptyState, Loading } from "./Shared";
 
 class App extends PureComponent {
-  constructor(props) {
-    super(props);
-    const { terms } = this.props;
-    this.state = {
-      active: terms.length > 0 ? "terms" : "privacy"
-    };
-  }
-
-  handleActiveTab = category => () => {
-    this.setState({ active: category });
+  state = {
+    terms: [],
+    privacies: [],
+    isLoading: true
   };
 
+  fetchState = url =>
+    new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage({ load: url }, response => {
+        if (response && response.data) resolve(response.data);
+        else
+          fetchSummaries(url)
+            .then(res => {
+              resolve(res);
+              chrome.runtime.sendMessage({ store: url, value: res });
+            })
+            .catch(err => reject(err));
+      });
+    });
+
+  async componentDidMount() {
+    const url = await getCurrentURL();
+    const { privacies, terms } = await this.fetchState(url);
+    this.setState({
+      terms,
+      privacies,
+      isLoading: false
+    });
+  }
+
   render() {
-    const { active } = this.state;
-    const { terms, privacies } = this.props;
-    const clauses = active === "terms" ? terms : privacies;
-    return (
-      <div className="uk-section uk-section-xsmall">
-        <div className="uk-container uk-container-small">
-          <ul className="uk-subnav uk-subnav-pill uk-flex-center">
-            <li className={active === "terms" ? "uk-active" : ""}>
-              {/* eslint-disable */}
-              <a
-                onClick={this.handleActiveTab("terms")}
-                uk-tooltip="title:Terms of Service; pos: left"
-              >
-                Terms
-              </a>
-            </li>
-            <li className={active === "privacy" ? "uk-active" : ""}>
-              <a
-                onClick={this.handleActiveTab("privacy")}
-                uk-tooltip="title:Privacy Policies ; pos: right"
-              >
-                Privacy
-              </a>
-              {/* eslint-enable */}
-            </li>
-          </ul>
-          <ul
-            className="uk-list uk-list-divider"
-            uk-scrollspy="cls: uk-animation-fade; target: > li; delay: 300; repeat: true"
-          >
-            {clauses.length > 0 ? (
-              clauses.map((clause, idx) => <Clause key={idx} text={clause} />)
-            ) : (
-              <EmptyState />
-            )}
-          </ul>
-        </div>
-      </div>
-    );
+    const { isLoading, privacies, terms } = this.state;
+    const UI =
+      privacies.length > 0 || terms.length > 0 ? (
+        <Main privacies={privacies} terms={terms} />
+      ) : (
+        <EmptyState />
+      );
+    return isLoading ? <Loading /> : UI;
   }
 }
 
-App.propTypes = {
-  terms: PropTypes.arrayOf(PropTypes.string).isRequired,
-  privacies: PropTypes.arrayOf(PropTypes.string).isRequired
-};
-
-export default App;
+export default hot(module)(App);

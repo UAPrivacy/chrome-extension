@@ -1,5 +1,4 @@
 /build
 /utils
 secrets.js
-**/vendor
 webpack.config.js

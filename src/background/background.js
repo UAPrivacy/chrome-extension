@@ -13,49 +13,39 @@ function getLength(value) {
 const getLengthString = data => getLength(data).toString();
 
 function loadState(key) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) =>
     chrome.storage.sync.get([key], data => {
-      if (data && data[key]) {
-        resolve(JSON.parse(data[key]));
-      } else {
-        reject(Error("unable to fetch from storage"));
-      }
-    });
-  });
+      if (data && data[key]) resolve(JSON.parse(data[key]));
+      else reject(Error("unable to fetch from storage"));
+    })
+  );
 }
 
 function storeState({ key, value }) {
   return new Promise((resolve, reject) => {
-    if (getLength(value) > 0) {
+    if (getLength(value) > 0)
       chrome.storage.sync.set(
         {
           [key]: JSON.stringify(value)
         },
         () => {
-          if (chrome.runtime.lastError) {
-            reject(Error(chrome.runtime.lastError));
-          } else {
-            resolve(`${getLengthString(value)} items saved`);
-          }
+          if (chrome.runtime.lastError) reject(Error(chrome.runtime.lastError));
+          else resolve(`${getLengthString(value)} items saved`);
         }
       );
-    } else {
-      reject(Error("nothing to save"));
-    }
+    else reject(Error("nothing to save"));
   });
 }
 
 function updateBadge(text) {
-  return new Promise(resolve => {
+  return new Promise(resolve =>
     chrome.browserAction.setBadgeText(
       {
         text
       },
-      () => {
-        resolve();
-      }
-    );
-  });
+      resolve
+    )
+  );
 }
 
 async function handleLoadRequest(request, sendResponse) {
@@ -110,6 +100,12 @@ async function handlePrefetchRequest() {
   }
 }
 
+function logLocalStorage() {
+  chrome.storage.sync.get(null, function(result) {
+    console.log(Object.keys(result));
+  });
+}
+
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   if (request.load) {
     await handleLoadRequest(request, sendResponse);
@@ -118,13 +114,6 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   } else if (request.prefetch) {
     await handlePrefetchRequest();
   }
-
   logLocalStorage();
   return true;
 });
-
-function logLocalStorage() {
-  chrome.storage.sync.get(null, function(result) {
-    console.log(Object.keys(result));
-  });
-}

@@ -11,6 +11,12 @@ Center.propTypes = {
   children: PropTypes.node.isRequired
 };
 
+const Clause = ({ text }) => <li>{text}</li>;
+
+Clause.propTypes = {
+  text: PropTypes.string.isRequired
+};
+
 const Loading = () => (
   <Center>
     <span uk-spinner="ratio: 4.5" className="uk-margin-auto-vertical" />
@@ -23,4 +29,4 @@ const EmptyState = () => (
   </Center>
 );
 
-export { Center, EmptyState, Loading };
+export { Center, EmptyState, Loading, Clause };

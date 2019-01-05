@@ -9,11 +9,8 @@ export function getCurrentURL() {
       },
       tabs => {
         const [{ url }] = tabs;
-        if (url) {
-          resolve(getHostname(url));
-        } else {
-          reject(Error(`unable to get current url`));
-        }
+        if (url) resolve(getHostname(url));
+        else reject(Error(`unable to get current url`));
       }
     );
   });

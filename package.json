@@ -1,9 +1,7 @@
 {
-  "author": {
-    "email": "info@uaprivacy.com",
-    "name": "uaprivacy",
-    "url": "https://www.uaprivacy.com"
-  },
+  "name": "uaprivacy",
+  "version": "1.0.5",
+  "description": "Highlighting the important bits of User Agreements & Privacy Policy for the website you are browsing.",
   "dependencies": {
     "axios": "^0.18.0",
     "prop-types": "^15.6.2",
@@ -13,7 +11,6 @@
     "string-similarity": "^1.2.2",
     "uikit": "^3.0.0-rc.20"
   },
-  "description": "Highlighting the important bits of User Agreements & Privacy Policy for the website you are browsing.",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
@@ -44,9 +41,6 @@
     "webpack-dev-server": "^2.11.3",
     "write-file-webpack-plugin": "3.4.2"
   },
-  "license": "UNLICENSED",
-  "name": "uaprivacy",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/UAPrivacy/chrome-extension.git"
@@ -55,6 +49,5 @@
     "build": "node utils/build.js",
     "start": "node utils/webserver.js",
     "zip": "npm run build && rm -f build.zip && zip -r build.zip build"
-  },
-  "version": "1.0.5"
+  }
 }
