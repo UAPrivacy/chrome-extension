@@ -15,14 +15,13 @@ export default class ErrorBoundary extends PureComponent {
   render() {
     const { error } = this.state;
     const { children } = this.props;
-    if (error) {
-      return (
-        <Center>
-          <p>an error has occurred</p>
-        </Center>
-      );
-    }
-    return children;
+    return error ? (
+      <Center>
+        <p>an error has occurred</p>
+      </Center>
+    ) : (
+      children
+    );
   }
 }
 

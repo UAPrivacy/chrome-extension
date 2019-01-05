@@ -25,14 +25,14 @@ class Main extends PureComponent {
       <div className="uk-section uk-section-xsmall">
         <div className="uk-container uk-container-small">
           <div
-            className="uk-grid uk-child-width-1-3@s uk-flex uk-flex-middle"
+            className="uk-grid uk-child-width-1-3 uk-flex uk-flex-middle"
             uk-grid=""
           >
             <div>
-              <img src={logo} alt="" />
+              <img className="uk-visible@s" src={logo} alt="" />
             </div>
             <div>
-              <ul className="uk-subnav uk-subnav-pill uk-flex-center">
+              <ul className="uk-subnav uk-subnav-pill uk-flex-center uk-flex-nowrap">
                 <li className={active === "terms" ? "uk-active" : ""}>
                   <a
                     onClick={this.handleActiveTab("terms")}
@@ -45,7 +45,7 @@ class Main extends PureComponent {
                 <li className={active === "privacy" ? "uk-active" : ""}>
                   <a
                     onClick={this.handleActiveTab("privacy")}
-                    uk-tooltip="title:Privacy Policies ; pos: right"
+                    uk-tooltip="title:Privacy Policy ; pos: right"
                     href="#privacy"
                   >
                     Privacy
@@ -73,7 +73,7 @@ class Main extends PureComponent {
 Main.propTypes = {
   terms: PropTypes.arrayOf(PropTypes.string).isRequired,
   privacies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  logo: PropTypes.string
+  logo: PropTypes.string.isRequired
 };
 
 export default Main;

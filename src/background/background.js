@@ -79,9 +79,8 @@ async function handlePrefetchRequest() {
   try {
     key = await getURL();
     value = await loadState(key);
-    console.log("prefetch has been cancelled");
+    console.log("prefetch cancelled");
   } catch (error) {
-    console.error(`error prefetching: ${error}`);
     if (key) {
       try {
         value = await fetchSummaries(key);
@@ -93,7 +92,7 @@ async function handlePrefetchRequest() {
         console.error(`error prefetching: ${error}`);
       }
     } else {
-      console.error("could not even get the url key");
+      console.error("could not get url");
     }
   } finally {
     await updateBadge(getLengthString(value));

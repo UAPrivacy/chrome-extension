@@ -9,20 +9,19 @@ class App extends PureComponent {
   state = {
     terms: [],
     privacies: [],
-    isLoading: true
+    isLoading: true,
+    logo: ""
   };
 
   fetchState = url =>
-    new Promise((resolve, reject) => {
+    new Promise(resolve => {
       chrome.runtime.sendMessage({ load: url }, response => {
         if (response && response.data) resolve(response.data);
         else
-          fetchSummaries(url)
-            .then(res => {
-              resolve(res);
-              chrome.runtime.sendMessage({ store: url, value: res });
-            })
-            .catch(err => reject(err));
+          fetchSummaries(url).then(summaries => {
+            chrome.runtime.sendMessage({ store: url, value: summaries });
+            return resolve(summaries);
+          });
       });
     });
 
@@ -32,15 +31,16 @@ class App extends PureComponent {
     this.setState({
       terms,
       privacies,
-      isLoading: false
+      isLoading: false,
+      logo: `https://logo.clearbit.com/${url}?size=36`
     });
   }
 
   render() {
-    const { isLoading, privacies, terms } = this.state;
+    const { isLoading, privacies, terms, logo } = this.state;
     const UI =
       privacies.length > 0 || terms.length > 0 ? (
-        <Main privacies={privacies} terms={terms} />
+        <Main privacies={privacies} terms={terms} logo={logo} />
       ) : (
         <EmptyState />
       );

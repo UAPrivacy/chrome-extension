@@ -18,9 +18,14 @@ async function main(URL) {
   startLogging();
   const results = {};
   const urls = await getURLs(URL);
-  if (!isObjectEmpty(urls))
-    for (const [category, url] of Object.entries(urls))
-      if (category && url) results[category] = await getSummaries(url);
+  if (!isObjectEmpty(urls)) {
+    const summaries = await Promise.all(
+      Object.values(urls).map(url => getSummaries(url))
+    );
+    Object.keys(urls).forEach(
+      (category, idx) => (results[category] = summaries[idx])
+    );
+  }
   return results;
 }
 
