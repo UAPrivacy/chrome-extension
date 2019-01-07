@@ -2,6 +2,7 @@ import axios from "axios";
 import getURLs from "./src/urls";
 import getSummaries from "./src/summarize";
 import { isObjectEmpty } from "../shared";
+import cache from "./src/manual.json";
 
 function startLogging() {
   axios.interceptors.request.use(request => {
@@ -9,15 +10,19 @@ function startLogging() {
     return request;
   });
   axios.interceptors.response.use(response => {
-    console.log("Response:", response);
+    console.log("Response:", response.data);
     return response;
   });
 }
 
 async function main(URL) {
   startLogging();
-  const results = {};
-  const urls = await getURLs(URL);
+  const results = {
+    terms: [],
+    privacies: []
+  };
+  let urls = cache[URL];
+  if (!urls) urls = await getURLs(URL);
   if (!isObjectEmpty(urls)) {
     const summaries = await Promise.all(
       Object.values(urls).map(url => getSummaries(url))
