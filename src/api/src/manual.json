@@ -1,9 +1,9 @@
 {
-  "web.facebook.com": {
+  "facebook.com": {
     "terms": "https://www.facebook.com/terms/",
     "privacies": "https://www.facebook.com/privacy/explanation/"
   },
-  "www.google.com": {
+  "google.com": {
     "terms": "https://policies.google.com/terms?hl=en&gl=us",
     "privacies": "https://policies.google.com/privacy?hl=en&gl=us"
   },

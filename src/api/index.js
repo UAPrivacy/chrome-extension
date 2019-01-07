@@ -21,8 +21,10 @@ async function main(URL) {
     terms: [],
     privacies: []
   };
-  let urls = cache[URL];
-  if (!urls) urls = await getURLs(URL);
+  let urls;
+  const key = Object.keys(cache).find(url => URL.endsWith(url));
+  if (key) urls = cache[key];
+  else urls = await getURLs(URL);
   if (!isObjectEmpty(urls)) {
     const summaries = await Promise.all(
       Object.values(urls).map(url => getSummaries(url))
