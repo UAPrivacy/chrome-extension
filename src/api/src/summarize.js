@@ -9,7 +9,9 @@ async function fetchSummaries(url) {
     sentences: NUM_SENTENCES,
     url
   };
-  const { data: summary } = await axios.get(
+  const {
+    data: { summary }
+  } = await axios.get(
     `https://meaningcloud-summarization-v1.p.mashape.com/summarization-1.0?${createQueryString(
       options
     )}`,
