@@ -1,0 +1,5 @@
+
+> uaprivacy@1.0.5 test /Users/smbaabu/Products/uaprivacy/chrome-extension
+> echo 'Error: no test specified'
+
+Error: no test specified

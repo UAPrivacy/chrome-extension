@@ -1,40 +1,37 @@
-import { ALGORITHMIA } from "secrets";
 import axios from "axios";
+import { BING } from "secrets";
 
-function findCategory(url) {
-  const isTerms = /terms|\/tos/gi;
-  const isNotTerms = /&search|\/search/gi;
-  const isUserAgreement = /agreement/gi;
-  const isPrivacies = /privacy/gi;
-  if ((isTerms.test(url) || isUserAgreement.test(url)) && !isNotTerms.test(url))
-    return "terms";
-  if (isPrivacies.test(url)) return "privacies";
-  return null;
-}
+const convert = url => {
+  const pieces = url.split(".");
+  const name = pieces[pieces.length - 2];
+  return name;
+};
 
-async function fetchURLs(url) {
-  const endpoint = "https://api.algorithmia.com/v1/algo/web/GetLinks/0.1.5";
-  const {
-    data: { result }
-  } = await axios.post(endpoint, url, {
+async function fetch(url, terms = true) {
+  const endpoint = "https://api.cognitive.microsoft.com/bing/v7.0/search";
+  const name = convert(url);
+  const { data } = await axios.get(endpoint, {
+    params: {
+      q: `${name} ${terms ? "terms of service" : "privacy policy"}`
+    },
     headers: {
-      "Content-Type": "text/plain",
-      Authorization: `Simple ${ALGORITHMIA}`
+      "Ocp-Apim-Subscription-Key": BING,
+      mkt: "en-US",
+      safeSearch: "strict"
     }
   });
-  return result;
+  return data.webPages.value[0].url;
 }
 
-async function searchURLs(url) {
-  const results = {};
-  const urls = await fetchURLs(url);
-  if (urls)
-    urls.forEach(u => {
-      const category = findCategory(u);
-      if (category)
-        if (!results.hasOwnProperty(category)) results[category] = u;
-    });
-  return results;
+async function main(url) {
+  const [terms, privacies] = await Promise.all([
+    fetch(url, true),
+    fetch(url, false)
+  ]);
+  return {
+    terms,
+    privacies
+  };
 }
 
-export default searchURLs;
+export default main;

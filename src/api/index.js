@@ -2,7 +2,6 @@ import axios from "axios";
 import getURLs from "./src/urls";
 import getSummaries from "./src/summarize";
 import { isObjectEmpty } from "../shared";
-import cache from "./src/manual.json";
 
 function startLogging() {
   axios.interceptors.request.use(request => {
@@ -21,10 +20,7 @@ async function main(URL) {
     terms: [],
     privacies: []
   };
-  let urls;
-  const key = Object.keys(cache).find(url => URL.endsWith(url));
-  if (key) urls = cache[key];
-  else urls = await getURLs(URL);
+  const urls = await getURLs(URL);
   if (!isObjectEmpty(urls)) {
     const summaries = await Promise.all(
       Object.values(urls).map(url => getSummaries(url))
