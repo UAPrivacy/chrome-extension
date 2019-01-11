@@ -23,16 +23,28 @@ class App extends PureComponent {
   };
 
   fetchState = url =>
-    new Promise(resolve => {
-      fetchSummaries(url).then(summaries => {
-        chrome.runtime.sendMessage({ badge: getLength(summaries) });
-        return resolve(summaries);
-      });
-    });
+    new Promise((resolve, reject) =>
+      fetchSummaries(url)
+        .then(summaries => {
+          chrome.runtime.sendMessage({ badge: getLength(summaries) });
+          return resolve(summaries);
+        })
+        .catch(err => {
+          console.error(err);
+          reject(null);
+        })
+    );
 
   async componentDidMount() {
     const url = await getCurrentURL();
-    const { privacies, terms } = await this.fetchState(url);
+    let terms = [];
+    let privacies = [];
+    try {
+      const results = await this.fetchState(url);
+      if (results) ({ terms, privacies } = results);
+    } catch (error) {
+      console.error(error);
+    }
     this.setState({
       terms,
       privacies,
