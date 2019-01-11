@@ -29,7 +29,7 @@ class Main extends PureComponent {
             uk-grid=""
           >
             <div>
-              <img className="uk-visible@s" src={logo} alt="" />
+              <img className="uk-visible" src={logo} alt="" />
             </div>
             <div>
               <ul className="uk-subnav uk-subnav-pill uk-flex-center uk-flex-nowrap">

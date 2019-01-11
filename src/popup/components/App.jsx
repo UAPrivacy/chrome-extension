@@ -5,6 +5,15 @@ import fetchSummaries from "../../api";
 import { getCurrentURL } from "../../shared";
 import { EmptyState, Loading } from "./Shared";
 
+function getLength(summaries) {
+  let length = 0;
+  if (summaries) {
+    if (summaries.terms) length += summaries.terms.length;
+    if (summaries.privacies) length += summaries.privacies.length;
+  }
+  return length;
+}
+
 class App extends PureComponent {
   state = {
     terms: [],
@@ -15,13 +24,9 @@ class App extends PureComponent {
 
   fetchState = url =>
     new Promise(resolve => {
-      chrome.runtime.sendMessage({ load: url }, response => {
-        if (response && response.data) resolve(response.data);
-        else
-          fetchSummaries(url).then(summaries => {
-            chrome.runtime.sendMessage({ store: url, value: summaries });
-            return resolve(summaries);
-          });
+      fetchSummaries(url).then(summaries => {
+        chrome.runtime.sendMessage({ badge: getLength(summaries) });
+        return resolve(summaries);
       });
     });
 

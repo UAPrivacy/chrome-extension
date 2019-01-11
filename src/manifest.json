@@ -10,15 +10,6 @@
     "default_popup": "popup.html",
     "default_title": "UAPrivacy"
   },
-  "content_scripts": [{
-    "js": [
-      "content.bundle.js"
-    ],
-    "run_at": "document_idle",
-    "matches": [
-      "https://*/*"
-    ]
-  }],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "icons": {
     "128": "favicon.png"
@@ -26,11 +17,7 @@
   "manifest_version": 2,
   "name": "UAPrivacy",
   "permissions": [
-    "storage",
     "tabs",
-    "activeTab",
-    "unlimitedStorage",
-    "https://*/",
-    "http://api.smmry.com/"
+    "https://*/"
   ]
 }
