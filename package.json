@@ -1,6 +1,6 @@
 {
   "name": "uaprivacy",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Shows you summaries of Terms of Service & Privacy Policy for the website you are browsing.",
   "dependencies": {
     "axios": "^0.18.0",
