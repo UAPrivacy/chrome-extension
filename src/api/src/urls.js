@@ -23,15 +23,8 @@ async function fetch(url, terms = true) {
   return data.webPages.value[0].url;
 }
 
-async function main(url) {
-  const [terms, privacies] = await Promise.all([
-    fetch(url, true),
-    fetch(url, false)
-  ]);
-  return {
-    terms,
-    privacies
-  };
+function main(url) {
+  return Promise.all([fetch(url, true), fetch(url, false)]);
 }
 
 export default main;

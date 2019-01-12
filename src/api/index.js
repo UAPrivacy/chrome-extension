@@ -22,12 +22,8 @@ async function main(URL) {
   };
   const urls = await getURLs(URL);
   if (!isObjectEmpty(urls)) {
-    const summaries = await Promise.all(
-      Object.values(urls).map(url => getSummaries(url))
-    );
-    Object.keys(urls).forEach(
-      (category, idx) => (results[category] = summaries[idx])
-    );
+    const summaries = await Promise.all(urls.map(url => getSummaries(url)));
+    Object.assign(results, { terms: summaries[0], privacies: summaries[1] });
   }
   return results;
 }
