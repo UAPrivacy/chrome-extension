@@ -12,7 +12,9 @@ async function fetch(url, terms = true) {
   const name = convert(url);
   const { data } = await axios.get(endpoint, {
     params: {
-      q: `${name} ${terms ? "terms of service" : "privacy policy"}`
+      q: `${name} ${terms ? "terms of service" : "privacy policy"}`,
+      count: 1,
+      responseFilter: "webpages"
     },
     headers: {
       "Ocp-Apim-Subscription-Key": BING,

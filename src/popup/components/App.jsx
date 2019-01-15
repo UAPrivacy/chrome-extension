@@ -5,11 +5,11 @@ import fetchSummaries from "../../api";
 import { getCurrentURL } from "../../shared";
 import { EmptyState, Loading } from "./Shared";
 
-function getLength(summaries) {
+function getLengthSafe(summaries) {
   let length = 0;
   if (summaries) {
-    if (summaries.terms) length += summaries.terms.length;
-    if (summaries.privacies) length += summaries.privacies.length;
+    if (summaries[0]) length += summaries[0].length;
+    if (summaries[1]) length += summaries[1].length;
   }
   return length;
 }
@@ -18,46 +18,52 @@ class App extends PureComponent {
   state = {
     terms: [],
     privacies: [],
+    termsURL: "",
+    privaciesURL: "",
     isLoading: true,
     logo: ""
   };
 
-  fetchState = url =>
-    new Promise((resolve, reject) =>
-      fetchSummaries(url)
-        .then(summaries => {
-          chrome.runtime.sendMessage({ badge: getLength(summaries) });
-          return resolve(summaries);
-        })
-        .catch(err => {
-          console.error(err);
-          reject(null);
-        })
-    );
+  async fetchState(url) {
+    const results = await fetchSummaries(url);
+    chrome.runtime.sendMessage({ badge: getLengthSafe(results[1]) });
+    return results;
+  }
 
   async componentDidMount() {
     const url = await getCurrentURL();
-    let terms = [];
-    let privacies = [];
-    try {
-      const results = await this.fetchState(url);
-      if (results) ({ terms, privacies } = results);
-    } catch (error) {
-      console.error(error);
-    }
+    const [
+      [termsURL, privaciesURL],
+      [terms, privacies]
+    ] = await this.fetchState(url);
     this.setState({
       terms,
       privacies,
+      privaciesURL,
+      termsURL,
       isLoading: false,
       logo: `https://logo.clearbit.com/${url}?size=36`
     });
   }
 
   render() {
-    const { isLoading, privacies, terms, logo } = this.state;
+    const {
+      isLoading,
+      privacies,
+      terms,
+      logo,
+      termsURL,
+      privaciesURL
+    } = this.state;
     const UI =
       privacies.length > 0 || terms.length > 0 ? (
-        <Main privacies={privacies} terms={terms} logo={logo} />
+        <Main
+          privacies={privacies}
+          terms={terms}
+          logo={logo}
+          termsURL={termsURL}
+          privaciesURL={privaciesURL}
+        />
       ) : (
         <EmptyState />
       );
